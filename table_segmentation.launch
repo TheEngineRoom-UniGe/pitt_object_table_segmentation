@@ -1,0 +1,80 @@
+<launch>
+
+		<!--	###################	PITT PARAMETERS	#########################	(do not put any " " on values) -->	
+			 
+		<!-- 			ARGS TO THAT CANNOT BE CHANGED AFTER LAUNCH (comment (or ".") (or <0.0f) (or []) for defaults values)	-->
+	<param name="/pitt/ref_frame/input_cloud" type="str" value= "/cameraB_depth_optical_frame" /> 		<!-- default: "/camera_depth_optical_frame" (used by obj_segmentation node)	-->
+	<param name="/pitt/ref_frame/output_cloud" type="str" value= "." />							 		<!-- default: "/world" (used by obj_segmentation node)						-->
+	
+	<param name="/pitt/service/deep_filter/z_threshould" type="double" value= "1.5" />					<!-- default: 3.0 (used by obj_segmentation node to call deep filter server)-->
+	
+	<rosparam param="/pitt/service/arm_filter/min_forearm_box">[]</rosparam>							<!-- default:[-0.040f, -0.120f, -0.190f] 									-->
+	<rosparam param="/pitt/service/arm_filter/max_forearm_box">[]</rosparam>							<!-- default:[0.340f,  0.120f,  0.105f] 									-->
+	<rosparam param="/pitt/service/arm_filter/min_elbow_box">[]</rosparam>								<!-- default:[-0.090f, -0.135f, -0.160f] 									-->
+	<rosparam param="/pitt/service/arm_filter/max_elbow_box">[]</rosparam>								<!-- default:[ 0.440f,  0.135f,  0.110f] 									-->
+	
+	
+	
+		<!--			ARGS FOR OBJ_SEGMENTATION NODE	(considered only on launching)	("." for default)				--> 
+	<arg name="pitt_input_cloud_topic" value= "/cameraB/depth/points" /> 			<!-- default: "/camera/depth/points"					-->
+	<arg name="pitt_show_original_cloud" value="." /> 								<!-- default: "0" (false) [white ptn]					-->
+	<arg name="pitt_show_supports" value="." /> 									<!-- default: "0" (false) [brown ptn]					-->
+	<arg name="pitt_show_cluster" value="1" />		 								<!-- default: "0" (false) [random ptn]					-->
+	<arg name="pitt_show_object_on_support" value="." /> 							<!-- default: "0" (false) [orange ptn]					-->
+	<arg name="pitt_raw_centroid_log_file_path" value="." /> 						<!-- default: "" (do not print)							-->
+		  					<!-- set to: ".." for timed formatting name (works only at the end of the path) or set to any other paths.
+		  						 ExAMPLE <arg name="pitt_raw_centroid_log_file_path" value="$(find pitt_object_table_segmentation)/logs/log-.." />  
+		  					-->
+							
+	<arg name="pitt_arm_filter_show_cloud" value= "1" /> 										<!-- default:"0"(false)[red arm][green objs]-->
+	<arg name="pitt_arm_filter_camera_frame" value= "/cameraB_depth_optical_frame" /> 			<!-- default: "/camera_depth_optical_frame"	-->
+	<arg name="pitt_arm_filter_left_forearm_frame" value= "." /> 								<!-- default: "/left_lower_forearm"			-->
+	<arg name="pitt_arm_filter_right_forearm_frame" value= "." /> 								<!-- default: "/right_lower_forearm"		-->
+	<arg name="pitt_arm_filter_left_elbow_frame" value= "." /> 									<!-- default: "/left_lower_elbow"			-->
+	<arg name="pitt_arm_filter_right_elbow_frame" value= "." /> 								<!-- default: "/right_lower_elbow"			-->
+
+
+		<!--	###################	PITT LAUNCH #########################	-->
+
+		<!-- 		    KINECT DRIVER LAUNCH	 																		-->
+	<!-- <include file="$(find freenect_launch)/launch/freenect.launch"/> -->
+
+
+
+		<!-- 			CLUSTER AND SUPPORT CONFIG																		-->
+	<node name="deep_filter_srv" 				pkg="pitt_object_table_segmentation" 	type="deep_filter_srv" 				/> <!-- output="screen"/> -->
+	<node name="arm_filter_srv" 				pkg="pitt_object_table_segmentation" 	type="arm_filter_srv" 				
+			args=	"$(arg pitt_arm_filter_show_cloud)
+					 $(arg pitt_arm_filter_camera_frame)
+					 $(arg pitt_arm_filter_left_forearm_frame)
+					 $(arg pitt_arm_filter_right_forearm_frame)
+					 $(arg pitt_arm_filter_left_elbow_frame)
+					 $(arg pitt_arm_filter_right_elbow_frame)"
+		/> <!-- output="screen"/> -->
+	<node name="supports_segmentation_srv" 		pkg="pitt_object_table_segmentation" 	type="supports_segmentation_srv" 	/> <!-- output="screen"/> -->
+	<node name="cluster_segmentation_srv" 		pkg="pitt_object_table_segmentation" 	type="cluster_segmentation_srv"		/> <!-- output="screen"/> -->
+	<node name="obj_segmentation" 				pkg="pitt_object_table_segmentation" 	type="obj_segmentation" 			
+			output="screen"
+			args=	"$(arg pitt_input_cloud_topic) 
+					 $(arg pitt_show_original_cloud) 
+					 $(arg pitt_show_supports) 
+					 $(arg pitt_show_cluster) 
+					 $(arg pitt_show_object_on_support)
+					 $(arg pitt_raw_centroid_log_file_path)"
+		/> 
+
+
+
+		<!-- 			RANSAC CONFIG																					-->
+	<node name="plane_segmentation_srv" 		pkg="pitt_object_table_segmentation" 	type="plane_segmentation_srv"		/> <!-- output="screen"/> -->
+	<node name="sphere_segmentation_srv" 		pkg="pitt_object_table_segmentation" 	type="sphere_segmentation_srv" 		/> <!-- output="screen"/> -->
+	<node name="cylinder_segmentation_srv" 		pkg="pitt_object_table_segmentation" 	type="cylinder_segmentation_srv" 	/> <!-- output="screen"/> -->
+	<node name="cone_segmentation_srv" 			pkg="pitt_object_table_segmentation" 	type="cone_segmentation_srv" 		/> <!-- output="screen"/> -->
+	<node name="ransac_segmentation" 			pkg="pitt_object_table_segmentation" 	type="ransac_segmentation" 			output="screen"/>
+
+
+
+		<!--			TRACKER																							-->
+	<node name="geometric_tracker" 				pkg="pitt_geometric_tracking" 			type="geometric_tracker" 			/> <!-- output="screen"/> -->
+
+</launch>
