@@ -24,34 +24,32 @@ using namespace std;
 using namespace pcm;
 using namespace srvm;
 using namespace sensor_msgs;
-//using namespace pitt_object_table_segmentation;
 using namespace pitt_msgs;
 
+ros::NodeHandle* nh_ptr = NULL;
+
 // default parameters value (set parameter to be < 0 to use default value) (e.g. minimum distances between different objects)
-const float TOLLERANCE_DEFAULT = 0.03f; // distanza (in metri) per considerare due punti appartenenti allo stesso cluster
-const float MIN_CLUSTER_RATE_DEFAULT = 0.01f;// (001.0%) rate w.r.t. the total number of points !!!! MIN > MAX !!!!
-const float MAX_CLUSTER_RATE_DEFAULT = 0.99f;// (099.0%)
-const int MIN_INPUT_SIZE_DEFAULT =   30; // minimum number of points
+const double CLUSTER_TOLERANCE_DEFAULT = 0.03; // distanza (in metri) per considerare due punti appartenenti allo stesso cluster
+const double CLUSTER_MIN_RATE_DEFAULT = 0.01;// (001.0%) rate w.r.t. the total number of points !!!! MIN > MAX !!!!
+const double CLUSTER_MAX_RATE_DEFAULT = 0.99;// (099.0%)
+const int CLUSTER_MIN_INPUT_SIZE_DEFAULT =   30; // minimum number of points
 
 // call Euclidean Cluster Extraction (ref: http://www.pointclouds.org/documentation/tutorials/cluster_extraction.php)
 bool clusterize(ClusterSegmentation::Request  &req, ClusterSegmentation::Response &res){
 
 	// get data and convert in useful format considering also default
 	PCLCloudPtr cloud = pcm::PCManager::cloudForRosMsg( req.cloud);
-	double tollerance, minClasterSizeRate, maxClasterSizeRate;
+	double tolerance, minClusterSizeRate, maxClusterSizeRate;
 	int minInputSize;
-	if( req.cluster_tolerance >= 0.0f)
-		tollerance = req.cluster_tolerance;
-	else tollerance = TOLLERANCE_DEFAULT;
-	if( req.min_cluster_size_rate >= 0.0f)
-		minClasterSizeRate = req.min_cluster_size_rate;
-	else minClasterSizeRate = MIN_CLUSTER_RATE_DEFAULT;
-	if( req.max_cluster_size_rate >= 0.0f)
-		maxClasterSizeRate = req.max_cluster_size_rate;
-	else maxClasterSizeRate = MAX_CLUSTER_RATE_DEFAULT;
-	if( req.min_input_size >= 0.0f)
-		minInputSize = req.min_input_size;
-	else minInputSize = MIN_INPUT_SIZE_DEFAULT;
+
+    nh_ptr->param(srvm::PARAM_NAME_CLUSTER_TOLERANCE,
+                  tolerance, CLUSTER_TOLERANCE_DEFAULT);
+    nh_ptr->param(srvm::PARAM_NAME_CLUSTER_MIN_RATE,
+                  minClusterSizeRate, CLUSTER_MIN_RATE_DEFAULT);
+    nh_ptr->param(srvm::PARAM_NAME_CLUSTER_MAX_RATE,
+                  maxClusterSizeRate, CLUSTER_MAX_RATE_DEFAULT);
+    nh_ptr->param(srvm::PARAM_NAME_CLUSTER_TOLERANCE,
+                  minInputSize, CLUSTER_MIN_INPUT_SIZE_DEFAULT);
 
 	if( cloud->points.size() >= minInputSize){ // skip if input cloud is too small
 
@@ -62,10 +60,10 @@ bool clusterize(ClusterSegmentation::Request  &req, ClusterSegmentation::Respons
 		// compute clusters
 		vector< PointIndices> cluster_indices;
 		EuclideanClusterExtraction< PointXYZ> ec;
-		ec.setClusterTolerance( tollerance); // in meters
-		ec.setMinClusterSize( round(cloud->points.size () * minClasterSizeRate)); // percentage
-		ec.setMaxClusterSize( round(cloud->points.size () * maxClasterSizeRate));
-		//ROS_ERROR( "%d  %f   %f", cloud->points.size(), cloud->points.size () * minClasterSizeRate, cloud->points.size () * maxClasterSizeRate);
+		ec.setClusterTolerance(tolerance); // in meters
+		ec.setMinClusterSize( round(cloud->points.size () * minClusterSizeRate)); // percentage
+		ec.setMaxClusterSize( round(cloud->points.size () * maxClusterSizeRate));
+		//ROS_ERROR( "%d  %f   %f", cloud->points.size(), cloud->points.size () * minClusterSizeRate, cloud->points.size () * maxClusterSizeRate);
 		ec.setSearchMethod( tree);
 		ec.setInputCloud( cloud);
 		ec.extract( cluster_indices);
@@ -106,12 +104,6 @@ bool clusterize(ClusterSegmentation::Request  &req, ClusterSegmentation::Respons
 		}
 	}
 
-	// set used parameters
-	res.used_cluster_tolerance = tollerance;
-	res.used_max_cluster_size_rate = maxClasterSizeRate;
-	res.used_min_cluster_size_rate = minClasterSizeRate;
-	res.used_min_input_size = minInputSize;
-
 	return true;
 }
 
@@ -121,9 +113,10 @@ bool clusterize(ClusterSegmentation::Request  &req, ClusterSegmentation::Respons
 // Initialize node
 int main(int argc, char **argv){
 	ros::init(argc, argv, srvm::SRV_NAME_CUSTER_FILTER);
-	ros::NodeHandle n;
+    ros::NodeHandle nh;
+    nh_ptr = &nh;
 
-	ros::ServiceServer service = n.advertiseService( srvm::SRV_NAME_CUSTER_FILTER, clusterize);
+	ros::ServiceServer service = nh.advertiseService( srvm::SRV_NAME_CUSTER_FILTER, clusterize);
 	ros::spin();
 
 	return 0;

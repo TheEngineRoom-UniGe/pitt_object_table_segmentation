@@ -14,15 +14,17 @@ using namespace std;
 //using namespace pitt_object_table_segmentation;
 using namespace pitt_msgs;
 
-// default parameters value (set parameter to be < 0 to use default value)
-const float NORMAL_DISTANCE_WEIGHT_DEFAULT = 0.0006f;// 0.001f;
-const float DISTANCE_THRESHOLD_DEFAULT = 0.0055f;//0.0065f;//0.019f; //0.7f;
-const int MAX_ITERATION_DEFAULT = 1000;//20;
-const float MIN_RADIUS_LIMIT = 0.001;//0.0f;//
-const float MAX_RADIUS_LIMIT = 0.500;//3.0f;
-const float EPS_ANGLE = 0.4f;
-const float MIN_OPENING_ANGLE = 10.0f; // degree
-const float MAX_OPENING_ANGLE = 170.0f; // degree
+ros::NodeHandle* nh_ptr = NULL;
+
+// default params names
+static const double CONE_NORMAL_DISTANCE_WEIGTH = 0.0006f; // 0.001f;
+static const double CONE_DISTANCE_TH = 0.0055f;//0.0065f;//0.019f; //0.7f;
+static const double CONE_MIN_RADIUS_LIMIT = 0.001; //0.0f;
+static const double CONE_MAX_RADIUS_LIMIT = 0.500; //3.0f;
+static const int CONE_MAX_ITERATION_LIMIT = 1000; //20;
+static const double CONE_EPS_ANGLE_TH = 0.4f;
+static const double CONE_MIN_OPENING_ANGLE_DEGREE = 10.0f; // degree
+static const double CONE_MAX_OPENING_ANGLE_DEGREE = 170.0f; // degree
 
 // vector or point data structure
 struct vector3d {
@@ -74,30 +76,24 @@ bool ransacConeDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSegment
 	// initialise input parameter
 	int maxIterations;
 	double normalDistanceWeight, distanceThreshold, minRadiusLimit, maxRadiusLimit, epsAngleTh, minOpeningAngle, maxOpeningAngle;
-	if( req.normal_distance_weight >= 0.0f)
-		normalDistanceWeight = req.normal_distance_weight;
-	else normalDistanceWeight = NORMAL_DISTANCE_WEIGHT_DEFAULT;
-	if( req.distance_threshold >= 0.0f)
-		distanceThreshold = req.distance_threshold;
-	else distanceThreshold = DISTANCE_THRESHOLD_DEFAULT;
-	if( req.max_iterations >= 0)
-		maxIterations = req.max_iterations;
-	else maxIterations = MAX_ITERATION_DEFAULT;
-	if( req.min_radius_limit >= 0.0f)
-		minRadiusLimit = req.min_radius_limit;
-	else minRadiusLimit = MIN_RADIUS_LIMIT;
-	if( req.max_radius_limit >= 0.0f)
-		maxRadiusLimit = req.max_radius_limit;
-	else maxRadiusLimit = MAX_RADIUS_LIMIT;
-	if( req.eps_angle_threshold >= 0.0f)
-		epsAngleTh = req.eps_angle_threshold;
-	else epsAngleTh = EPS_ANGLE;
-	if( req.min_opening_angle_degree >= 0.0f)
-		minOpeningAngle = req.min_opening_angle_degree;
-	else minOpeningAngle = MIN_OPENING_ANGLE;
-	if( req.max_opening_angle_degree >= 0.0f)
-		maxOpeningAngle = req.max_opening_angle_degree;
-	else maxOpeningAngle = MAX_OPENING_ANGLE;
+
+    // get params or set to default values
+    nh_ptr->param(srvm::PARAM_NAME_CONE_NORMAL_DISTANCE_WEIGHT,
+                  normalDistanceWeight, CONE_NORMAL_DISTANCE_WEIGTH);
+    nh_ptr->param(srvm::PARAM_NAME_CONE_DISTANCE_TH,
+                  distanceThreshold, CONE_DISTANCE_TH);
+    nh_ptr->param(srvm::PARAM_NAME_CONE_MAX_ITERATION_LIMIT,
+                  maxIterations, CONE_MAX_ITERATION_LIMIT);
+    nh_ptr->param(srvm::PARAM_NAME_CONE_MIN_RADIUS_LIMIT,
+                  minRadiusLimit, CONE_MIN_RADIUS_LIMIT);
+    nh_ptr->param(srvm::PARAM_NAME_CONE_MAX_RADIUS_LIMIT,
+                  maxRadiusLimit, CONE_MAX_RADIUS_LIMIT);
+    nh_ptr->param(srvm::PARAM_NAME_CONE_EPS_ANGLE_TH,
+                  epsAngleTh, CONE_EPS_ANGLE_TH);
+    nh_ptr->param(srvm::PARAM_NAME_CONE_MIN_OPENING_ANGLE_DEGREE,
+                  minOpeningAngle, CONE_MIN_OPENING_ANGLE_DEGREE);
+    nh_ptr->param(srvm::PARAM_NAME_CONE_MAX_OPENING_ANGLE_DEGREE,
+                  maxOpeningAngle, CONE_MAX_OPENING_ANGLE_DEGREE);
 
 	// apply RANSAC
 	SACSegmentationFromNormals< PointXYZ, Normal> seg;
@@ -202,16 +198,6 @@ bool ransacConeDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSegment
 				"heigth:" << coefficientVector[ 7] << endl;
 	else cout << " NO cone found" << endl;*/
 
-	// set used parameters
-	res.used_distance_threshold = distanceThreshold;
-	res.used_eps_angle_th = epsAngleTh;
-	res.used_max_iterations = maxIterations;
-	res.used_max_opening_angle_degree = maxOpeningAngle;
-	res.used_max_radius_limit = maxRadiusLimit;
-	res.used_min_opening_angle_degree = minOpeningAngle;
-	res.used_min_radius_limit = minRadiusLimit;
-	res.used_normal_distance_weight = normalDistanceWeight;
-
 	return true;
 }
 
@@ -219,12 +205,13 @@ bool ransacConeDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSegment
 // Initialize node
 int main(int argc, char **argv){
 	ros::init(argc, argv, srvm::SRV_NAME_RANSAC_CONE_FILTER);
-	ros::NodeHandle n;
+    ros::NodeHandle nh;
+    nh_ptr = &nh;
 
 	if( VISUALIZE_RESULT)
 		vis = PCManager::createVisor( "CONE shape segmentation");
 
-	ros::ServiceServer service = n.advertiseService( srvm::SRV_NAME_RANSAC_CONE_FILTER , ransacConeDetaction);
+	ros::ServiceServer service = nh.advertiseService( srvm::SRV_NAME_RANSAC_CONE_FILTER , ransacConeDetaction);
 	ros::spin();
 
 	return 0;

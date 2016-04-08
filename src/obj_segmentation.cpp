@@ -64,7 +64,7 @@ static const float RANSAC_NORMAL_DISTANCE_WEIGHT = srvm::DEFAULT_SERVICE_PARAMET
 static float HORIZONTAL_AXIS[ 1] = { srvm::DEFAULT_SERVICE_PARAMETER_REQUEST}; // normal coordinate of the ground plane // to be an input parameter service !!!!!!!!!!!
 static const float *TABLE_EDGE_OFFSET = &srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST[0];
 // cluster filter
-static const float CLUSTER_TOLLERANCE = srvm::DEFAULT_SERVICE_PARAMETER_REQUEST;
+static const float CLUSTER_TOLERANCE = srvm::DEFAULT_SERVICE_PARAMETER_REQUEST;
 static const float MAX_CLUSTER_SIZE_RATE = srvm::DEFAULT_SERVICE_PARAMETER_REQUEST;
 static const float MIN_CLUSTER_SIZE_RATE = srvm::DEFAULT_SERVICE_PARAMETER_REQUEST;
 static const int MIN_CLUSTER_INPUT_SIZE = srvm::DEFAULT_SERVICE_PARAMETER_REQUEST;
@@ -168,11 +168,6 @@ InlierClusterPtr callClusterSegmentation( PCLCloudPtr cloud){
 
 	// set input data
 	srv.request.cloud = PCManager::cloudToRosMsg( cloud);
-	// set input parameter
-	srv.request.cluster_tolerance =  CLUSTER_TOLLERANCE;
-	srv.request.max_cluster_size_rate = MAX_CLUSTER_SIZE_RATE;
-	srv.request.min_cluster_size_rate = MIN_CLUSTER_SIZE_RATE;
-	srv.request.min_input_size = MIN_CLUSTER_INPUT_SIZE;
 
 	// call the service
 	InlierClusterPtr inc ( new InlierClusters( srv.response.cluster_objs.size()));

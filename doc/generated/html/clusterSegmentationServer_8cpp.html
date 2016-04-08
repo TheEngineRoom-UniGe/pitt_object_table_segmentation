@@ -137,13 +137,13 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a7b24eda7bd663da70a8f6b6c0b4321c9"><td class="memItemLeft" align="right" valign="top">const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clusterSegmentationServer_8cpp.html#a7b24eda7bd663da70a8f6b6c0b4321c9">TOLLERANCE_DEFAULT</a> = 0.03f</td></tr>
+<tr class="memitem:a7b24eda7bd663da70a8f6b6c0b4321c9"><td class="memItemLeft" align="right" valign="top">const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clusterSegmentationServer_8cpp.html#a7b24eda7bd663da70a8f6b6c0b4321c9">CLUSTER_TOLERANCE_DEFAULT</a> = 0.03f</td></tr>
 <tr class="separator:a7b24eda7bd663da70a8f6b6c0b4321c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a564e23c724934c557d5aa457f88fb2b2"><td class="memItemLeft" align="right" valign="top">const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clusterSegmentationServer_8cpp.html#a564e23c724934c557d5aa457f88fb2b2">MIN_CLUSTER_RATE_DEFAULT</a> = 0.01f</td></tr>
+<tr class="memitem:a564e23c724934c557d5aa457f88fb2b2"><td class="memItemLeft" align="right" valign="top">const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clusterSegmentationServer_8cpp.html#a564e23c724934c557d5aa457f88fb2b2">CLUSTER_MIN_RATE_DEFAULT</a> = 0.01f</td></tr>
 <tr class="separator:a564e23c724934c557d5aa457f88fb2b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab08bfd4bf19b043ce4fc7626fe762527"><td class="memItemLeft" align="right" valign="top">const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clusterSegmentationServer_8cpp.html#ab08bfd4bf19b043ce4fc7626fe762527">MAX_CLUSTER_RATE_DEFAULT</a> = 0.99f</td></tr>
+<tr class="memitem:ab08bfd4bf19b043ce4fc7626fe762527"><td class="memItemLeft" align="right" valign="top">const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clusterSegmentationServer_8cpp.html#ab08bfd4bf19b043ce4fc7626fe762527">CLUSTER_MAX_RATE_DEFAULT</a> = 0.99f</td></tr>
 <tr class="separator:ab08bfd4bf19b043ce4fc7626fe762527"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2811162c11f4454598f1e93804117342"><td class="memItemLeft" align="right" valign="top">const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clusterSegmentationServer_8cpp.html#a2811162c11f4454598f1e93804117342">MIN_INPUT_SIZE_DEFAULT</a> = 30.0f</td></tr>
+<tr class="memitem:a2811162c11f4454598f1e93804117342"><td class="memItemLeft" align="right" valign="top">const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clusterSegmentationServer_8cpp.html#a2811162c11f4454598f1e93804117342">CLUSTER_MIN_INPUT_SIZE_DEFAULT</a> = 30.0f</td></tr>
 <tr class="separator:a2811162c11f4454598f1e93804117342"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -173,7 +173,7 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="clusterSegmentationServer_8cpp_source.html#l00033">33</a> of file <a class="el" href="clusterSegmentationServer_8cpp_source.html">clusterSegmentationServer.cpp</a>.</p>
 
-<p>References <a class="el" href="PCManager_8cpp_source.html#l00101">pcm::PCManager::cloudForRosMsg()</a>, <a class="el" href="clusterSegmentationServer_8cpp_source.html#l00029">MAX_CLUSTER_RATE_DEFAULT</a>, <a class="el" href="clusterSegmentationServer_8cpp_source.html#l00028">MIN_CLUSTER_RATE_DEFAULT</a>, <a class="el" href="clusterSegmentationServer_8cpp_source.html#l00030">MIN_INPUT_SIZE_DEFAULT</a>, <a class="el" href="clusterSegmentationServer_8cpp_source.html#l00027">TOLLERANCE_DEFAULT</a>, and <a class="el" href="namespacepcm.html#a6db83da07339681645ba19a92dbd2046">pcm::tree()</a>.</p>
+<p>References <a class="el" href="PCManager_8cpp_source.html#l00101">pcm::PCManager::cloudForRosMsg()</a>, <a class="el" href="clusterSegmentationServer_8cpp_source.html#l00029">CLUSTER_MAX_RATE_DEFAULT</a>, <a class="el" href="clusterSegmentationServer_8cpp_source.html#l00028">CLUSTER_MIN_RATE_DEFAULT</a>, <a class="el" href="clusterSegmentationServer_8cpp_source.html#l00030">CLUSTER_MIN_INPUT_SIZE_DEFAULT</a>, <a class="el" href="clusterSegmentationServer_8cpp_source.html#l00027">CLUSTER_TOLERANCE_DEFAULT</a>, and <a class="el" href="namespacepcm.html#a6db83da07339681645ba19a92dbd2046">pcm::tree()</a>.</p>
 
 <p>Referenced by <a class="el" href="clusterSegmentationServer_8cpp_source.html#l00118">main()</a>.</p>
 
@@ -233,7 +233,7 @@ Here is the call graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const float MAX_CLUSTER_RATE_DEFAULT = 0.99f</td>
+          <td class="memname">const float CLUSTER_MAX_RATE_DEFAULT = 0.99f</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -249,7 +249,7 @@ Here is the call graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const float MIN_CLUSTER_RATE_DEFAULT = 0.01f</td>
+          <td class="memname">const float CLUSTER_MIN_RATE_DEFAULT = 0.01f</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -265,7 +265,7 @@ Here is the call graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const float MIN_INPUT_SIZE_DEFAULT = 30.0f</td>
+          <td class="memname">const float CLUSTER_MIN_INPUT_SIZE_DEFAULT = 30.0f</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -281,7 +281,7 @@ Here is the call graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const float TOLLERANCE_DEFAULT = 0.03f</td>
+          <td class="memname">const float CLUSTER_TOLERANCE_DEFAULT = 0.03f</td>
         </tr>
       </table>
 </div><div class="memdoc">

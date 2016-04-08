@@ -11,54 +11,48 @@ using namespace pcm;
 using namespace pcl;
 using namespace std;
 using namespace srvm;
-//using namespace pitt_object_table_segmentation;
 using namespace pitt_msgs;
 
+ros::NodeHandle* nh_ptr = NULL;
 
-// default parameters value (set parameter to be < 0 to use default value)
-const float NORMAL_DISTANCE_WEIGHT_DEFAULT = 0.001f; //0.0001f;
-const float DISTANCE_THRESHOLD_DEFAULT = 0.007f; // 0.7f;
-const int MAX_ITERATION_DEFAULT = 1000;//20;
-const float MIN_RADIUS_LIMIT = 0.005;
-const float MAX_RADIUS_LIMIT = 0.500;
-const float EPS_ANGLE = 0.0f;
-const float MIN_OPENING_ANGLE = 100.0f; // degree
-const float MAX_OPENING_ANGLE = 180.0f; // degree
+// default param names
+static const double SPHERE_NORMAL_DISTANCE_WEIGTH = 0.001f; //0.0001f;
+static const double SPHERE_DISTANCE_TH = 0.007f; // 0.7f;
+static const double SPHERE_MIN_RADIUS_LIMIT = 0.005;
+static const double SPHERE_MAX_RADIUS_LIMIT = 0.500;
+static const int SPHERE_MAX_ITERATION_LIMIT = 1000; //20;
+static const double SPHERE_EPS_ANGLE_TH = 0.0f;
+static const double SPHERE_MIN_OPENING_ANGLE_DEGREE = 100.0f; // degree
+static const double SPHERE_MAX_OPENING_ANGLE_DEGREE = 180.0f; // degree
 
 // call Euclidean Cluster Extraction (ref: http://www.pointclouds.org/documentation/tutorials/cluster_extraction.php)
-bool ransacSphereDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSegmentation::Response &res){
+bool ransacSphereDetection(PrimitiveSegmentation::Request &req, PrimitiveSegmentation::Response &res){
 
 	// get input points
 	PCLCloudPtr cloud = PCManager::cloudForRosMsg( req.cloud); 		// input cloud
 	PCLNormalPtr normals = PCManager::normForRosMsg( req.normals);	// input norms
 
-	// initialise input parameter
+    // initialize input parameters
 	int maxIterations;
 	double normalDistanceWeight, distanceThreshold, minRadiusLimit, maxRadiusLimit, epsAngleTh, minOpeningAngle, maxOpeningAngle;
-	if( req.normal_distance_weight >= 0.0f)
-		normalDistanceWeight = req.normal_distance_weight;
-	else normalDistanceWeight = NORMAL_DISTANCE_WEIGHT_DEFAULT;
-	if( req.distance_threshold >= 0.0f)
-		distanceThreshold = req.distance_threshold;
-	else distanceThreshold = DISTANCE_THRESHOLD_DEFAULT;
-	if( req.max_iterations >= 0)
-		maxIterations = req.max_iterations;
-	else maxIterations = MAX_ITERATION_DEFAULT;
-	if( req.min_radius_limit >= 0.0f)
-		minRadiusLimit = req.min_radius_limit;
-	else minRadiusLimit = MIN_RADIUS_LIMIT;
-	if( req.max_radius_limit >= 0.0f)
-		maxRadiusLimit = req.max_radius_limit;
-	else maxRadiusLimit = MAX_RADIUS_LIMIT;
-	if( req.eps_angle_threshold >= 0.0f)
-		epsAngleTh = req.eps_angle_threshold;
-	else epsAngleTh = EPS_ANGLE;
-	if( req.min_opening_angle_degree >= 0.0f)
-		minOpeningAngle = req.min_opening_angle_degree;
-	else minOpeningAngle = MIN_OPENING_ANGLE;
-	if( req.max_opening_angle_degree >= 0.0f)
-		maxOpeningAngle = req.max_opening_angle_degree;
-	else maxOpeningAngle = MAX_OPENING_ANGLE;
+
+	// get params or set to default values
+	nh_ptr->param(srvm::PARAM_NAME_SPHERE_NORMAL_DISTANCE_WEIGHT,
+				  normalDistanceWeight, SPHERE_NORMAL_DISTANCE_WEIGTH);
+	nh_ptr->param(srvm::PARAM_NAME_SPHERE_DISTANCE_TH,
+				  distanceThreshold, SPHERE_DISTANCE_TH);
+	nh_ptr->param(srvm::PARAM_NAME_SPHERE_MAX_ITERATION_LIMIT,
+                  maxIterations, SPHERE_MAX_ITERATION_LIMIT);
+	nh_ptr->param(srvm::PARAM_NAME_SPHERE_MIN_RADIUS_LIMIT,
+				  minRadiusLimit, SPHERE_MIN_RADIUS_LIMIT);
+	nh_ptr->param(srvm::PARAM_NAME_SPHERE_MAX_RADIUS_LIMIT,
+				  maxRadiusLimit, SPHERE_MAX_RADIUS_LIMIT);
+	nh_ptr->param(srvm::PARAM_NAME_SPHERE_EPS_ANGLE_TH,
+				  epsAngleTh, SPHERE_EPS_ANGLE_TH);
+	nh_ptr->param(srvm::PARAM_NAME_SPHERE_MIN_OPENING_ANGLE_DEGREE,
+                  minOpeningAngle, SPHERE_MIN_OPENING_ANGLE_DEGREE);
+	nh_ptr->param(srvm::PARAM_NAME_SPHERE_MAX_OPENING_ANGLE_DEGREE,
+                  maxOpeningAngle, SPHERE_MAX_OPENING_ANGLE_DEGREE);
 
 	// apply RANSAC
 	SACSegmentationFromNormals< PointXYZ, Normal> seg;
@@ -98,16 +92,6 @@ bool ransacSphereDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSegme
 //				" radius:" << coefficients_sphere->values[ 3] << endl;
 //	else cout << " NO sphere found" << endl;
 
-	// set used parameters
-	res.used_distance_threshold = distanceThreshold;
-	res.used_eps_angle_th = epsAngleTh;
-	res.used_max_iterations = maxIterations;
-	res.used_max_opening_angle_degree = maxOpeningAngle;
-	res.used_max_radius_limit = maxRadiusLimit;
-	res.used_min_opening_angle_degree = minOpeningAngle;
-	res.used_min_radius_limit = minRadiusLimit;
-	res.used_normal_distance_weight = normalDistanceWeight;
-
 	return true;
 }
 
@@ -115,9 +99,10 @@ bool ransacSphereDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSegme
 // Initialize node
 int main(int argc, char **argv){
 	ros::init(argc, argv, srvm::SRV_NAME_RANSAC_SPHERE_FILTER);
-	ros::NodeHandle n;
+	ros::NodeHandle nh;
+	nh_ptr = &nh;
 
-	ros::ServiceServer service = n.advertiseService( srvm::SRV_NAME_RANSAC_SPHERE_FILTER, ransacSphereDetaction);
+	ros::ServiceServer service = nh.advertiseService(srvm::SRV_NAME_RANSAC_SPHERE_FILTER, ransacSphereDetection);
 	ros::spin();
 
 	return 0;

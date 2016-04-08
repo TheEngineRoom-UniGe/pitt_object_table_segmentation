@@ -6,7 +6,7 @@
 	<param name="/pitt/ref_frame/input_cloud" type="str" value= "/cameraB_depth_optical_frame" /> 		<!-- default: "/camera_depth_optical_frame" (used by obj_segmentation node)	-->
 	<param name="/pitt/ref_frame/output_cloud" type="str" value= "." />							 		<!-- default: "/world" (used by obj_segmentation node)						-->
 	
-	<param name="/pitt/service/deep_filter/z_threshould" type="double" value= "1.5" />					<!-- default: 3.0 (used by obj_segmentation node to call deep filter server)-->
+	<param name="/pitt/service/deep_filter/z_threshold" type="double" value= "1.5" />					<!-- default: 3.0 (used by obj_segmentation node to call deep filter server)-->
 	
 	<rosparam param="/pitt/service/arm_filter/min_forearm_box">[]</rosparam>							<!-- default:[-0.040f, -0.120f, -0.190f] 									-->
 	<rosparam param="/pitt/service/arm_filter/max_forearm_box">[]</rosparam>							<!-- default:[0.340f,  0.120f,  0.105f] 									-->

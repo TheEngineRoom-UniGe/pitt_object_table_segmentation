@@ -158,12 +158,14 @@ bool isHorizontalPlane( PCLNormalPtr normal, ModelCoefficients::Ptr coefficients
 
 // return all the points that, if projected will follow in the given plane.
 // this method is designed with respect to the body frame. Particularly, the support are considered to have the z-axis horizontal.
-#define LESS_INF 	-9999999.0
-#define INF			 9999999.0
+
+const double inf = std::numeric_limits<double>::infinity();
+const double neg_inf = -std::numeric_limits<double>::infinity();
+
 PCLCloudPtr getPointOnPlane( PCLCloudPtr plane, PrimitiveIdxPtr inlierIdx, int mapLevel){
 	// get the margin of the plane (x,y) and compute the avarage high (z)
-	double xMax = LESS_INF, yMax = LESS_INF, zMed = 0;
-	double xMin = INF, yMin = INF;
+	double xMax = neg_inf, yMax = neg_inf, zMed = 0;
+	double xMin = inf, yMin = inf;
 	for( int i = 0; i < plane->size(); i++){
 		if( plane->points[ i].x > xMax)
 			xMax = plane->points[ i].x;

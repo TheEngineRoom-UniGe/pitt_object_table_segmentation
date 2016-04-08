@@ -27,7 +27,7 @@ using namespace pitt_msgs;
 
 const Duration WAIT_FOR_TF_TIME_OUT = Duration( srvm::DEFAULT_TF_WAIT_SECONDS);
 
-//transformation vector and matrixes
+//transformation vector and matrices
 StampedTransform leftForearmCameraTansf, rightForearmCameraTansf, leftElbowCameraTansf, rightElbowCameraTansf;
 
 //true if an error in retrieve a transformation occurs
