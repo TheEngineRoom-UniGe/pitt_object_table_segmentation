@@ -17,14 +17,14 @@ using namespace pitt_msgs;
 ros::NodeHandle* nh_ptr = NULL;
 
 // default params names
-static const double CONE_NORMAL_DISTANCE_WEIGTH = 0.0006f; // 0.001f;
-static const double CONE_DISTANCE_TH = 0.0055f;//0.0065f;//0.019f; //0.7f;
-static const double CONE_MIN_RADIUS_LIMIT = 0.001; //0.0f;
-static const double CONE_MAX_RADIUS_LIMIT = 0.500; //3.0f;
+static const double CONE_NORMAL_DISTANCE_WEIGTH = 0.0006; // 0.001;
+static const double CONE_DISTANCE_TH = 0.0055;//0.0065;//0.019; //0.7;
+static const double CONE_MIN_RADIUS_LIMIT = 0.001; //0.0;
+static const double CONE_MAX_RADIUS_LIMIT = 0.500; //3.0;
 static const int CONE_MAX_ITERATION_LIMIT = 1000; //20;
-static const double CONE_EPS_ANGLE_TH = 0.4f;
-static const double CONE_MIN_OPENING_ANGLE_DEGREE = 10.0f; // degree
-static const double CONE_MAX_OPENING_ANGLE_DEGREE = 170.0f; // degree
+static const double CONE_EPS_ANGLE_TH = 0.4;
+static const double CONE_MIN_OPENING_ANGLE_DEGREE = 10.0; // degree
+static const double CONE_MAX_OPENING_ANGLE_DEGREE = 170.0; // degree
 
 // vector or point data structure
 struct vector3d {

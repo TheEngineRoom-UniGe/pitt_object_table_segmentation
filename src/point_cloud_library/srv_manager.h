@@ -79,8 +79,6 @@ using namespace std;
         const string PARAM_NAME_PLANE_NORMAL_DISTANCE_WEIGHT = "/pitt/srv/plane_segmentation/normal_distance_weight";
         const string PARAM_NAME_PLANE_DISTANCE_TH = "/pitt/srv/plane_segmentation/distance_th";
         const string PARAM_NAME_PLANE_MAX_ITERATION_LIMIT = "/pitt/srv/plane_segmentation/max_iter_limit";
-        const string PARAM_NAME_PLANE_MIN_RADIUS_LIMIT =  "/pitt/srv/plane_segmentation/min_radius_limit";
-        const string PARAM_NAME_PLANE_MAX_RADIUS_LIMIT = "/pitt/srv/plane_segmentation/max_radius_limit";
         const string PARAM_NAME_PLANE_EPS_ANGLE_TH = "/pitt/srv/plane_segmentation/eps_angle_th";
         const string PARAM_NAME_PLANE_MIN_OPENING_ANGLE_DEGREE = "/pitt/srv/plane_segmentation/min_opening_angle_deg";
         const string PARAM_NAME_PLANE_MAX_OPENING_ANGLE_DEGREE = "/pitt/srv/plane_segmentation/max_opening_angle_deg";

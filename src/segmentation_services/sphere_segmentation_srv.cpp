@@ -16,14 +16,14 @@ using namespace pitt_msgs;
 ros::NodeHandle* nh_ptr = NULL;
 
 // default param names
-static const double SPHERE_NORMAL_DISTANCE_WEIGTH = 0.001f; //0.0001f;
-static const double SPHERE_DISTANCE_TH = 0.007f; // 0.7f;
+static const double SPHERE_NORMAL_DISTANCE_WEIGTH = 0.001; //0.0001;
+static const double SPHERE_DISTANCE_TH = 0.007; // 0.7;
 static const double SPHERE_MIN_RADIUS_LIMIT = 0.005;
 static const double SPHERE_MAX_RADIUS_LIMIT = 0.500;
 static const int SPHERE_MAX_ITERATION_LIMIT = 1000; //20;
-static const double SPHERE_EPS_ANGLE_TH = 0.0f;
-static const double SPHERE_MIN_OPENING_ANGLE_DEGREE = 100.0f; // degree
-static const double SPHERE_MAX_OPENING_ANGLE_DEGREE = 180.0f; // degree
+static const double SPHERE_EPS_ANGLE_TH = 0.0;
+static const double SPHERE_MIN_OPENING_ANGLE_DEGREE = 100.0; // degree
+static const double SPHERE_MAX_OPENING_ANGLE_DEGREE = 180.0; // degree
 
 // call Euclidean Cluster Extraction (ref: http://www.pointclouds.org/documentation/tutorials/cluster_extraction.php)
 bool ransacSphereDetection(PrimitiveSegmentation::Request &req, PrimitiveSegmentation::Response &res){

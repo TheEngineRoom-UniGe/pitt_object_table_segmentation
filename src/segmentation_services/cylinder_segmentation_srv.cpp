@@ -16,14 +16,14 @@ using namespace pitt_msgs;
 ros::NodeHandle* nh_ptr = NULL;
 
 // default params names
-static const double CYLINDER_NORMAL_DISTANCE_WEIGTH = 0.001f; //0.0001f;
-static const double CYLINDER_DISTANCE_TH = 0.008f; //0.007f;//0.7f;
+static const double CYLINDER_NORMAL_DISTANCE_WEIGTH = 0.001; //0.0001;
+static const double CYLINDER_DISTANCE_TH = 0.008; //0.007;//0.7;
 static const double CYLINDER_MIN_RADIUS_LIMIT = 0.005;
 static const double CYLINDER_MAX_RADIUS_LIMIT = 0.500;
 static const int CYLINDER_MAX_ITERATION_LIMIT = 1000; //20;
-static const double CYLINDER_EPS_ANGLE_TH = 0.0001f;
-static const double CYLINDER_MIN_OPENING_ANGLE_DEGREE = 50.0f; // degree
-static const double CYLINDER_MAX_OPENING_ANGLE_DEGREE = 180.0f; // degree
+static const double CYLINDER_EPS_ANGLE_TH = 0.0001;
+static const double CYLINDER_MIN_OPENING_ANGLE_DEGREE = 50.0; // degree
+static const double CYLINDER_MAX_OPENING_ANGLE_DEGREE = 180.0; // degree
 
 // vector or point data structure
 struct vector3d {

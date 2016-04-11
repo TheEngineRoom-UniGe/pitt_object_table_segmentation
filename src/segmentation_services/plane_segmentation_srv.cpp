@@ -16,12 +16,12 @@ using namespace pitt_msgs;
 ros::NodeHandle* nh_ptr = NULL;
 
 // default params names
-static const double PLANE_NORMAL_DISTANCE_WEIGTH = 0.001f; // 0.01f;
-static const double PLANE_DISTANCE_TH = 0.007f;
+static const double PLANE_NORMAL_DISTANCE_WEIGTH = 0.001; // 0.01f;
+static const double PLANE_DISTANCE_TH = 0.007;
 static const int PLANE_MAX_ITERATION_LIMIT = 1000;
-static const double PLANE_EPS_ANGLE_TH = 0.0f;
-static const double PLANE_MIN_OPENING_ANGLE_DEGREE = 0.0f; // degree
-static const double PLANE_MAX_OPENING_ANGLE_DEGREE = 10.0f; // degree
+static const double PLANE_EPS_ANGLE_TH = 0.0;
+static const double PLANE_MIN_OPENING_ANGLE_DEGREE = 0.0; // degree
+static const double PLANE_MAX_OPENING_ANGLE_DEGREE = 10.0; // degree
 
 // call Euclidean Cluster Extraction (ref: http://www.pointclouds.org/documentation/tutorials/cluster_extraction.php)
 bool ransacPlaneDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSegmentation::Response &res){
