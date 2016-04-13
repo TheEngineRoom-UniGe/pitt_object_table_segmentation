@@ -208,11 +208,22 @@ int main(int argc, char **argv){
     ros::NodeHandle nh;
     nh_ptr = &nh;
 
-	if( VISUALIZE_RESULT)
-		vis = PCManager::createVisor( "CONE shape segmentation");
+	if( VISUALIZE_RESULT) {
+		vis = PCManager::createVisor("CONE shape segmentation");
+		vis->setCameraPosition(8.6096e-05, 0.61526, 0.0408496, 0, 0, 1, 0.0230758, -0.841489, -0.539782);
+		vis->setCameraFieldOfView(0.8575);
+		vis->setCameraClipDistances(0.00433291, 4.33291);
+		vis->setPosition(1, 52);
+		vis->setSize(960, 540);
+	}
 
 	ros::ServiceServer service = nh.advertiseService( srvm::SRV_NAME_RANSAC_CONE_FILTER , ransacConeDetaction);
-	ros::spin();
-
+	//ros::Rate r(20);
+	while ( nh.ok()){
+		ros::spinOnce();
+		if( VISUALIZE_RESULT)
+			vis->spinOnce();
+		//r.sleep();
+	}
 	return 0;
 }

@@ -35,7 +35,7 @@ typedef boost::shared_ptr< vector< InliersCluster> > InlierClusterPtr;
 typedef vector< InliersCluster> InlierClusters;
 
 // global input parameter used during node initialization
-bool inputShowSupportClouds, inputShowOriginalCloud, inputShowClasterClouds, inputShowObjectOnSupport;
+bool inputShowSupportClouds, inputShowOriginalCloud, inputShowClusterClouds, inputShowObjectOnSupport;
 string centroidLogFilePath;
 // input parameters used in service (populate on the main node spin)
 // for depth filter service
@@ -242,7 +242,7 @@ void depthAcquisition( const PointCloud2Ptr& input){
 								// get cluster
 								PCLCloudPtr clusetrCloud = PCManager::cloudForRosMsg( clusterObject.cloud);
 
-								if( inputShowClasterClouds) // visualize cluster
+								if(inputShowClusterClouds) // visualize cluster
 									PCManager::updateVisor( vis, clusetrCloud, "clusterPlane" +
                                             boost::lexical_cast<std::string>( j));
 
@@ -295,7 +295,7 @@ int main(int argc, char **argv){
 		// read the flags to show point cloud plots
 		inputShowOriginalCloud = srvm::getBoolPtrParameter( argv[ 2], DEFAULT_INPUT_PARAM_SHOW_ORIGINAL_CLOUD);
 		inputShowSupportClouds = srvm::getBoolPtrParameter( argv[ 3], DEFAULT_INPUT_PARAM_SHOW_SUPPORTS);
-		inputShowClasterClouds = srvm::getBoolPtrParameter( argv[ 4], DEFAULT_INPUT_PARAM_SHOW_CLUSTERS);
+		inputShowClusterClouds = srvm::getBoolPtrParameter(argv[ 4], DEFAULT_INPUT_PARAM_SHOW_CLUSTERS);
 		inputShowObjectOnSupport = srvm::getBoolPtrParameter( argv[ 5], DEFAULT_INPUT_PARAM_SHOW_OBJECT_ON_SUPPORT);
 
 		// read the path in which save the file
@@ -305,19 +305,19 @@ int main(int argc, char **argv){
 		inputPointCloudTopicName = DEFAULT_INPUT_PARAM_RAW_CLOUD_TOPIC;
 		inputShowOriginalCloud = DEFAULT_INPUT_PARAM_SHOW_ORIGINAL_CLOUD;
 		inputShowSupportClouds = DEFAULT_INPUT_PARAM_SHOW_SUPPORTS;
-		inputShowClasterClouds = DEFAULT_INPUT_PARAM_SHOW_CLUSTERS;
+		inputShowClusterClouds = DEFAULT_INPUT_PARAM_SHOW_CLUSTERS;
 		inputShowObjectOnSupport = DEFAULT_INPUT_PARAM_SHOW_OBJECT_ON_SUPPORT;
 		centroidLogFilePath = DEFAULT_INPUT_PARAM_CENTROID_LOG_FILE;
 		ROS_WARN_STREAM( "input parameter given to \"" << nodeName << "\" are not correct. Setting all to the default value.");
 	}
 	// log the value coming from using inputs
-	ROS_INFO_STREAM( nodeName << " initialised with:" 		<< endl
-					<< "\t show original cloud flag: \t"	<< getFlagValueToPrint( inputShowOriginalCloud) 	<< endl
-					<< "\t show supports cloud flag: \t" 	<< getFlagValueToPrint( inputShowSupportClouds) 	<< endl
-					<< "\t show clusters cloud flag: \t" 	<< getFlagValueToPrint( inputShowClasterClouds) 	<< endl
-					<< "\t show objects on support flag: \t"<< getFlagValueToPrint( inputShowObjectOnSupport)	<< endl
-					<< "\t input raw cloud topic name: \t\""<< inputPointCloudTopicName 				<< "\""	<< endl
-					<< "\t raw centroid log file path (empty means do not print): \"" << centroidLogFilePath	<< "\"");
+	ROS_INFO_STREAM(nodeName << " initialised with:" << endl
+					<< "\t show original cloud flag: \t" << getFlagValueToPrint( inputShowOriginalCloud) << endl
+					<< "\t show supports cloud flag: \t" << getFlagValueToPrint( inputShowSupportClouds) << endl
+					<< "\t show clusters cloud flag: \t" << getFlagValueToPrint(inputShowClusterClouds) << endl
+					<< "\t show objects on support flag: \t" << getFlagValueToPrint( inputShowObjectOnSupport) << endl
+					<< "\t input raw cloud topic name: \t\"" << inputPointCloudTopicName << "\"" << endl
+					<< "\t raw centroid log file path (empty means do not print): \"" << centroidLogFilePath << "\"");
 
 	// eventually (if file path is not "") write raw centroid log header
 	PCManager::writeToFile( "scan id, support idx, cluster idx, centroid X, cenntroid Y, centroid Z;\n", centroidLogFilePath, true);
@@ -326,8 +326,14 @@ int main(int argc, char **argv){
 	Subscriber subDepth = node.subscribe ( inputPointCloudTopicName, 1, depthAcquisition);
 
 	// create window to visualize clouds
-	if( inputShowOriginalCloud || inputShowSupportClouds || inputShowClasterClouds || inputShowObjectOnSupport)
-		vis = PCManager::createVisor( "Object Table Segmentation");
+	if(inputShowOriginalCloud || inputShowSupportClouds || inputShowClusterClouds || inputShowObjectOnSupport) {
+        vis = PCManager::createVisor("Object Table Segmentation");
+        vis->setCameraPosition(8.6096e-05, 0.61526, 0.0408496, 0, 0, 1, 0.0230758, -0.841489, -0.539782);
+        vis->setCameraFieldOfView(0.8575);
+        vis->setCameraClipDistances(0.00433291,4.33291);
+        vis->setPosition(900,1);
+        vis->setSize(960,540);
+    }
 
 	// set publisher for cluster out
 	clusterPub = node.advertise< ClustersOutput>( srvm::TOPIC_OUT_NAME_OBJECT_PERCEPTION, 10);
@@ -375,6 +381,8 @@ int main(int argc, char **argv){
 			ROS_WARN_ONCE( "%s",ex.what());
 		}
 		spinOnce(); // spin as soon as a new data is available
+		if(inputShowOriginalCloud || inputShowSupportClouds || inputShowClusterClouds || inputShowObjectOnSupport)
+			vis->spinOnce();
 	}
 	return 0;
 }

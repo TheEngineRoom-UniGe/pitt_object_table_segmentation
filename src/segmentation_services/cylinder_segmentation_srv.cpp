@@ -194,7 +194,7 @@ bool ransacCylinderDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSeg
 //				"  axisX:" << coefficientVector[ 3] <<
 //				"  axisY:" << coefficientVector[ 4] <<
 //				"  axisZ:" << coefficientVector[ 5] <<
-//				" radious:" << coefficientVector[ 6] <<
+//				" radius:" << coefficientVector[ 6] <<
 //				" height:" << coefficientVector[ 7] << endl;
 //	else cout << " NO cylinder found" << endl;
 
@@ -208,11 +208,23 @@ int main(int argc, char **argv){
 	ros::NodeHandle nh;
     nh_ptr = &nh;
 
-	if( VISUALIZE_RESULT)
-		vis = PCManager::createVisor( "CYLINDER shape segmentation");
+	if( VISUALIZE_RESULT) {
+        vis = PCManager::createVisor("CYLINDER shape segmentation");
+        vis->setCameraPosition(8.6096e-05, 0.61526, 0.0408496, 0, 0, 1, 0.0230758, -0.841489, -0.539782);
+        vis->setCameraFieldOfView(0.8575);
+        vis->setCameraClipDistances(0.00433291, 4.33291);
+        vis->setPosition(1, 52);
+        vis->setSize(960, 540);
+    }
 
 	ros::ServiceServer service = nh.advertiseService( srvm::SRV_NAME_RANSAC_CYLINDER_FILTER, ransacCylinderDetaction);
-	ros::spin();
+	//ros::Rate r(20);
+	while ( nh.ok()){
+		ros::spinOnce();
+        if( VISUALIZE_RESULT)
+            vis->spinOnce();
+		//r.sleep();
+	}
 
 	return 0;
 }

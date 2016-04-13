@@ -1,63 +1,62 @@
 <launch>
 
-		<!--	###################	PITT PARAMETERS	#########################	(do not put any " " on values) -->	
+	<!--	###################	PITT PARAMETERS	#########################	(do not put any " " on values) -->	
 			 
-		<!-- 			ARGS TO THAT CANNOT BE CHANGED AFTER LAUNCH (comment (or ".") (or <0.0f) (or []) for defaults values)	-->
+	<!-- 			ARGS TO THAT CANNOT BE CHANGED AFTER LAUNCH (comment (or ".") (or <0.0f) (or []) for defaults values)	-->
+
 	<param name="/pitt/ref_frame/input_cloud" type="str" value= "/cameraB_depth_optical_frame" /> 		<!-- default: "/camera_depth_optical_frame" (used by obj_segmentation node)	-->
 	<param name="/pitt/ref_frame/output_cloud" type="str" value= "." />							 		<!-- default: "/world" (used by obj_segmentation node)						-->
 	<param name="/pitt/service/deep_filter/z_threshold" type="double" value= "1.5" />					<!-- default: 3.0 (used by obj_segmentation node to call deep filter server)-->
 	
-	<rosparam param="/pitt/srv/arm_filter/min_forearm_box">[]</rosparam>							<!-- default:[-0.040, -0.120, -0.190] 									-->
-	<rosparam param="/pitt/srv/arm_filter/max_forearm_box">[]</rosparam>							<!-- default:[0.340,  0.120,  0.105] 									-->
-	<rosparam param="/pitt/srv/arm_filter/min_elbow_box">[]</rosparam>								<!-- default:[-0.090, -0.135, -0.160] 									-->
-	<rosparam param="/pitt/srv/arm_filter/max_elbow_box">[]</rosparam>								<!-- default:[ 0.440,  0.135,  0.110]
+	<rosparam param="/pitt/srv/arm_filter/min_forearm_box">[]</rosparam>							<!-- default:[-0.040, -0.120, -0.190] -->
+	<rosparam param="/pitt/srv/arm_filter/max_forearm_box">[]</rosparam>							<!-- default:[0.340,  0.120,  0.105]  -->
+	<rosparam param="/pitt/srv/arm_filter/min_elbow_box">[]</rosparam>								<!-- default:[-0.090, -0.135, -0.160] -->
+	<rosparam param="/pitt/srv/arm_filter/max_elbow_box">[]</rosparam>								<!-- default:[ 0.440,  0.135,  0.110] -->
 
-	<rosparam param="/pitt/srv/cluster_segmentation/tolerance">[]</rosparam>-->                     <!-- default:[0.03]
-	<rosparam param="/pitt/srv/cluster_segmentation/min_rate">[]</rosparam>-->                      <!-- default:[0.01]
-	<rosparam param="/pitt/srv/cluster_segmentation/max_rate">[]</rosparam>-->                      <!-- default:[0.99]
-	<rosparam param="/pitt/srv/cluster_segmentation/min_input_size">[]</rosparam>-->                <!-- default:[30]
+	<rosparam param="/pitt/srv/cluster_segmentation/tolerance">[]</rosparam>-->                     <!-- default:[0.03] -->
+	<rosparam param="/pitt/srv/cluster_segmentation/min_rate">[]</rosparam>-->                      <!-- default:[0.01] -->
+	<rosparam param="/pitt/srv/cluster_segmentation/max_rate">[]</rosparam>-->                      <!-- default:[0.99] -->
+	<rosparam param="/pitt/srv/cluster_segmentation/min_input_size">[]</rosparam>-->                <!-- default:[30] -->
 
-	<rosparam param="/pitt/srv/sphere_segmentation/normal_distance_weight">[]</rosparam>-->         <!-- default:[0.001]
-	<rosparam param="/pitt/srv/sphere_segmentation/distance_th">[]</rosparam>-->                    <!-- default:[0.007]
-	<rosparam param="/pitt/srv/sphere_segmentation/max_iter_limit">[]</rosparam>-->                 <!-- default:[1000]
-	<rosparam param="/pitt/srv/sphere_segmentation/min_radius_limit">[]</rosparam>-->               <!-- default:[0.005]
-	<rosparam param="/pitt/srv/sphere_segmentation/max_radius_limit">[]</rosparam>-->               <!-- default:[0.500]
-	<rosparam param="/pitt/srv/sphere_segmentation/eps_angle_th">[]</rosparam>-->                   <!-- default:[0.0]
-	<rosparam param="/pitt/srv/sphere_segmentation/min_opening_angle_deg">[]</rosparam>-->          <!-- default:[100.0]
-	<rosparam param="/pitt/srv/sphere_segmentation/max_opening_angle_deg">[]</rosparam>-->          <!-- default:[180.0]
-	<rosparam param="/pitt/srv/sphere_segmentation/min_inliers">[]</rosparam>-->                    <!-- default:[40]
+	<rosparam param="/pitt/srv/sphere_segmentation/normal_distance_weight">[]</rosparam>-->         <!-- default:[0.001] -->
+	<rosparam param="/pitt/srv/sphere_segmentation/distance_th">[]</rosparam>-->                    <!-- default:[0.007] -->
+	<rosparam param="/pitt/srv/sphere_segmentation/max_iter_limit">[]</rosparam>-->                 <!-- default:[1000] -->
+	<rosparam param="/pitt/srv/sphere_segmentation/min_radius_limit">[]</rosparam>-->               <!-- default:[0.005] -->
+	<rosparam param="/pitt/srv/sphere_segmentation/max_radius_limit">[]</rosparam>-->               <!-- default:[0.500] -->
+	<rosparam param="/pitt/srv/sphere_segmentation/eps_angle_th">[]</rosparam>-->                   <!-- default:[0.0] -->
+	<rosparam param="/pitt/srv/sphere_segmentation/min_opening_angle_deg">[]</rosparam>-->          <!-- default:[100.0] -->
+	<rosparam param="/pitt/srv/sphere_segmentation/max_opening_angle_deg">[]</rosparam>-->          <!-- default:[180.0] -->
+	<rosparam param="/pitt/srv/sphere_segmentation/min_inliers">[]</rosparam>-->                    <!-- default:[40] -->
 
-	<rosparam param="/pitt/srv/cylinder_segmentation/normal_distance_weight">[]</rosparam>-->       <!-- default:[0.001]
-    <rosparam param="/pitt/srv/cylinder_segmentation/distance_th">[]</rosparam>-->                  <!-- default:[0.008]
-    <rosparam param="/pitt/srv/cylinder_segmentation/max_iter_limit">[]</rosparam>-->               <!-- default:[1000]
-  	<rosparam param="/pitt/srv/cylinder_segmentation/min_radius_limit">[]</rosparam>-->             <!-- default:[0.005]
-   	<rosparam param="/pitt/srv/cylinder_segmentation/max_radius_limit">[]</rosparam>-->             <!-- default:[0.500]
-   	<rosparam param="/pitt/srv/cylinder_segmentation/eps_angle_th">[]</rosparam>-->                 <!-- default:[0.0001]
-   	<rosparam param="/pitt/srv/cylinder_segmentation/min_opening_angle_deg">[]</rosparam>-->        <!-- default:[50.0]
-    <rosparam param="/pitt/srv/cylinder_segmentation/max_opening_angle_deg">[]</rosparam>-->        <!-- default:[180.0]
-    <rosparam param="/pitt/srv/cylinder_segmentation/min_inliers">[]</rosparam>-->                  <!-- default:[40]
+	<rosparam param="/pitt/srv/cylinder_segmentation/normal_distance_weight">[]</rosparam>-->       <!-- default:[0.001] -->
+    <rosparam param="/pitt/srv/cylinder_segmentation/distance_th">[]</rosparam>-->                  <!-- default:[0.008] -->
+    <rosparam param="/pitt/srv/cylinder_segmentation/max_iter_limit">[]</rosparam>-->               <!-- default:[1000] -->
+  	<rosparam param="/pitt/srv/cylinder_segmentation/min_radius_limit">[]</rosparam>-->             <!-- default:[0.005] -->
+   	<rosparam param="/pitt/srv/cylinder_segmentation/max_radius_limit">[]</rosparam>-->             <!-- default:[0.500] -->
+   	<rosparam param="/pitt/srv/cylinder_segmentation/eps_angle_th">[]</rosparam>-->                 <!-- default:[0.0001] -->
+   	<rosparam param="/pitt/srv/cylinder_segmentation/min_opening_angle_deg">[]</rosparam>-->        <!-- default:[50.0] -->
+    <rosparam param="/pitt/srv/cylinder_segmentation/max_opening_angle_deg">[]</rosparam>-->        <!-- default:[180.0] -->
+    <rosparam param="/pitt/srv/cylinder_segmentation/min_inliers">[]</rosparam>-->                  <!-- default:[40] -->
 
-    <rosparam param="/pitt/srv/cone_segmentation/normal_distance_weight">[]</rosparam>-->           <!-- default:[0.0006]
-    <rosparam param="/pitt/srv/cone_segmentation/distance_th">[]</rosparam>-->                      <!-- default:[0.0055]
-    <rosparam param="/pitt/srv/cone_segmentation/max_iter_limit">[]</rosparam>-->                   <!-- default:[1000]
-    <rosparam param="/pitt/srv/cone_segmentation/min_radius_limit">[]</rosparam>-->                 <!-- default:[0.001]
-    <rosparam param="/pitt/srv/cone_segmentation/max_radius_limit">[]</rosparam>-->                 <!-- default:[0.500]
-    <rosparam param="/pitt/srv/cone_segmentation/eps_angle_th">[]</rosparam>-->                     <!-- default:[0.4]
-    <rosparam param="/pitt/srv/cone_segmentation/min_opening_angle_deg">[]</rosparam>-->            <!-- default:[10.0]
-    <rosparam param="/pitt/srv/cone_segmentation/max_opening_angle_deg">[]</rosparam>-->            <!-- default:[170.0]
-    <rosparam param="/pitt/srv/cone_segmentation/min_inliers">[]</rosparam>-->                      <!-- default:[40]
+    <rosparam param="/pitt/srv/cone_segmentation/normal_distance_weight">[]</rosparam>-->           <!-- default:[0.0006] -->
+    <rosparam param="/pitt/srv/cone_segmentation/distance_th">[]</rosparam>-->                      <!-- default:[0.0055] -->
+    <rosparam param="/pitt/srv/cone_segmentation/max_iter_limit">[]</rosparam>-->                   <!-- default:[1000] -->
+    <rosparam param="/pitt/srv/cone_segmentation/min_radius_limit">[]</rosparam>-->                 <!-- default:[0.001] -->
+    <rosparam param="/pitt/srv/cone_segmentation/max_radius_limit">[]</rosparam>-->                 <!-- default:[0.500] -->
+    <rosparam param="/pitt/srv/cone_segmentation/eps_angle_th">[]</rosparam>-->                     <!-- default:[0.4] -->
+    <rosparam param="/pitt/srv/cone_segmentation/min_opening_angle_deg">[]</rosparam>-->            <!-- default:[10.0] -->
+    <rosparam param="/pitt/srv/cone_segmentation/max_opening_angle_deg">[]</rosparam>-->            <!-- default:[170.0] -->
+    <rosparam param="/pitt/srv/cone_segmentation/min_inliers">[]</rosparam>-->                      <!-- default:[40] -->
 
-    <rosparam param="/pitt/srv/plane_segmentation/normal_distance_weight">[]</rosparam>-->          <!-- default:[0.001]
-    <rosparam param="/pitt/srv/plane_segmentation/distance_th">[]</rosparam>-->                     <!-- default:[0.007]
-    <rosparam param="/pitt/srv/plane_segmentation/max_iter_limit">[]</rosparam>-->                  <!-- default:[1000]
-    <rosparam param="/pitt/srv/plane_segmentation/eps_angle_th">[]</rosparam>-->                    <!-- default:[0.0]
-    <rosparam param="/pitt/srv/plane_segmentation/min_opening_angle_deg">[]</rosparam>-->           <!-- default:[0.0]
-    <rosparam param="/pitt/srv/plane_segmentation/max_opening_angle_deg">[]</rosparam>-->           <!-- default:[10.0]
-    <rosparam param="/pitt/srv/plane_segmentation/min_inliers">[]</rosparam>-->                     <!-- default:[40]
-
+    <rosparam param="/pitt/srv/plane_segmentation/normal_distance_weight">[]</rosparam>-->          <!-- default:[0.001] -->
+    <rosparam param="/pitt/srv/plane_segmentation/distance_th">[]</rosparam>-->                     <!-- default:[0.007] -->
+    <rosparam param="/pitt/srv/plane_segmentation/max_iter_limit">[]</rosparam>-->                  <!-- default:[1000] -->
+    <rosparam param="/pitt/srv/plane_segmentation/eps_angle_th">[]</rosparam>-->                    <!-- default:[0.0] -->
+    <rosparam param="/pitt/srv/plane_segmentation/min_opening_angle_deg">[]</rosparam>-->           <!-- default:[0.0] -->
+    <rosparam param="/pitt/srv/plane_segmentation/max_opening_angle_deg">[]</rosparam>-->           <!-- default:[10.0] -->
+    <rosparam param="/pitt/srv/plane_segmentation/min_inliers">[]</rosparam>-->                     <!-- default:[40] -->
 	
-	
-		<!--			ARGS FOR OBJ_SEGMENTATION NODE	(considered only on launching)	("." for default)				--> 
+	<!--			ARGS FOR OBJ_SEGMENTATION NODE	(considered only on launching)	("." for default)				--> 
 	<arg name="pitt_input_cloud_topic" value= "/cameraB/depth/points" /> 			<!-- default: "/camera/depth/points"					-->
 	<arg name="pitt_show_original_cloud" value="." /> 								<!-- default: "0" (false) [white ptn]					-->
 	<arg name="pitt_show_supports" value="." /> 									<!-- default: "0" (false) [brown ptn]					-->

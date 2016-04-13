@@ -331,13 +331,23 @@ int main(int argc, char **argv){
     pub = nh.advertise< TrackedShapes>( "ransac_segmentation/trackedShape", 10);
 
     // create window to visualize cloud
-    if( SHOW_PRIMITIVE)
-        vis = PCManager::createVisor( "Ransac shape segmentation");
+    if( SHOW_PRIMITIVE) {
+        vis = PCManager::createVisor("Ransac shape segmentation");
+        vis->setCameraPosition(8-2.19051, 0.198678, 0.366248, -0.044886, 0.0859204, 0.471681, -0.0487582, 0.00610776, 0.998792);
+        vis->setCameraFieldOfView(0.8575);
+        vis->setCameraClipDistances(0.435734, 7.868);
+        vis->setPosition(1, 480);
+        vis->setSize(960, 540);
+    }
 
 
     //Rate rate(20); // hz
+    //ros::Rate r(20);
     while ( nh.ok()){
         spinOnce();
+        if( SHOW_PRIMITIVE)
+            vis->spinOnce();
+        //r.sleep();
     }
 
     return 0;

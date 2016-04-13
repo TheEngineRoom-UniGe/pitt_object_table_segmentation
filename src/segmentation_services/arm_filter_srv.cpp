@@ -189,11 +189,18 @@ int main(int argc, char **argv){
 					<< "\t left elbow frame: \t\""			<< leftElbowFrameName 		<< "\"");
 
 	// eventually show filtered and not clouds
-	if( showClouds)
-		vis = PCManager::createVisor( "Arm Filtering");
+	if( showClouds) {
+        vis = PCManager::createVisor("Arm Filtering");
+        vis->setCameraPosition(8.6096e-05, 0.61526, 0.0408496, 0, 0, 1, 0.0230758, -0.841489, -0.539782);
+        vis->setCameraFieldOfView(0.8575);
+        vis->setCameraClipDistances(0.00433291,4.33291);
+        vis->setPosition(1,1);
+        vis->setSize(960,540);
+    }
 
 	// set the listener to the frame transformations
 	TransformListener* baxter_tf_listener = new( TransformListener);
+	//ros::Rate r(20);
 	while ( n.ok()){
 		try{
 			// camera to left forearm transformation
@@ -216,6 +223,9 @@ int main(int argc, char **argv){
 			continue;
 		}
 		spinOnce();
+        if( showClouds)
+            vis->spinOnce();
+		//r.sleep();
 	}
 	return 0;
 }
