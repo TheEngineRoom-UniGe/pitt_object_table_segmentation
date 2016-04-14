@@ -158,7 +158,7 @@ namespace pcm {
 		viewer->setPointCloudRenderingProperties( visualization::PCL_VISUALIZER_POINT_SIZE, VISUALIZER_POINT_SIZE, name);
 		viewer->spinOnce();
 	}
-	// with random color
+
 	void PCManager::updateVisor ( PCLVisualizer viewer, PCLCloudPtr cloud, string name){
 		updateVisor( viewer, cloud, rand()%255+1, rand()%255+1, rand()%255+1, name);
 	}

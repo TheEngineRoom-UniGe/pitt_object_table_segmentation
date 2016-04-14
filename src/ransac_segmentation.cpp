@@ -5,6 +5,7 @@
 #include "pitt_msgs/TrackedShape.h" // for out message
 #include "point_cloud_library/pc_manager.h" // for my static library
 #include "point_cloud_library/srv_manager.h"
+#include <boost/format.hpp>
 
 using namespace ros;
 using namespace pcm;
@@ -35,6 +36,8 @@ const static int TXT_SPHERE_SHAPE_TAG = 2;
 const static int TXT_CONE_SHAPE_TAG = 3;
 const static int TXT_CYLINDER_SHAPE_TAG = 4;
 
+int sphereMinInliers, cylinderMinInliers, coneMinInliers, planeMinInliers, coneToCylinderPriority;
+
 // use ransac to detach sphere
 bool callRansacSphereSegmentation( PCLCloudPtr cloud, PCLNormalPtr norm, PrimitiveSegmentationPtr &out){//, bool parameterTest){
     // call sphere service
@@ -50,7 +53,7 @@ bool callRansacSphereSegmentation( PCLCloudPtr cloud, PCLNormalPtr norm, Primiti
     if( client.call( srv)){
 
         int minInliers = 0;
-        nh_ptr->param(srvm::PARAM_NAME_SPHERE_MIN_INLIERS, minInliers, SPHERE_MIN_INLIERS);
+        nh_ptr->param(srvm::PARAM_NAME_SPHERE_MIN_INLIERS, sphereMinInliers, SPHERE_MIN_INLIERS);
 
         if(  srv.response.inliers.size() > minInliers){
             *out = srv;
@@ -87,7 +90,7 @@ bool callRansacCylinderSegmentation( PCLCloudPtr cloud, PCLNormalPtr norm, Primi
     // call the service
     if( client.call( srv)){
         int minInliers = 0;
-        nh_ptr->param(srvm::PARAM_NAME_CYLINDER_MIN_INLIERS, minInliers, CYLINDER_MIN_INLIERS);
+        nh_ptr->param(srvm::PARAM_NAME_CYLINDER_MIN_INLIERS, cylinderMinInliers, CYLINDER_MIN_INLIERS);
         if(  srv.response.inliers.size() > minInliers){
             *out = srv; // get respose
 
@@ -126,7 +129,7 @@ bool callRansacConeSegmentation( PCLCloudPtr cloud, PCLNormalPtr norm, Primitive
     // call the service
     if( client.call( srv)){
         int minInliers = 0;
-        nh_ptr->param(srvm::PARAM_NAME_CONE_MIN_INLIERS, minInliers, CONE_MIN_INLIERS);
+        nh_ptr->param(srvm::PARAM_NAME_CONE_MIN_INLIERS, coneMinInliers, CONE_MIN_INLIERS);
         if(  srv.response.inliers.size() > minInliers){
             *out = srv; // get the respose
 
@@ -166,7 +169,7 @@ bool callRansacPlaneSegmentation( PCLCloudPtr cloud, PCLNormalPtr norm, Primitiv
     // call the service
     if( client.call( srv)){
         int minInliers = 0;
-        nh_ptr->param(srvm::PARAM_NAME_PLANE_MIN_INLIERS, minInliers, PLANE_MIN_INLIERS);
+        nh_ptr->param(srvm::PARAM_NAME_PLANE_MIN_INLIERS, planeMinInliers, PLANE_MIN_INLIERS);
         if(  srv.response.inliers.size() > minInliers){
             *out = srv; // get response
 
@@ -280,8 +283,12 @@ void clustersAcquisition(const ClustersOutputConstPtr& clusterObj){
                 R = 100, G = 100, B = 100;	// nothing : GRAY
                 detechedPrimitiveTag = TXT_UNKNOWN_SHAPE_TAG;
             }
-            if( SHOW_PRIMITIVE)
+            if( SHOW_PRIMITIVE){
                 PCManager::updateVisor( vis, cluster, R, G, B, "clusterShape" + boost::to_string( j));
+
+                string log_str = str(boost::format("INLIERS: %s/%s/%s/%s    CONE/CYLINDER PRIORITY:%s")
+                                     %sphereMinInliers %cylinderMinInliers %coneMinInliers %planeMinInliers %CONE_TO_CYLINDER_PRIORITY);
+                vis->updateText(log_str, 10, 520, "log_str");}
 
             ROS_INFO( "cluster_%d: %d #INLIER plane: %d sphere: %d cylinder: %d cone: %d selected: %s",
                       clusters[ j].shape_id, (int) cluster->size(), planeInl, sphereInl, cylinderInl, coneInl, returnPrimitiveNameFromTag( detechedPrimitiveTag).c_str());
@@ -330,6 +337,9 @@ int main(int argc, char **argv){
     // to publish the data at the end of the process
     pub = nh.advertise< TrackedShapes>( "ransac_segmentation/trackedShape", 10);
 
+    string log_str = str(boost::format("INLIERS: %s/%s/%s/%s    CONE/CYLINDER PRIORITY:%s")
+                         %SPHERE_MIN_INLIERS %CYLINDER_MIN_INLIERS %CONE_MIN_INLIERS %PLANE_MIN_INLIERS %CONE_TO_CYLINDER_PRIORITY);
+
     // create window to visualize cloud
     if( SHOW_PRIMITIVE) {
         vis = PCManager::createVisor("Ransac shape segmentation");
@@ -338,6 +348,7 @@ int main(int argc, char **argv){
         vis->setCameraClipDistances(0.435734, 7.868);
         vis->setPosition(1, 480);
         vis->setSize(960, 540);
+        vis->addText(log_str, 10, 520, 13, 0.9, 0.9, 0.9, "log_str");
     }
 
 

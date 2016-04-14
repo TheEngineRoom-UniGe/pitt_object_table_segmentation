@@ -63,7 +63,7 @@ namespace pcm {
 			static vector< float> coefficientToVectorMsg( ModelCoefficients::Ptr coefficients);
 			// methods for visualization
 			static PCLVisualizer createVisor( string title); // method to create visualization window
-			static void updateVisor ( PCLVisualizer viewer, PCLCloudPtr cloud, int R, int G, int B, string name); // method to show a new cloud
+			static void updateVisor ( PCLVisualizer viewer, PCLCloudPtr cloud, int R, int G, int B, string name);// method to show a new cloud
 			static void updateVisor ( PCLVisualizer viewer, PCLCloudPtr cloud, string name); // method to show a new cloud (with random color)
 			static void updateVisor ( PCLVisualizer viewer, PCLCloudPtr cloud, PCLNormalPtr normals, int R, int G, int B, string name); // method to show a new cloud with normals
 			static void updateVisor ( PCLVisualizer viewer, PCLCloudPtr cloud, PCLNormalPtr normals, string name); // method to show a new cloud with normals with random color

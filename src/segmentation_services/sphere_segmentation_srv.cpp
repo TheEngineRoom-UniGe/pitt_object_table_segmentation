@@ -80,7 +80,7 @@ bool ransacSphereDetection(PrimitiveSegmentation::Request &req, PrimitiveSegment
 		res.x_centroid = coefficients_sphere->values[ 0];
 		res.y_centroid = coefficients_sphere->values[ 1];
 		res.z_centroid = coefficients_sphere->values[ 2];
-		ROS_INFO(" estimated sphere centeroid: %f  %f  %f", coefficients_sphere->values[ 0], coefficients_sphere->values[ 1], coefficients_sphere->values[ 2]);
+		ROS_INFO(" estimated sphere centroid: %f  %f  %f", coefficients_sphere->values[ 0], coefficients_sphere->values[ 1], coefficients_sphere->values[ 2]);
 	}
 
 	// coeff 0:centreX, 1:centreY, 2:centreZ, 3:radious
