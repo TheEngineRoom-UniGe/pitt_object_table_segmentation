@@ -7,6 +7,9 @@
 #include "../point_cloud_library/pc_manager.h"				// my static library
 #include "../point_cloud_library/srv_manager.h"
 
+#include <boost/thread.hpp>
+#include <boost/thread/mutex.hpp>
+
 using namespace pcm;
 using namespace pcl;
 using namespace srvm;
@@ -35,6 +38,12 @@ struct vector3d {
 // visualization variables
 const bool VISUALIZE_RESULT = false;
 boost::shared_ptr< visualization::PCLVisualizer> vis;	// to visualize cloud
+boost::thread vis_thread;
+boost::mutex vis_mutex;
+
+void visSpin(){
+    vis->spin();
+}
 
 // retrieve the direction of the cone axes and normalize it as a versor
 vector3d getNormalizeAxesDirectionVector( ModelCoefficients::Ptr coefficients){
@@ -166,7 +175,8 @@ bool ransacCylinderDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSeg
 		ROS_INFO(" estimated cone centeroid: %f  %f  %f", centroid.x, centroid.y, centroid.z);
 
 		if( VISUALIZE_RESULT){
-			PCManager::updateVisor( vis, cloud, 200, 200, 200, "cone"); // show incoming cloud
+            boost::mutex::scoped_lock lock(vis_mutex);
+			PCManager::updateVisor( vis, cloud, 200, 200, 200, "cylinder"); // show incoming cloud
 			PCManager::updateVisor( vis, projected_cloud, 255, 0, 0, "projected"); // show point of the cloud projected on the cone axis
 			PCManager::updateVisor( vis, projected_cloud->points[ idx1], 0, 0, 255, "pMax"); // add the maximum point to compute the height (distance)
 			PCManager::updateVisor( vis, projected_cloud->points[ idx2], 0, 0, 255, "pMin"); // add the minimum point to compute the height (distance)
@@ -215,16 +225,15 @@ int main(int argc, char **argv){
         vis->setCameraClipDistances(0.00433291, 4.33291);
         vis->setPosition(1, 52);
         vis->setSize(960, 540);
+        vis_thread = boost::thread(visSpin);
     }
 
 	ros::ServiceServer service = nh.advertiseService( srvm::SRV_NAME_RANSAC_CYLINDER_FILTER, ransacCylinderDetaction);
 	//ros::Rate r(20);
 	while ( nh.ok()){
 		ros::spinOnce();
-        if( VISUALIZE_RESULT)
-            vis->spinOnce();
 		//r.sleep();
 	}
-
+    vis_thread.join();
 	return 0;
 }

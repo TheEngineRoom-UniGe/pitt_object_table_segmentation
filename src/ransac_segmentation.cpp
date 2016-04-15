@@ -7,6 +7,9 @@
 #include "point_cloud_library/srv_manager.h"
 #include <boost/format.hpp>
 
+#include <boost/thread.hpp>
+#include <boost/thread/mutex.hpp>
+
 using namespace ros;
 using namespace pcm;
 using namespace srvm;
@@ -21,6 +24,9 @@ typedef boost::shared_ptr< PrimitiveSegmentation> PrimitiveSegmentationPtr;
 ros::NodeHandle* nh_ptr = NULL;
 
 boost::shared_ptr< visualization::PCLVisualizer> vis;	// to visualize cloud
+boost::thread vis_thread;
+boost::mutex vis_mutex;
+
 Publisher pub; // to publish out results
 
 static const int SPHERE_MIN_INLIERS = 40;
@@ -37,6 +43,10 @@ const static int TXT_CONE_SHAPE_TAG = 3;
 const static int TXT_CYLINDER_SHAPE_TAG = 4;
 
 int sphereMinInliers, cylinderMinInliers, coneMinInliers, planeMinInliers, coneToCylinderPriority;
+
+void visSpin(){
+    vis->spin();
+}
 
 // use ransac to detach sphere
 bool callRansacSphereSegmentation( PCLCloudPtr cloud, PCLNormalPtr norm, PrimitiveSegmentationPtr &out){//, bool parameterTest){
@@ -284,6 +294,7 @@ void clustersAcquisition(const ClustersOutputConstPtr& clusterObj){
                 detechedPrimitiveTag = TXT_UNKNOWN_SHAPE_TAG;
             }
             if( SHOW_PRIMITIVE){
+                boost::mutex::scoped_lock lock(vis_mutex);
                 PCManager::updateVisor( vis, cluster, R, G, B, "clusterShape" + boost::to_string( j));
 
                 string log_str = str(boost::format("INLIERS: %s/%s/%s/%s    CONE/CYLINDER PRIORITY:%s")
@@ -349,6 +360,7 @@ int main(int argc, char **argv){
         vis->setPosition(1, 480);
         vis->setSize(960, 540);
         vis->addText(log_str, 10, 520, 13, 0.9, 0.9, 0.9, "log_str");
+        vis_thread = boost::thread(visSpin);
     }
 
 
@@ -356,10 +368,8 @@ int main(int argc, char **argv){
     //ros::Rate r(20);
     while ( nh.ok()){
         spinOnce();
-        if( SHOW_PRIMITIVE)
-            vis->spinOnce();
         //r.sleep();
     }
-
+    vis_thread.join();
     return 0;
 }

@@ -14,6 +14,9 @@
 #include "../point_cloud_library/pc_manager.h"
 #include "../point_cloud_library/srv_manager.h"
 
+#include <boost/thread.hpp>
+#include <boost/thread/mutex.hpp>
+
 // used name space
 using namespace pitt_msgs;
 using namespace ros;
@@ -31,37 +34,46 @@ float minIterativeCloudPercentage, minPlanePercentageSize, minVarianceThForHoriz
 float *horizontalAxis, *supportEdgeRemoveOffset; // TODO check if working
 int ransacMaxIteration;
 
-// set input parameter (global variables) (default if <0 or array are of not 3d structures)
-void initializeInputParameters( SupportSegmentation::Request  &req){
-	minIterativeCloudPercentage = srvm::getServiceFloatParameter(
-            req.min_iterative_cloud_percentual_size, srvm::DEFAULT_PARAM_SUPPORT_SRV_MIN_ITERATIVE_CLOUD_PERCENTAGE);
-	minPlanePercentageSize = srvm::getServiceFloatParameter(
-            req.min_iterative_plane_percentual_size, srvm::DEFAULT_PARAM_SUPPORT_SRV_MIN_ITERATIVE_SUPPORT_PERCENTAGE);
-	maxVarianceThForHorizontal = srvm::getServiceFloatParameter(
-            req.variance_threshold_for_horizontal, srvm::DEFAULT_PARAM_SUPPORT_SRV_VARIANCE_THRESHOLD_FOR_HORIZONTAL);
-	minVarianceThForHorizontal = -1 * maxVarianceThForHorizontal;
-	ransacThDistancePointShape = srvm::getServiceFloatParameter(
-            req.ransac_distance_point_in_shape_threshold, srvm::DEFAULT_PARAM_SUPPORT_SRV_RANSAC_DISTANCE_POINT_IN_SHAPE_THRESHOLD);
-	ransacNormalDistanceWeigth = srvm::getServiceFloatParameter(
-            req.ransac_model_normal_distance_weigth, srvm::DEFAULT_PARAM_SUPPORT_SRV_RANSAC_MODEL_NORMAL_DISTANCE_WEIGHT);
-	ransacMaxIteration = srvm::getServiceIntParameter(
-            req.ransac_max_iteration_threshold, srvm::DEFAULT_PARAM_SUPPORT_SRV_RANSAC_MAX_ITERATION_THRESHOLD);
-	horizontalAxis = &srvm::getService3DArrayParameter(
-            req.horizontal_axis, srvm::DEFAULT_PARAM_SUPPORT_SRV_HORIZONTAL_AXIS)[0];
-	supportEdgeRemoveOffset = &srvm::getService3DArrayParameter(
-            req.support_edge_remove_offset, srvm::DEFAULT_PARAM_SUPPORT_SRV_SUPPORT_EDGE_REMOVE_OFFSET)[0];
-}
-
 // common global variables
-PCLVisualizer visual;
+PCLVisualizer vis;
 PCLCloudPtr originalCloud;
 PCLNormalPtr originalNorms;
+boost::thread vis_thread;
+boost::mutex vis_mutex;
+
+//TODO: visualization
+
+void visSpin(){
+    vis->spin();
+}
+
 // visualize inlier idx w.r.t to original map for debugging
 /*void visualizeInlier( PrimitiveIdxPtr indices){
 	vector< PCLCloudPtr> idxCloud = PCManager::getCloudFromIdx( originalCloud, indices);
 	for( int i = 0; i < idxCloud.size(); i++)
-		PCManager::updateVisor( visual, idxCloud[ i], "idxMap_" + ::to_string( i));
+		PCManager::updateVisor( vis, idxCloud[ i], "idxMap_" + ::to_string( i));
 }*/
+
+// set input parameter (global variables) (default if <0 or array are of not 3d structures)
+void initializeInputParameters( SupportSegmentation::Request  &req){
+    minIterativeCloudPercentage = srvm::getServiceFloatParameter(
+            req.min_iterative_cloud_percentual_size, srvm::DEFAULT_PARAM_SUPPORT_SRV_MIN_ITERATIVE_CLOUD_PERCENTAGE);
+    minPlanePercentageSize = srvm::getServiceFloatParameter(
+            req.min_iterative_plane_percentual_size, srvm::DEFAULT_PARAM_SUPPORT_SRV_MIN_ITERATIVE_SUPPORT_PERCENTAGE);
+    maxVarianceThForHorizontal = srvm::getServiceFloatParameter(
+            req.variance_threshold_for_horizontal, srvm::DEFAULT_PARAM_SUPPORT_SRV_VARIANCE_THRESHOLD_FOR_HORIZONTAL);
+    minVarianceThForHorizontal = -1 * maxVarianceThForHorizontal;
+    ransacThDistancePointShape = srvm::getServiceFloatParameter(
+            req.ransac_distance_point_in_shape_threshold, srvm::DEFAULT_PARAM_SUPPORT_SRV_RANSAC_DISTANCE_POINT_IN_SHAPE_THRESHOLD);
+    ransacNormalDistanceWeigth = srvm::getServiceFloatParameter(
+            req.ransac_model_normal_distance_weigth, srvm::DEFAULT_PARAM_SUPPORT_SRV_RANSAC_MODEL_NORMAL_DISTANCE_WEIGHT);
+    ransacMaxIteration = srvm::getServiceIntParameter(
+            req.ransac_max_iteration_threshold, srvm::DEFAULT_PARAM_SUPPORT_SRV_RANSAC_MAX_ITERATION_THRESHOLD);
+    horizontalAxis = &srvm::getService3DArrayParameter(
+            req.horizontal_axis, srvm::DEFAULT_PARAM_SUPPORT_SRV_HORIZONTAL_AXIS)[0];
+    supportEdgeRemoveOffset = &srvm::getService3DArrayParameter(
+            req.support_edge_remove_offset, srvm::DEFAULT_PARAM_SUPPORT_SRV_SUPPORT_EDGE_REMOVE_OFFSET)[0];
+}
 
 // use ransac pcl implementation to find the biggest horizontal plane on the scene
 SACSegmentationFromNormals< PointXYZ, Normal> seg;

@@ -21,6 +21,10 @@
 #include "point_cloud_library/pc_manager.h" // for my static library
 #include "point_cloud_library/srv_manager.h"
 
+#include <boost/thread.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/format.hpp>
+
 //using namespace pitt_object_table_segmentation;
 using namespace pitt_msgs;
 using namespace ros;
@@ -74,6 +78,12 @@ static const int MIN_CLUSTER_INPUT_SIZE = srvm::DEFAULT_SERVICE_PARAMETER_REQUES
 pcm::PCManager* manager = new pcm::PCManager( false); // true (visualize)
 boost::shared_ptr< visualization::PCLVisualizer> vis; // to visualize cloud
 Publisher clusterPub; // variable to publish the output on the call back
+boost::thread vis_thread;
+boost::mutex vis_mutex;
+
+void visSpin(){
+    vis->spin();
+}
 
 // call deep filter service (modifies the input data)
 // remove all the point over a threshold on the z-axis of the camera frame
@@ -200,6 +210,8 @@ void depthAcquisition( const PointCloud2Ptr& input){
 			// transform point cloud to world frame
 			PCLCloudPtr worldCloud( new PCLCloud);
 			pcl::transformPointCloud( *cloud, *worldCloud, pclTransform);
+
+            boost::mutex::scoped_lock lock(vis_mutex);
 
 			// skip if too few input point (avoid error on compute normals)
 			if( worldCloud->points.size() > MIN_POINT_IN_ORIGINAL_CLOUD){
@@ -333,6 +345,7 @@ int main(int argc, char **argv){
         vis->setCameraClipDistances(0.00433291,4.33291);
         vis->setPosition(900,1);
         vis->setSize(960,540);
+        vis_thread = boost::thread(visSpin);
     }
 
 	// set publisher for cluster out
@@ -381,8 +394,7 @@ int main(int argc, char **argv){
 			ROS_WARN_ONCE( "%s",ex.what());
 		}
 		spinOnce(); // spin as soon as a new data is available
-		if(inputShowOriginalCloud || inputShowSupportClouds || inputShowClusterClouds || inputShowObjectOnSupport)
-			vis->spinOnce();
 	}
+    vis_thread.join();
 	return 0;
 }

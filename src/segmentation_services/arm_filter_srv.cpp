@@ -14,6 +14,9 @@
 // custom message to get data and send results
 #include <pitt_msgs/ArmFilter.h>
 
+#include <boost/thread.hpp>
+#include <boost/thread/mutex.hpp>
+
 // use also abbreviations (typedef: PCLCloud, PCLCloudPtr) (given from PCManager in turn given from PCPrimitive)
 using namespace pcl;
 using namespace std;
@@ -35,6 +38,12 @@ bool tfError = false;
 bool showClouds;
 // to visualize cloud
 boost::shared_ptr< visualization::PCLVisualizer> vis;
+boost::thread vis_thread;
+boost::mutex vis_mutex;
+
+void visSpin(){
+    vis->spin();
+}
 
 //procedure to remove the points belonging to the arm in the input cloud
 PCLCloudPtr armFiltering(PCLCloudPtr original, Vector4f minValues, Vector4f maxValues, StampedTransform frame){
@@ -134,6 +143,7 @@ bool filter( ArmFilterRequest& input, ArmFilterResponse& output){
 
 	// eventually show clouds for debugging and tuning
 	if( showClouds){
+        boost::mutex::scoped_lock lock(vis_mutex);
 		PCManager::updateVisor( vis, inputCloud, 255, 0, 0, "original");
 		PCManager::updateVisor( vis, outputCloud4, 0, 255, 0, "filtered");
 	}
@@ -196,6 +206,7 @@ int main(int argc, char **argv){
         vis->setCameraClipDistances(0.00433291,4.33291);
         vis->setPosition(1,1);
         vis->setSize(960,540);
+        vis_thread = boost::thread(visSpin);
     }
 
 	// set the listener to the frame transformations
@@ -223,10 +234,9 @@ int main(int argc, char **argv){
 			continue;
 		}
 		spinOnce();
-        if( showClouds)
-            vis->spinOnce();
 		//r.sleep();
 	}
+    vis_thread.join();
 	return 0;
 }
 

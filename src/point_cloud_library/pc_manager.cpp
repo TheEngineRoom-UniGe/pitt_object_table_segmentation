@@ -137,14 +137,12 @@ namespace pcm {
 	}
 	// method to show a single point
 	void PCManager::updateVisor ( PCLVisualizer viewer, PointXYZ point, int R, int G, int B, string name){
-		/** All updateVisor instances should be called in a while loop since they implement pcl spinOnce **/
 		PCLCloudPtr cloud( new PCLCloud);
 		cloud->push_back( point);
 		viewer->removePointCloud( name);
 		visualization::PointCloudColorHandlerCustom< PointXYZ> color_handler( cloud, R, G, B);
 		viewer->addPointCloud< PointXYZ>( cloud, color_handler, name);
 		viewer->setPointCloudRenderingProperties( visualization::PCL_VISUALIZER_POINT_SIZE, VISUALIZER_POINT_SIZE_BIG, name);
-		viewer->spinOnce();
 	}
 	// show a single point (with random color))
 	void PCManager::updateVisor ( PCLVisualizer viewer, PointXYZ point, string name){
@@ -156,7 +154,6 @@ namespace pcm {
 		visualization::PointCloudColorHandlerCustom< PointXYZ> color_handler( cloud, R, G, B);
 		viewer->addPointCloud< PointXYZ>( cloud, color_handler, name);
 		viewer->setPointCloudRenderingProperties( visualization::PCL_VISUALIZER_POINT_SIZE, VISUALIZER_POINT_SIZE, name);
-		viewer->spinOnce();
 	}
 
 	void PCManager::updateVisor ( PCLVisualizer viewer, PCLCloudPtr cloud, string name){
@@ -170,7 +167,6 @@ namespace pcm {
 		viewer->addPointCloud< PointXYZ> ( cloud, color_handler, name);
 		viewer->setPointCloudRenderingProperties ( visualization::PCL_VISUALIZER_POINT_SIZE, VISUALIZER_POINT_SIZE, name);
 		viewer->addPointCloudNormals< PointXYZ, Normal> ( cloud, normals, DEFAULT_NORM_LEVEL, DEFAULT_NORM_SCALE, name + DEFAULT_NORM_NAME_SUFFIX);
-		viewer->spinOnce();
 	}
 	// with random color
 	void PCManager::updateVisor ( PCLVisualizer viewer, PCLCloudPtr cloud, PCLNormalPtr normals, string name){
