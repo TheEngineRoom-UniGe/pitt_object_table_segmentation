@@ -40,9 +40,24 @@ bool showClouds;
 boost::shared_ptr< visualization::PCLVisualizer> vis;
 boost::thread vis_thread;
 boost::mutex vis_mutex;
+bool vis_update;
+
+PCLCloudPtr inputCloud( new PCLCloud);
+PCLCloudPtr outputCloud1( new PCLCloud);
+PCLCloudPtr outputCloud2( new PCLCloud);
+PCLCloudPtr outputCloud3( new PCLCloud);
+PCLCloudPtr outputCloud4( new PCLCloud);
 
 void visSpin(){
-    vis->spin();
+    while(!vis->wasStopped()){
+        vis->spinOnce(100);
+        boost::mutex::scoped_lock updateLock(vis_mutex);
+        if (vis_update){
+            PCManager::updateVisor( vis, inputCloud, 255, 0, 0, "original");
+            PCManager::updateVisor( vis, outputCloud4, 0, 255, 0, "filtered");
+            vis_update = false;
+        }
+    }
 }
 
 //procedure to remove the points belonging to the arm in the input cloud
@@ -94,7 +109,6 @@ Vector4f generateBoxVector( vector< float> vec){
 //service function
 bool filter( ArmFilterRequest& input, ArmFilterResponse& output){
 	//convert ROS point cloud to PCL format
-	PCLCloudPtr inputCloud( new PCLCloud);
 	fromROSMsg( input.input_cloud, *inputCloud);
 
 	// get bounding box parameters
@@ -111,12 +125,7 @@ bool filter( ArmFilterRequest& input, ArmFilterResponse& output){
 	Vector4f elbowMinValue = generateBoxVector( minElbow);
 	Vector4f elbowMaxValue = generateBoxVector( maxElbow);
 
-	//initialize output
-	PCLCloudPtr outputCloud1( new PCLCloud);
-	PCLCloudPtr outputCloud2( new PCLCloud);
-	PCLCloudPtr outputCloud3( new PCLCloud);
-	PCLCloudPtr outputCloud4( new PCLCloud);
-
+    boost::mutex::scoped_lock updateLock(vis_mutex);
 	//check transform availability
 	if( ! tfError){
 		int leftForearmRemovedCnt, rightForearmRemovedCnt, leftElbowRemovedCnt, rightElbowRemovedCnt; // used only for logs
@@ -142,11 +151,8 @@ bool filter( ArmFilterRequest& input, ArmFilterResponse& output){
 	}
 
 	// eventually show clouds for debugging and tuning
-	if( showClouds){
-        boost::mutex::scoped_lock lock(vis_mutex);
-		PCManager::updateVisor( vis, inputCloud, 255, 0, 0, "original");
-		PCManager::updateVisor( vis, outputCloud4, 0, 255, 0, "filtered");
-	}
+    if (showClouds)
+        vis_update = true;
 
 	//preparing ROS output message
 	PointCloud2Ptr temp(new PointCloud2);

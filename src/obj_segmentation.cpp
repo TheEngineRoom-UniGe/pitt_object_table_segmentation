@@ -82,7 +82,11 @@ boost::thread vis_thread;
 boost::mutex vis_mutex;
 
 void visSpin(){
-    vis->spin();
+    while(!vis->wasStopped()){
+        boost::mutex::scoped_lock updateLock(vis_mutex);
+        vis->spinOnce(100);
+    }
+
 }
 
 // call deep filter service (modifies the input data)
