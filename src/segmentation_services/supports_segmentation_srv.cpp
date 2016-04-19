@@ -42,10 +42,10 @@ boost::thread vis_thread;
 boost::mutex vis_mutex;
 
 //TODO: visualization
-
-void visSpin(){
-    vis->spin();
-}
+//
+//void visSpin(){
+//    vis->spin();
+//}
 
 // visualize inlier idx w.r.t to original map for debugging
 /*void visualizeInlier( PrimitiveIdxPtr indices){

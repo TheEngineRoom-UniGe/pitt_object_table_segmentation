@@ -20,23 +20,23 @@
 
 	<rosparam param="/pitt/srv/sphere_segmentation/normal_distance_weight">[]</rosparam>-->         <!-- default:[0.001] -->
 	<rosparam param="/pitt/srv/sphere_segmentation/distance_th">[]</rosparam>-->                    <!-- default:[0.007] -->
-	<rosparam param="/pitt/srv/sphere_segmentation/max_iter_limit">[]</rosparam>-->                 <!-- default:[1000] -->
+	<rosparam param="/pitt/srv/sphere_segmentation/max_iter_limit">[]</rosparam>-->                 <!--  default:[1000] -->
 	<rosparam param="/pitt/srv/sphere_segmentation/min_radius_limit">[]</rosparam>-->               <!-- default:[0.005] -->
 	<rosparam param="/pitt/srv/sphere_segmentation/max_radius_limit">[]</rosparam>-->               <!-- default:[0.500] -->
-	<rosparam param="/pitt/srv/sphere_segmentation/eps_angle_th">[]</rosparam>-->                   <!-- default:[0.0] -->
+	<rosparam param="/pitt/srv/sphere_segmentation/eps_angle_th">[]</rosparam>-->                   <!--  default:[0.0]  -->
 	<rosparam param="/pitt/srv/sphere_segmentation/min_opening_angle_deg">[]</rosparam>-->          <!-- default:[100.0] -->
 	<rosparam param="/pitt/srv/sphere_segmentation/max_opening_angle_deg">[]</rosparam>-->          <!-- default:[180.0] -->
-	<rosparam param="/pitt/srv/sphere_segmentation/min_inliers">[]</rosparam>-->                    <!-- default:[40] -->
+	<rosparam param="/pitt/srv/sphere_segmentation/min_inliers">[]</rosparam>-->                    <!--  default:[40]   -->
 
 	<rosparam param="/pitt/srv/cylinder_segmentation/normal_distance_weight">[]</rosparam>-->       <!-- default:[0.001] -->
     <rosparam param="/pitt/srv/cylinder_segmentation/distance_th">[]</rosparam>-->                  <!-- default:[0.008] -->
-    <rosparam param="/pitt/srv/cylinder_segmentation/max_iter_limit">[]</rosparam>-->               <!-- default:[1000] -->
+    <rosparam param="/pitt/srv/cylinder_segmentation/max_iter_limit">[]</rosparam>-->               <!--  default:[1000] -->
   	<rosparam param="/pitt/srv/cylinder_segmentation/min_radius_limit">[]</rosparam>-->             <!-- default:[0.005] -->
    	<rosparam param="/pitt/srv/cylinder_segmentation/max_radius_limit">[]</rosparam>-->             <!-- default:[0.500] -->
    	<rosparam param="/pitt/srv/cylinder_segmentation/eps_angle_th">[]</rosparam>-->                 <!-- default:[0.0001] -->
-   	<rosparam param="/pitt/srv/cylinder_segmentation/min_opening_angle_deg">[]</rosparam>-->        <!-- default:[50.0] -->
+   	<rosparam param="/pitt/srv/cylinder_segmentation/min_opening_angle_deg">[]</rosparam>-->        <!-- default:[50.0]  -->
     <rosparam param="/pitt/srv/cylinder_segmentation/max_opening_angle_deg">[]</rosparam>-->        <!-- default:[180.0] -->
-    <rosparam param="/pitt/srv/cylinder_segmentation/min_inliers">[]</rosparam>-->                  <!-- default:[40] -->
+    <rosparam param="/pitt/srv/cylinder_segmentation/min_inliers">[]</rosparam>-->                  <!--  default:[40]  -->
 
     <rosparam param="/pitt/srv/cone_segmentation/normal_distance_weight">[]</rosparam>-->           <!-- default:[0.0006] -->
     <rosparam param="/pitt/srv/cone_segmentation/distance_th">[]</rosparam>-->                      <!-- default:[0.0055] -->
@@ -55,6 +55,11 @@
     <rosparam param="/pitt/srv/plane_segmentation/min_opening_angle_deg">[]</rosparam>-->           <!-- default:[0.0] -->
     <rosparam param="/pitt/srv/plane_segmentation/max_opening_angle_deg">[]</rosparam>-->           <!-- default:[10.0] -->
     <rosparam param="/pitt/srv/plane_segmentation/min_inliers">[]</rosparam>-->                     <!-- default:[40] -->
+
+    <rosparam param="/pitt/srv/geometric_tracker/tracker_forget_threshold">[]</rosparam>-->         <!-- default:[3] -->
+    <rosparam param="/pitt/srv/geometric_tracker/range_threshold">[]</rosparam>-->                  <!-- default:[0.2] -->
+    <rosparam param="/pitt/srv/geometric_tracker/confidence_weight_old">[]</rosparam>-->            <!-- default:[0.6] -->
+    <rosparam param="/pitt/srv/geometric_tracker/confiddence_weight_new">[]</rosparam>-->           <!-- default:[0.4] -->
 	
 	<!--			ARGS FOR OBJ_SEGMENTATION NODE	(considered only on launching)	("." for default)				--> 
 	<arg name="pitt_input_cloud_topic" value= "/cameraB/depth/points" /> 			<!-- default: "/camera/depth/points"					-->

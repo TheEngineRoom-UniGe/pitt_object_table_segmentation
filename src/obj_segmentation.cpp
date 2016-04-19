@@ -86,7 +86,6 @@ void visSpin(){
         boost::mutex::scoped_lock updateLock(vis_mutex);
         vis->spinOnce(100);
     }
-
 }
 
 // call deep filter service (modifies the input data)
@@ -215,15 +214,15 @@ void depthAcquisition( const PointCloud2Ptr& input){
 			PCLCloudPtr worldCloud( new PCLCloud);
 			pcl::transformPointCloud( *cloud, *worldCloud, pclTransform);
 
-            boost::mutex::scoped_lock lock(vis_mutex);
-
 			// skip if too few input point (avoid error on compute normals)
 			if( worldCloud->points.size() > MIN_POINT_IN_ORIGINAL_CLOUD){
 				// compute normal
 				PCLNormalPtr normal = PCManager::estimateNormal( worldCloud); // using default ESTIMATE_NORMAL_SPAN
 				// show original cloud as gray points
-				if( inputShowOriginalCloud)
-					PCManager::updateVisor( vis, worldCloud, normal, 220, 220, 220, "original");
+				if( inputShowOriginalCloud) {
+                    boost::mutex::scoped_lock lock(vis_mutex);
+                    PCManager::updateVisor(vis, worldCloud, normal, 220, 220, 220, "original");
+                }
 
 				// compute supports
 				InlierSupportsPtr supports = callSupportFilter( worldCloud, normal);
@@ -234,15 +233,18 @@ void depthAcquisition( const PointCloud2Ptr& input){
 							// get horizontal plane from service response
 							PCLCloudPtr support = PCManager::cloudForRosMsg( (* supports)[ i].support_cloud);
 							// show points with brown colors
+                            boost::mutex::scoped_lock lock(vis_mutex);
 							PCManager::updateVisor( vis, support, 102, 55, 55,  "table" +
                                     boost::lexical_cast<std::string>( i));
 						}
 						// show object on the horizontal plane
 						PCLCloudPtr onSupport = PCManager::cloudForRosMsg( (* supports)[ i].on_support_cloud);
 						// show points
-						if( inputShowObjectOnSupport)
-							PCManager::updateVisor( vis, onSupport, 255, 183, 131, "object" +
-                                    boost::lexical_cast<std::string>( i));
+						if( inputShowObjectOnSupport) {
+                            boost::mutex::scoped_lock lock(vis_mutex);
+                            PCManager::updateVisor(vis, onSupport, 255, 183, 131, "object" +
+                                    boost::lexical_cast<std::string>(i));
+                        }
 
 						// compute clusters
 						InlierClusterPtr clusters = callClusterSegmentation( onSupport);
@@ -258,9 +260,11 @@ void depthAcquisition( const PointCloud2Ptr& input){
 								// get cluster
 								PCLCloudPtr clusetrCloud = PCManager::cloudForRosMsg( clusterObject.cloud);
 
-								if(inputShowClusterClouds) // visualize cluster
-									PCManager::updateVisor( vis, clusetrCloud, "clusterPlane" +
-                                            boost::lexical_cast<std::string>( j));
+								if(inputShowClusterClouds) { // visualize cluster
+                                    boost::mutex::scoped_lock lock(vis_mutex);
+                                    PCManager::updateVisor(vis, clusetrCloud, "clusterPlane" +
+                                                                              boost::lexical_cast<std::string>(j));
+                                }
 
 								// prepare detached cluster center of mass logs
 								centroidFileLog += boost::lexical_cast<std::string>(scanId) + ", " +
@@ -344,9 +348,9 @@ int main(int argc, char **argv){
 	// create window to visualize clouds
 	if(inputShowOriginalCloud || inputShowSupportClouds || inputShowClusterClouds || inputShowObjectOnSupport) {
         vis = PCManager::createVisor("Object Table Segmentation");
-        vis->setCameraPosition(8.6096e-05, 0.61526, 0.0408496, 0, 0, 1, 0.0230758, -0.841489, -0.539782);
+        vis->setCameraPosition(-1.88222, 0.632754, 0.534685, -0.650194, 0.490984, 0.6405, -0.081319, 0.036718, 0.99601);
         vis->setCameraFieldOfView(0.8575);
-        vis->setCameraClipDistances(0.00433291,4.33291);
+        vis->setCameraClipDistances(0.131668,7.43063);
         vis->setPosition(900,1);
         vis->setSize(960,540);
         vis_thread = boost::thread(visSpin);
@@ -399,6 +403,10 @@ int main(int argc, char **argv){
 		}
 		spinOnce(); // spin as soon as a new data is available
 	}
-    vis_thread.join();
+
+    if (inputShowOriginalCloud || inputShowSupportClouds || inputShowClusterClouds || inputShowObjectOnSupport){
+        vis->close();
+        vis_thread.join();
+    }
 	return 0;
 }

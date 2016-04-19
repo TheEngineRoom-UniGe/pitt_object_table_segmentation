@@ -242,7 +242,10 @@ int main(int argc, char **argv){
 		spinOnce();
 		//r.sleep();
 	}
-    vis_thread.join();
+	if (showClouds){
+		vis->close();
+		vis_thread.join();
+	}
 	return 0;
 }
 

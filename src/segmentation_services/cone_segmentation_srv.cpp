@@ -9,6 +9,7 @@
 
 #include <boost/thread.hpp>
 #include <boost/thread/mutex.hpp>
+#include <boost/format.hpp>
 
 using namespace pcm;
 using namespace pcl;
@@ -43,7 +44,10 @@ boost::thread vis_thread;
 boost::mutex vis_mutex;
 
 void visSpin(){
-    vis->spin();
+	while(!vis->wasStopped()){
+		boost::mutex::scoped_lock updateLock(vis_mutex);
+		vis->spinOnce(100);
+	}
 }
 
 // retrieve the direction of the cone axes and normalize it as a versor
@@ -235,6 +239,9 @@ int main(int argc, char **argv){
 		ros::spinOnce();
 		//r.sleep();
 	}
-    vis_thread.join();
+	if (VISUALIZE_RESULT){
+		vis->close();
+		vis_thread.join();
+	}
 	return 0;
 }

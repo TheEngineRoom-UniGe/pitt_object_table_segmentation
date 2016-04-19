@@ -5,16 +5,16 @@
 #include "pitt_msgs/TrackedShape.h" // for out message
 #include "point_cloud_library/pc_manager.h" // for my static library
 #include "point_cloud_library/srv_manager.h"
-#include <boost/format.hpp>
 
 #include <boost/thread.hpp>
 #include <boost/thread/mutex.hpp>
+#include <boost/format.hpp>
 
 using namespace ros;
 using namespace pcm;
 using namespace srvm;
 //using namespace pitt_object_table_segmentation;
-//using namespace geometric_traking;
+//using namespace geometric_tracking;
 using namespace pitt_msgs;
 
 typedef vector< InliersCluster> InliersClusters;
@@ -45,7 +45,10 @@ const static int TXT_CYLINDER_SHAPE_TAG = 4;
 int sphereMinInliers, cylinderMinInliers, coneMinInliers, planeMinInliers, coneToCylinderPriority;
 
 void visSpin(){
-    vis->spin();
+    while(!vis->wasStopped()){
+        boost::mutex::scoped_lock updateLock(vis_mutex);
+        vis->spinOnce(100);
+    }
 }
 
 // use ransac to detach sphere
@@ -293,13 +296,15 @@ void clustersAcquisition(const ClustersOutputConstPtr& clusterObj){
                 R = 100, G = 100, B = 100;	// nothing : GRAY
                 detechedPrimitiveTag = TXT_UNKNOWN_SHAPE_TAG;
             }
+
             if( SHOW_PRIMITIVE){
                 boost::mutex::scoped_lock lock(vis_mutex);
                 PCManager::updateVisor( vis, cluster, R, G, B, "clusterShape" + boost::to_string( j));
 
                 string log_str = str(boost::format("INLIERS: %s/%s/%s/%s    CONE/CYLINDER PRIORITY:%s")
                                      %sphereMinInliers %cylinderMinInliers %coneMinInliers %planeMinInliers %CONE_TO_CYLINDER_PRIORITY);
-                vis->updateText(log_str, 10, 520, "log_str");}
+                vis->updateText(log_str, 10, 520, "log_str");
+            }
 
             ROS_INFO( "cluster_%d: %d #INLIER plane: %d sphere: %d cylinder: %d cone: %d selected: %s",
                       clusters[ j].shape_id, (int) cluster->size(), planeInl, sphereInl, cylinderInl, coneInl, returnPrimitiveNameFromTag( detechedPrimitiveTag).c_str());
@@ -356,7 +361,7 @@ int main(int argc, char **argv){
         vis = PCManager::createVisor("Ransac shape segmentation");
         vis->setCameraPosition(8-2.19051, 0.198678, 0.366248, -0.044886, 0.0859204, 0.471681, -0.0487582, 0.00610776, 0.998792);
         vis->setCameraFieldOfView(0.8575);
-        vis->setCameraClipDistances(0.435734, 7.868);
+        vis->setCameraClipDistances(0.0064556, 6.4556);
         vis->setPosition(1, 480);
         vis->setSize(960, 540);
         vis->addText(log_str, 10, 520, 13, 0.9, 0.9, 0.9, "log_str");
@@ -370,6 +375,9 @@ int main(int argc, char **argv){
         spinOnce();
         //r.sleep();
     }
-    vis_thread.join();
+    if (SHOW_PRIMITIVE){
+        vis->close();
+        vis_thread.join();
+    }
     return 0;
 }
