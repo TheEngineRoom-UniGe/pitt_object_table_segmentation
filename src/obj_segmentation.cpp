@@ -43,18 +43,16 @@ bool inputShowSupportClouds, inputShowOriginalCloud, inputShowClusterClouds, inp
 string centroidLogFilePath;
 // input parameters used in service (populate on the main node spin)
 // for depth filter service
-int inputDeepThreshold;
+int inputDepthThreshold;
 // for the arm filtering service
 vector< float> forearmMinBox, forearmMaxBox, elbowMinBox, elbowMaxBox;
+string log_str = "Loading...";
 
 // used only for logging
 long scanId = 0;
 
 // the cloud is not processed if has less number of points
 static const int MIN_POINT_IN_ORIGINAL_CLOUD = 30;
-
-
-
 
 // deep filter threshold
 //static const float DEPTH_THRESHOLD = 1.3f;////PCManager::DEFAULT_SERVICE_PARAMETER_REQUEST;
@@ -98,7 +96,7 @@ bool callDeepFilter( PCLCloudPtr& cloud){
 
 	// set input data and parameters
 	srvDeep.request.input_cloud = PCManager::cloudToRosMsg( cloud);
-	srvDeep.request.deep_threshold = inputDeepThreshold;
+	srvDeep.request.deep_threshold = inputDepthThreshold;
 
 	// call service
 	if( clientDeep.call( srvDeep)){ // get the repose
@@ -165,7 +163,7 @@ InlierSupportsPtr  callSupportFilter( PCLCloudPtr inputCloud, PCLNormalPtr norma
 	// call service
 	InlierSupportsPtr objs ( new InlierSupports( srv.response.supports_description.size()));
 	if( client.call( srv))
-		*objs = srv.response.supports_description; // get the respose
+		*objs = srv.response.supports_description; // get the response
 	else
 		ROS_ERROR_STREAM( " error on calling service " << client.getService());
 
@@ -197,6 +195,12 @@ Eigen::Matrix4f pclTransform;
 void depthAcquisition( const PointCloud2Ptr& input){
 
 	string centroidFileLog = "";
+
+    if (inputShowOriginalCloud || inputShowSupportClouds || inputShowClusterClouds || inputShowObjectOnSupport) {
+        log_str = boost::str(boost::format("DEPTH THRESHOLD: %f")
+                             % inputDepthThreshold);
+        vis->updateText(log_str, 10, 520, "log_str");
+    }
 
 	// get kinect inputs as a standard pcl cloud
 	PCLCloudPtr rawCloud = PCManager::cloudForRosMsg( input);
@@ -258,11 +262,11 @@ void depthAcquisition( const PointCloud2Ptr& input){
 								out->clusterObjs.push_back( clusterObject);
 
 								// get cluster
-								PCLCloudPtr clusetrCloud = PCManager::cloudForRosMsg( clusterObject.cloud);
+								PCLCloudPtr clusterCloud = PCManager::cloudForRosMsg(clusterObject.cloud);
 
 								if(inputShowClusterClouds) { // visualize cluster
                                     boost::mutex::scoped_lock lock(vis_mutex);
-                                    PCManager::updateVisor(vis, clusetrCloud, "clusterPlane" +
+                                    PCManager::updateVisor(vis, clusterCloud, "clusterPlane" +
                                                                               boost::lexical_cast<std::string>(j));
                                 }
 
@@ -306,7 +310,8 @@ int main(int argc, char **argv){
 
 	// read input parameters (the one that are set only on node start up)
 	std::string inputPointCloudTopicName;
-	if( argc == numberOfInputParameter + 1){
+
+    if( argc == numberOfInputParameter + 1){
 		// args[ 0] is the path to the executable file
 
 		// read the name of the input cloud topic
@@ -340,7 +345,7 @@ int main(int argc, char **argv){
 					<< "\t raw centroid log file path (empty means do not print): \"" << centroidLogFilePath << "\"");
 
 	// eventually (if file path is not "") write raw centroid log header
-	PCManager::writeToFile( "scan id, support idx, cluster idx, centroid X, cenntroid Y, centroid Z;\n", centroidLogFilePath, true);
+	PCManager::writeToFile( "scan id, support idx, cluster idx, centroid X, centroid Y, centroid Z;\n", centroidLogFilePath, true);
 
 	// set subscriber to get kinect depth points given from input parameter
 	Subscriber subDepth = node.subscribe ( inputPointCloudTopicName, 1, depthAcquisition);
@@ -353,6 +358,7 @@ int main(int argc, char **argv){
         vis->setCameraClipDistances(0.131668,7.43063);
         vis->setPosition(900,1);
         vis->setSize(960,540);
+        vis->addText(log_str, 10, 520, 13, 0.9, 0.9, 0.9, "log_str");
         vis_thread = boost::thread(visSpin);
     }
 
@@ -390,16 +396,16 @@ int main(int argc, char **argv){
 							0, 							  0, 							0, 							  1;
 
 			// get ros parameter for services
-			// deep filter srvice
-			node.param( srvm::PARAM_NAME_DEEP_SRV_Z_THRESHOLD, inputDeepThreshold, srvm::DEFAULT_SERVICE_PARAMETER_REQUEST);
+			// deep filter service
+			node.param(srvm::PARAM_NAME_DEEP_SRV_Z_THRESHOLD, inputDepthThreshold, srvm::DEFAULT_SERVICE_PARAMETER_REQUEST);
 			// arm filtering service
-			node.param( srvm::PARAM_NAME_ARM_SRV_MIN_FOREARM_BOX, forearmMinBox, srvm::get3DArray( srvm::DEFAULT_PARAM_ARM_SRV_MIN_FOREARM_BOX));
-			node.param( srvm::PARAM_NAME_ARM_SRV_MAX_FOREARM_BOX, forearmMaxBox, srvm::get3DArray( srvm::DEFAULT_PARAM_ARM_SRV_MAX_FOREARM_BOX));
-			node.param( srvm::PARAM_NAME_ARM_SRV_MIN_ELBOW_BOX, elbowMinBox, srvm::get3DArray( srvm::DEFAULT_PARAM_ARM_SRV_MIN_ELBOW_BOX));
-			node.param( srvm::PARAM_NAME_ARM_SRV_MAX_ELBOW_BOX, elbowMaxBox, srvm::get3DArray( srvm::DEFAULT_PARAM_ARM_SRV_MAX_ELBOW_BOX));
+			node.param( srvm::PARAM_NAME_ARM_SRV_MIN_FOREARM_BOX, forearmMinBox, srvm::get3DArray( srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
+			node.param( srvm::PARAM_NAME_ARM_SRV_MAX_FOREARM_BOX, forearmMaxBox, srvm::get3DArray( srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
+			node.param( srvm::PARAM_NAME_ARM_SRV_MIN_ELBOW_BOX, elbowMinBox, srvm::get3DArray( srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
+			node.param( srvm::PARAM_NAME_ARM_SRV_MAX_ELBOW_BOX, elbowMaxBox, srvm::get3DArray( srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
 
 		} catch ( TransformException &ex){
-			ROS_WARN_ONCE( "%s",ex.what());
+			ROS_WARN_ONCE( "%s", ex.what());
 		}
 		spinOnce(); // spin as soon as a new data is available
 	}

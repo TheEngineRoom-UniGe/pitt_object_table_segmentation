@@ -28,6 +28,12 @@ using namespace Eigen;
 using namespace sensor_msgs;
 using namespace pitt_msgs;
 
+// the (minimum/maximum) coordinate for the (forearm/elbow) box w.r.t. the input (left/right) (forearm/elbow) frame
+const float DEFAULT_PARAM_ARM_SRV_MIN_FOREARM_BOX[] = 	{ -0.040f, -0.120f, -0.190f};
+const float DEFAULT_PARAM_ARM_SRV_MAX_FOREARM_BOX[] = 	{  0.340f,  0.120f,  0.105f};
+const float DEFAULT_PARAM_ARM_SRV_MIN_ELBOW_BOX[] = 	{ -0.090f, -0.135f, -0.160f};
+const float DEFAULT_PARAM_ARM_SRV_MAX_ELBOW_BOX[] = 	{  0.440f,  0.135f,  0.110f};
+
 const Duration WAIT_FOR_TF_TIME_OUT = Duration( srvm::DEFAULT_TF_WAIT_SECONDS);
 
 //transformation vector and matrices
@@ -40,7 +46,7 @@ bool showClouds;
 boost::shared_ptr< visualization::PCLVisualizer> vis;
 boost::thread vis_thread;
 boost::mutex vis_mutex;
-bool vis_update;
+string log_str = "Loading...";
 
 PCLCloudPtr inputCloud( new PCLCloud);
 PCLCloudPtr outputCloud1( new PCLCloud);
@@ -50,15 +56,11 @@ PCLCloudPtr outputCloud4( new PCLCloud);
 
 void visSpin(){
     while(!vis->wasStopped()){
-        vis->spinOnce(100);
-        boost::mutex::scoped_lock updateLock(vis_mutex);
-        if (vis_update){
-            PCManager::updateVisor( vis, inputCloud, 255, 0, 0, "original");
-            PCManager::updateVisor( vis, outputCloud4, 0, 255, 0, "filtered");
-            vis_update = false;
+		boost::mutex::scoped_lock updateLock(vis_mutex);
+		vis->spinOnce(100);
         }
     }
-}
+
 
 //procedure to remove the points belonging to the arm in the input cloud
 PCLCloudPtr armFiltering(PCLCloudPtr original, Vector4f minValues, Vector4f maxValues, StampedTransform frame){
@@ -112,10 +114,10 @@ bool filter( ArmFilterRequest& input, ArmFilterResponse& output){
 	fromROSMsg( input.input_cloud, *inputCloud);
 
 	// get bounding box parameters
-	vector<float> minForearm = srvm::getService3DArrayParameter( input.forearm_bounding_box_min_value, srvm::DEFAULT_PARAM_ARM_SRV_MIN_FOREARM_BOX);
-	vector<float> maxForearm = srvm::getService3DArrayParameter( input.forearm_bounding_box_max_value, srvm::DEFAULT_PARAM_ARM_SRV_MAX_FOREARM_BOX);
-	vector<float> minElbow = srvm::getService3DArrayParameter( input.elbow_bounding_box_min_value, srvm::DEFAULT_PARAM_ARM_SRV_MIN_ELBOW_BOX);
-	vector<float> maxElbow = srvm::getService3DArrayParameter( input.elbow_bounding_box_max_value, srvm::DEFAULT_PARAM_ARM_SRV_MAX_ELBOW_BOX);
+	vector<float> minForearm = srvm::getService3DArrayParameter( input.forearm_bounding_box_min_value, DEFAULT_PARAM_ARM_SRV_MIN_FOREARM_BOX);
+	vector<float> maxForearm = srvm::getService3DArrayParameter( input.forearm_bounding_box_max_value, DEFAULT_PARAM_ARM_SRV_MAX_FOREARM_BOX);
+	vector<float> minElbow = srvm::getService3DArrayParameter( input.elbow_bounding_box_min_value, DEFAULT_PARAM_ARM_SRV_MIN_ELBOW_BOX);
+	vector<float> maxElbow = srvm::getService3DArrayParameter( input.elbow_bounding_box_max_value, DEFAULT_PARAM_ARM_SRV_MAX_ELBOW_BOX);
 
 	// build the bounding boxes
 	// for forearm link
@@ -125,7 +127,6 @@ bool filter( ArmFilterRequest& input, ArmFilterResponse& output){
 	Vector4f elbowMinValue = generateBoxVector( minElbow);
 	Vector4f elbowMaxValue = generateBoxVector( maxElbow);
 
-    boost::mutex::scoped_lock updateLock(vis_mutex);
 	//check transform availability
 	if( ! tfError){
 		int leftForearmRemovedCnt, rightForearmRemovedCnt, leftElbowRemovedCnt, rightElbowRemovedCnt; // used only for logs
@@ -151,8 +152,19 @@ bool filter( ArmFilterRequest& input, ArmFilterResponse& output){
 	}
 
 	// eventually show clouds for debugging and tuning
-    if (showClouds)
-        vis_update = true;
+    if (showClouds) {
+		boost::mutex::scoped_lock updateLock(vis_mutex);
+		PCManager::updateVisor( vis, inputCloud, 255, 0, 0, "original");
+		PCManager::updateVisor( vis, outputCloud4, 0, 255, 0, "filtered");
+
+		log_str = boost::str(boost::format("ELBOW BOUNDING BOX MIN/MAX : %f, %f, %f/%f, %f, %f    "
+												   "\nFOREARM BOUNDING BOX MIN/MAX : %f, %f, %f/%f, %f, %f")
+							 % elbowMinValue[0] % elbowMinValue[1] % elbowMinValue[2]
+							 % elbowMaxValue[0] % elbowMaxValue[1] % elbowMaxValue[2]
+							 % forearmMinValue[0] % forearmMaxValue[1] % forearmMaxValue[2]
+							 % forearmMaxValue[0] % forearmMaxValue[1] % forearmMaxValue[2]);
+		vis->updateText(log_str, 10, 505, "log_str");
+		}
 
 	//preparing ROS output message
 	PointCloud2Ptr temp(new PointCloud2);
@@ -212,6 +224,7 @@ int main(int argc, char **argv){
         vis->setCameraClipDistances(0.00433291,4.33291);
         vis->setPosition(1,1);
         vis->setSize(960,540);
+		vis->addText(log_str, 10, 520, 13, 0.9, 0.9, 0.9, "log_str");
         vis_thread = boost::thread(visSpin);
     }
 

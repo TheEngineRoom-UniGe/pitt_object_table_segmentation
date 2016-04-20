@@ -60,6 +60,16 @@
     <rosparam param="/pitt/srv/geometric_tracker/range_threshold">[]</rosparam>-->                  <!-- default:[0.2] -->
     <rosparam param="/pitt/srv/geometric_tracker/confidence_weight_old">[]</rosparam>-->            <!-- default:[0.6] -->
     <rosparam param="/pitt/srv/geometric_tracker/confiddence_weight_new">[]</rosparam>-->           <!-- default:[0.4] -->
+
+    <rosparam param="/pitt/srv/supports_segmentation/min_iter_cloud_percent">[]</rosparam>-->
+    <rosparam param="/pitt/srv/supports_segmentation/min_iter_support_percent">[]</rosparam>-->
+    <rosparam param="/pitt/srv/supports_segmentation/horizontal_variance_th">[]</rosparam>-->
+    <rosparam param="/pitt/srv/supports_segmentation/in_shape_distance_th">[]</rosparam>-->
+    <rosparam param="/pitt/srv/supports_segmentation/normal_distance_weight">[]</rosparam>-->
+    <rosparam param="/pitt/srv/supports_segmentation/max_iter">[]</rosparam>-->
+    <rosparam param="/pitt/srv/supports_segmentation/horizontal_axis">[]</rosparam>-->
+    <rosparam param="/pitt/srv/supports_segmentation/edge-remove_offset">[]</rosparam>-->
+
 	
 	<!--			ARGS FOR OBJ_SEGMENTATION NODE	(considered only on launching)	("." for default)				--> 
 	<arg name="pitt_input_cloud_topic" value= "/cameraB/depth/points" /> 			<!-- default: "/camera/depth/points"					-->

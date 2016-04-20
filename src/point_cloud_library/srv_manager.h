@@ -84,24 +84,18 @@ using namespace std;
         const string PARAM_NAME_PLANE_MAX_OPENING_ANGLE_DEGREE = "/pitt/srv/plane_segmentation/max_opening_angle_deg";
         const string PARAM_NAME_PLANE_MIN_INLIERS = "/pitt/srv/plane_segmentation/min_inliers";
 
+        // supports_segmentation
+        const string PARAM_NAME_MIN_ITERATIVE_CLOUD_PERCENTAGE = "/pitt/srv/supports_segmentation/min_iter_cloud_percent";
+        const string PARAM_NAME_MIN_ITERATIVE_SUPPORT_PERCENTAGE = "/pitt/srv/supports_segmentation/min_iter_support_percent";
+        const string PARAM_NAME_HORIZONTAL_VARIANCE_THRESHOLD_FOR = "/pitt/srv/supports_segmentation/horizontal_variance_th";
+        const string PARAM_NAME_RANSAC_IN_SHAPE_DISTANCE_POINT_THRESHOLD = "/pitt/srv/supports_segmentation/in_shape_distance_th";
+        const string PARAM_NAME_RANSAC_MODEL_NORMAL_DISTANCE_WEIGHT = "/pitt/srv/supports_segmentation/normal_distance_weight";
+        const string PARAM_NAME_RANSAC_MAX_ITERATION_THRESHOLD = "/pitt/srv/supports_segmentation/max_iter";
+        const string PARAM_NAME_HORIZONTAL_AXIS = "/pitt/srv/supports_segmentation/horizontal_axis";
+        const string PARAM_NAME_SUPPORT_EDGE_REMOVE_OFFSET = "/pitt/srv/supports_segmentation/edge-remove_offset";
+
         // default ros parameter values
         const float DEFAULT_PARAM_DEEP_SRV_Z_THRESHOLD = 3.000f; // [m] [ baxter 2.61m]
-        // the (minimum/maximum) coordinate for the (forearm/elbow) box w.r.t. the input (left/right) (forearm/elbow) frame
-        const float DEFAULT_PARAM_ARM_SRV_MIN_FOREARM_BOX[] = 	{ -0.040f, -0.120f, -0.190f};
-        const float DEFAULT_PARAM_ARM_SRV_MAX_FOREARM_BOX[] = 	{  0.340f,  0.120f,  0.105f};
-        const float DEFAULT_PARAM_ARM_SRV_MIN_ELBOW_BOX[] = 	{ -0.090f, -0.135f, -0.160f};
-        const float DEFAULT_PARAM_ARM_SRV_MAX_ELBOW_BOX[] = 	{  0.440f,  0.135f,  0.110f};
-        // minimum percentage of number of points of the input cloud and found plane to stop iteratively support searching ([0,1])
-        const float DEFAULT_PARAM_SUPPORT_SRV_MIN_ITERATIVE_CLOUD_PERCENTAGE = 0.030f;
-        const float DEFAULT_PARAM_SUPPORT_SRV_MIN_ITERATIVE_SUPPORT_PERCENTAGE = 0.030f;
-        // the value (cross product -> 0) to discriminate if a vector is parallel to the ground given in the support service
-        const float DEFAULT_PARAM_SUPPORT_SRV_VARIANCE_THRESHOLD_FOR_HORIZONTAL = 0.09f;
-        // RANSAC parameter for support segmentation service
-        const float DEFAULT_PARAM_SUPPORT_SRV_RANSAC_DISTANCE_POINT_IN_SHAPE_THRESHOLD = 0.02f; // meters (distance between point to belong to the same shape)
-        const float DEFAULT_PARAM_SUPPORT_SRV_RANSAC_MODEL_NORMAL_DISTANCE_WEIGHT = 0.9f; // [0,1]
-        const int DEFAULT_PARAM_SUPPORT_SRV_RANSAC_MAX_ITERATION_THRESHOLD = 10; // max number of iterations for ransac plane segmentation on support detection iterative algorithm
-        const float DEFAULT_PARAM_SUPPORT_SRV_HORIZONTAL_AXIS[] = 	{ 0.0f, 0.0f, -1.0f};
-        const float DEFAULT_PARAM_SUPPORT_SRV_SUPPORT_EDGE_REMOVE_OFFSET[] = { 0.02, 0.02, 0.005}; // in meters
 
         // parameter (not ros) default value
         const string DEFAULT_PARAM_INPUT_CLOUD_REFERENCE_FRAME = "/camera_depth_optical_frame";
