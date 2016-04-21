@@ -16,6 +16,9 @@ using namespace pcm;
 using namespace pcl;
 using namespace srvm;
 
+// default ros parameter values
+const float DEFAULT_PARAM_DEEP_SRV_Z_THRESHOLD = 3.000f; // [m] [ baxter 2.61m]
+
 // used abbreviations (typedef: PCLCloud, PCLCloudPtr, PCLNormal, PCLNormalPtr ) (given from PCManager in turn given from PCPrimitive)
 
 // remove NaN from an input cloud and return two separate clouds (close & far).
@@ -26,7 +29,7 @@ bool deepFiltering( DeepFilter::Request& req, DeepFilter::Response& res){
 	PCLCloudPtr cloud = PCManager::cloudForRosMsg( req.input_cloud);
 
 	// set parameter default if <0
-	float thDeep = srvm::getServiceFloatParameter( req.deep_threshold, srvm::DEFAULT_PARAM_DEEP_SRV_Z_THRESHOLD);
+	float thDeep = srvm::getServiceFloatParameter( req.deep_threshold, DEFAULT_PARAM_DEEP_SRV_Z_THRESHOLD);
 
 	// initialize outputs
 	PCLCloudPtr cloudCloser ( new PCLCloud);

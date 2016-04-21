@@ -46,7 +46,7 @@ bool showClouds;
 boost::shared_ptr< visualization::PCLVisualizer> vis;
 boost::thread vis_thread;
 boost::mutex vis_mutex;
-string log_str = "Loading...";
+string log_str_depth = "Loading...";
 
 PCLCloudPtr inputCloud( new PCLCloud);
 PCLCloudPtr outputCloud1( new PCLCloud);
@@ -157,13 +157,13 @@ bool filter( ArmFilterRequest& input, ArmFilterResponse& output){
 		PCManager::updateVisor( vis, inputCloud, 255, 0, 0, "original");
 		PCManager::updateVisor( vis, outputCloud4, 0, 255, 0, "filtered");
 
-		log_str = boost::str(boost::format("ELBOW BOUNDING BOX MIN/MAX : %f, %f, %f/%f, %f, %f    "
+		log_str_depth = boost::str(boost::format("ELBOW BOUNDING BOX MIN/MAX : %f, %f, %f/%f, %f, %f    "
 												   "\nFOREARM BOUNDING BOX MIN/MAX : %f, %f, %f/%f, %f, %f")
-							 % elbowMinValue[0] % elbowMinValue[1] % elbowMinValue[2]
-							 % elbowMaxValue[0] % elbowMaxValue[1] % elbowMaxValue[2]
-							 % forearmMinValue[0] % forearmMaxValue[1] % forearmMaxValue[2]
-							 % forearmMaxValue[0] % forearmMaxValue[1] % forearmMaxValue[2]);
-		vis->updateText(log_str, 10, 505, "log_str");
+								   % elbowMinValue[0] % elbowMinValue[1] % elbowMinValue[2]
+								   % elbowMaxValue[0] % elbowMaxValue[1] % elbowMaxValue[2]
+								   % forearmMinValue[0] % forearmMaxValue[1] % forearmMaxValue[2]
+								   % forearmMaxValue[0] % forearmMaxValue[1] % forearmMaxValue[2]);
+		vis->updateText(log_str_depth, 10, 505, "log_str_depth");
 		}
 
 	//preparing ROS output message
@@ -224,7 +224,7 @@ int main(int argc, char **argv){
         vis->setCameraClipDistances(0.00433291,4.33291);
         vis->setPosition(1,1);
         vis->setSize(960,540);
-		vis->addText(log_str, 10, 520, 13, 0.9, 0.9, 0.9, "log_str");
+		vis->addText(log_str_depth, 10, 520, 13, 0.9, 0.9, 0.9, "log_str_depth");
         vis_thread = boost::thread(visSpin);
     }
 

@@ -43,7 +43,7 @@ const float DEFAULT_PARAM_SUPPORT_SRV_SUPPORT_EDGE_REMOVE_OFFSET[] = { 0.02, 0.0
 // input parameters (or defaults) as global variables
 float minIterativeCloudPercentage, minPlanePercentageSize, minVarianceThForHorizontal,
         maxVarianceThForHorizontal, ransacThDistancePointShape, ransacNormalDistanceWeigth;
-float *horizontalAxis, *supportEdgeRemoveOffset; // TODO check if working
+vector<float> horizontalAxis, supportEdgeRemoveOffset; // TODO check if working
 int ransacMaxIteration;
 
 // common global variables
@@ -81,10 +81,11 @@ void initializeInputParameters( SupportSegmentation::Request  &req){
             req.ransac_model_normal_distance_weigth, DEFAULT_PARAM_SUPPORT_SRV_RANSAC_MODEL_NORMAL_DISTANCE_WEIGHT);
     ransacMaxIteration = srvm::getServiceIntParameter(
             req.ransac_max_iteration_threshold, DEFAULT_PARAM_SUPPORT_SRV_RANSAC_MAX_ITERATION_THRESHOLD);
-    horizontalAxis = &srvm::getService3DArrayParameter(
-            req.horizontal_axis, DEFAULT_PARAM_SUPPORT_SRV_HORIZONTAL_AXIS)[0];
-    supportEdgeRemoveOffset = &srvm::getService3DArrayParameter(
-            req.support_edge_remove_offset, DEFAULT_PARAM_SUPPORT_SRV_SUPPORT_EDGE_REMOVE_OFFSET)[0];
+    horizontalAxis = srvm::getService3DArrayParameter(req.horizontal_axis, DEFAULT_PARAM_SUPPORT_SRV_HORIZONTAL_AXIS);
+    supportEdgeRemoveOffset = srvm::getService3DArrayParameter( req.support_edge_remove_offset, DEFAULT_PARAM_SUPPORT_SRV_SUPPORT_EDGE_REMOVE_OFFSET);
+
+
+
 }
 
 // use ransac pcl implementation to find the biggest horizontal plane on the scene
@@ -160,7 +161,7 @@ PrimitiveIdxPtr createNewIdxMap( PrimitiveIdxPtr previousInliersMap, PointIndice
 
 // returns true if the plane is horizontal, false otherwise
 // a plane is horizontal to another if the cross product w.r.t. the normals tends to zero
-bool isHorizontalPlane( PCLNormalPtr normal, ModelCoefficients::Ptr coefficients, const float referimentAxis[ 3]){ // vect<3>(X,Y,Z) for the reference normal to the plane
+bool isHorizontalPlane( PCLNormalPtr normal, ModelCoefficients::Ptr coefficients, vector< float> referimentAxis){ // vect<3>(X,Y,Z) for the reference normal to the plane
     // compute normal from cooeficient    nx = a / sqrt( a^2 + b^2 + c^2)  ny = b / sqrt( a^2 + b^2 + c^2)    nz = c / sqrt( a^2 + b^2 + c^2)
     float div = sqrtf( coefficients->values[ 0] * coefficients->values[ 0] + coefficients->values[ 1] * coefficients->values[ 1] + coefficients->values[ 2] * coefficients->values[ 2] );
     float normX = coefficients->values[ 0] / div;

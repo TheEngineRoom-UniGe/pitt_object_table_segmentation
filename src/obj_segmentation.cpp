@@ -33,6 +33,8 @@ using namespace pcm;
 using namespace srvm;
 using namespace tf;
 
+ros::NodeHandle* nh_ptr = NULL;
+
 typedef boost::shared_ptr< vector< Support> > InlierSupportsPtr;
 typedef vector< Support> InlierSupports;
 typedef boost::shared_ptr< vector< InliersCluster> > InlierClusterPtr;
@@ -42,35 +44,15 @@ typedef vector< InliersCluster> InlierClusters;
 bool inputShowSupportClouds, inputShowOriginalCloud, inputShowClusterClouds, inputShowObjectOnSupport;
 string centroidLogFilePath;
 // input parameters used in service (populate on the main node spin)
-// for depth filter service
-int inputDepthThreshold;
-// for the arm filtering service
-vector< float> forearmMinBox, forearmMaxBox, elbowMinBox, elbowMaxBox;
-string log_str = "Loading...";
+
+string log_str_depth = "Loading...";
+string log_str_supp = "Loading...";
 
 // used only for logging
 long scanId = 0;
 
 // the cloud is not processed if has less number of points
 static const int MIN_POINT_IN_ORIGINAL_CLOUD = 30;
-
-// deep filter threshold
-//static const float DEPTH_THRESHOLD = 1.3f;////PCManager::DEFAULT_SERVICE_PARAMETER_REQUEST;
-// support filter
-static const float MIN_ITERATIVE_CLOUD_PERCENTUAL_SIZE = srvm::DEFAULT_SERVICE_PARAMETER_REQUEST;// percentage of number of points (must be [0,1])
-static const float MIN_PLANE_PERCENTAGE_SIZE = srvm::DEFAULT_SERVICE_PARAMETER_REQUEST;// percentage of number of points (must be [0,1])
-static const float MAX_VARIANCE_TH_FOR_HORIZONTAL = srvm::DEFAULT_SERVICE_PARAMETER_REQUEST;// the variance must be small to discriminate horizontal planes
-static const int RANSAC_MAX_ITERATION_TH = srvm::DEFAULT_SERVICE_PARAMETER_REQUEST;// number of points
-static const float RANSAC_TH_DISTANCE_POINT_SHAPE = srvm::DEFAULT_SERVICE_PARAMETER_REQUEST;// meters (distance between point to belong to the same shape)
-static const float RANSAC_NORMAL_DISTANCE_WEIGHT = srvm::DEFAULT_SERVICE_PARAMETER_REQUEST;// must belong to [0,1]
-static float HORIZONTAL_AXIS[ 1] = { srvm::DEFAULT_SERVICE_PARAMETER_REQUEST}; // normal coordinate of the ground plane // to be an input parameter service !!!!!!!!!!!
-static const float *TABLE_EDGE_OFFSET = &srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST[0];
-// cluster filter
-static const float CLUSTER_TOLERANCE = srvm::DEFAULT_SERVICE_PARAMETER_REQUEST;
-static const float MAX_CLUSTER_SIZE_RATE = srvm::DEFAULT_SERVICE_PARAMETER_REQUEST;
-static const float MIN_CLUSTER_SIZE_RATE = srvm::DEFAULT_SERVICE_PARAMETER_REQUEST;
-static const int MIN_CLUSTER_INPUT_SIZE = srvm::DEFAULT_SERVICE_PARAMETER_REQUEST;
-
 
 // global private variable
 pcm::PCManager* manager = new pcm::PCManager( false); // true (visualize)
@@ -89,10 +71,21 @@ void visSpin(){
 // call deep filter service (modifies the input data)
 // remove all the point over a threshold on the z-axis of the camera frame
 bool callDeepFilter( PCLCloudPtr& cloud){
+
+	int inputDepthThreshold;
+
+	nh_ptr->param(srvm::PARAM_NAME_DEEP_SRV_Z_THRESHOLD, inputDepthThreshold, srvm::DEFAULT_SERVICE_PARAMETER_REQUEST);
+
+	if (inputShowOriginalCloud || inputShowSupportClouds || inputShowClusterClouds || inputShowObjectOnSupport) {
+        boost::mutex::scoped_lock updateLock(vis_mutex);
+		log_str_depth = boost::str(boost::format("DEPTH THRESHOLD: %f")
+                                   % inputDepthThreshold);
+		vis->updateText(log_str_depth, 10, 520, "log_str_depth");
+	}
+
 	// initialise deep filter server caller
-	NodeHandle n;
 	DeepFilter srvDeep;
-	ServiceClient clientDeep = n.serviceClient< DeepFilter>( srvm::SRV_NAME_DEEP_FILTER);
+	ServiceClient clientDeep = nh_ptr->serviceClient< DeepFilter>( srvm::SRV_NAME_DEEP_FILTER);
 
 	// set input data and parameters
 	srvDeep.request.input_cloud = PCManager::cloudToRosMsg( cloud);
@@ -111,10 +104,18 @@ bool callDeepFilter( PCLCloudPtr& cloud){
 
 //filter points belonging to the robot arms
 bool callArmFilter( PCLCloudPtr& cloud){
+
+	vector< float> forearmMinBox, forearmMaxBox, elbowMinBox, elbowMaxBox;
+
 	// initialise deep filter server caller
-	NodeHandle n;
-	ServiceClient clientArm = n.serviceClient< ArmFilter>( srvm::SRV_NAME_ARM_FILTER);
+	ServiceClient clientArm = nh_ptr->serviceClient< ArmFilter>( srvm::SRV_NAME_ARM_FILTER);
 	ArmFilter armFilterSrv;
+
+	// arm filtering service
+	nh_ptr->param( srvm::PARAM_NAME_ARM_SRV_MIN_FOREARM_BOX, forearmMinBox, srvm::get3DArray( srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
+	nh_ptr->param( srvm::PARAM_NAME_ARM_SRV_MAX_FOREARM_BOX, forearmMaxBox, srvm::get3DArray( srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
+	nh_ptr->param( srvm::PARAM_NAME_ARM_SRV_MIN_ELBOW_BOX, elbowMinBox, srvm::get3DArray( srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
+	nh_ptr->param( srvm::PARAM_NAME_ARM_SRV_MAX_ELBOW_BOX, elbowMaxBox, srvm::get3DArray( srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
 
 	// set input data and parameters
 	armFilterSrv.request.input_cloud = PCManager::cloudToRosMsg( cloud);
@@ -138,28 +139,35 @@ bool callArmFilter( PCLCloudPtr& cloud){
 InlierSupportsPtr  callSupportFilter( PCLCloudPtr inputCloud, PCLNormalPtr normal){
 
 	// call support service
-	NodeHandle n;
-	ServiceClient client = n.serviceClient< SupportSegmentation>( srvm::SRV_NAME_SUPPORT_FILTER);
+	ServiceClient client = nh_ptr->serviceClient< SupportSegmentation>( srvm::SRV_NAME_SUPPORT_FILTER);
 	SupportSegmentation srv;
 
 	// set input data
 	srv.request.input_cloud = PCManager::cloudToRosMsg( inputCloud);
 	srv.request.input_norm = PCManager::normToRosMsg( normal);
-	// set input parameter (default value if less than zero)
-	srv.request.min_iterative_cloud_percentual_size = MIN_ITERATIVE_CLOUD_PERCENTUAL_SIZE;
-	srv.request.min_iterative_plane_percentual_size = MIN_PLANE_PERCENTAGE_SIZE;
-	srv.request.variance_threshold_for_horizontal = MAX_VARIANCE_TH_FOR_HORIZONTAL;
-	srv.request.ransac_distance_point_in_shape_threshold = RANSAC_TH_DISTANCE_POINT_SHAPE;
-	srv.request.ransac_model_normal_distance_weigth = RANSAC_NORMAL_DISTANCE_WEIGHT;
-	srv.request.ransac_max_iteration_threshold = RANSAC_MAX_ITERATION_TH;
-	srv.request.support_edge_remove_offset.assign(3, *TABLE_EDGE_OFFSET);
-	vector< float>* tmpHrizontalAxis ( new vector< float>());
-	// since the point cloud is desctibed w.r.t. the baxter world frame the gravity is -z
-	for( int i = 0; i < (sizeof( HORIZONTAL_AXIS)/sizeof(* HORIZONTAL_AXIS)); i++)
-		tmpHrizontalAxis->push_back( HORIZONTAL_AXIS[ i]);
-	srv.request.horizontal_axis = *tmpHrizontalAxis; // default if dimention != 3
-	delete( tmpHrizontalAxis);
 
+	// get input parameter or set default (default value: -1)
+    vector<float> horizontalAxis, edgeRemoveOffset;
+
+    nh_ptr->param(srvm::PARAM_NAME_MIN_ITERATIVE_CLOUD_PERCENTAGE,
+                  srv.request.min_iterative_cloud_percentual_size, srvm::DEFAULT_SERVICE_PARAMETER_REQUEST_F);
+    nh_ptr->param(srvm::PARAM_NAME_MIN_ITERATIVE_SUPPORT_PERCENTAGE,
+                  srv.request.min_iterative_plane_percentual_size, srvm::DEFAULT_SERVICE_PARAMETER_REQUEST_F);
+    nh_ptr->param(srvm::PARAM_NAME_HORIZONTAL_VARIANCE_THRESHOLD,
+                  srv.request.variance_threshold_for_horizontal, srvm::DEFAULT_SERVICE_PARAMETER_REQUEST_F);
+    nh_ptr->param(srvm::PARAM_NAME_RANSAC_IN_SHAPE_DISTANCE_POINT_THRESHOLD,
+                  srv.request.ransac_distance_point_in_shape_threshold, srvm::DEFAULT_SERVICE_PARAMETER_REQUEST_F);
+    nh_ptr->param(srvm::PARAM_NAME_RANSAC_MODEL_NORMAL_DISTANCE_WEIGHT,
+                  srv.request.ransac_model_normal_distance_weigth, srvm::DEFAULT_SERVICE_PARAMETER_REQUEST_F);
+    nh_ptr->param(srvm::PARAM_NAME_RANSAC_MAX_ITERATION_THRESHOLD,
+                  srv.request.ransac_max_iteration_threshold, srvm::DEFAULT_SERVICE_PARAMETER_REQUEST);
+    nh_ptr->param(srvm::PARAM_NAME_HORIZONTAL_AXIS,
+                  horizontalAxis, srvm::get3DArray(srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
+    nh_ptr->param(srvm::PARAM_NAME_SUPPORT_EDGE_REMOVE_OFFSET,
+                  edgeRemoveOffset, srvm::get3DArray(srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
+
+    srv.request.horizontal_axis = horizontalAxis;
+    srv.request.support_edge_remove_offset = edgeRemoveOffset;
 	// call service
 	InlierSupportsPtr objs ( new InlierSupports( srv.response.supports_description.size()));
 	if( client.call( srv))
@@ -167,14 +175,37 @@ InlierSupportsPtr  callSupportFilter( PCLCloudPtr inputCloud, PCLNormalPtr norma
 	else
 		ROS_ERROR_STREAM( " error on calling service " << client.getService());
 
+    if (inputShowOriginalCloud || inputShowSupportClouds || inputShowClusterClouds || inputShowObjectOnSupport) {
+        boost::mutex::scoped_lock updateLock(vis_mutex);
+        log_str_supp = boost::str(boost::format("Cloud size %%: %f"
+                                                         "\nSupport size %%: %f"
+                                                         "\nHorizontal variance eps: %f"
+                                                         "\nIn-shape distance eps: %f"
+                                                         "\nNormal distance weight: %f"
+                                                         "\nMax iterations: %i"
+                                                         "\nHorizontal axis: (%f, %f, %f)"
+                                                         "\nSupports mask offset: (%f, %f, %f)")
+                                    %srv.request.min_iterative_cloud_percentual_size
+                                    %srv.request.min_iterative_plane_percentual_size
+                                    %srv.request.variance_threshold_for_horizontal
+                                    %srv.request.ransac_distance_point_in_shape_threshold
+                                    %srv.request.ransac_model_normal_distance_weigth
+                                    %srv.request.ransac_max_iteration_threshold
+                                    %srv.request.horizontal_axis[0]
+                                    %srv.request.horizontal_axis[1]
+                                    %srv.request.horizontal_axis[2]
+                                    %srv.request.support_edge_remove_offset[0]
+                                    %srv.request.support_edge_remove_offset[1]
+                                    %srv.request.support_edge_remove_offset[2]);
+        vis->updateText(log_str_supp, 10, 70, "log_str_supp");
+    }
 	return( objs);
 }
 
 // clusterize objects over the input support cloud
 InlierClusterPtr callClusterSegmentation( PCLCloudPtr cloud){
 	// call cluster service
-	NodeHandle n;
-	ServiceClient client = n.serviceClient< ClusterSegmentation>( srvm::SRV_NAME_CUSTER_FILTER);
+	ServiceClient client = nh_ptr->serviceClient< ClusterSegmentation>( srvm::SRV_NAME_CUSTER_FILTER);
 	ClusterSegmentation srv;
 
 	// set input data
@@ -195,12 +226,6 @@ Eigen::Matrix4f pclTransform;
 void depthAcquisition( const PointCloud2Ptr& input){
 
 	string centroidFileLog = "";
-
-    if (inputShowOriginalCloud || inputShowSupportClouds || inputShowClusterClouds || inputShowObjectOnSupport) {
-        log_str = boost::str(boost::format("DEPTH THRESHOLD: %f")
-                             % inputDepthThreshold);
-        vis->updateText(log_str, 10, 520, "log_str");
-    }
 
 	// get kinect inputs as a standard pcl cloud
 	PCLCloudPtr rawCloud = PCManager::cloudForRosMsg( input);
@@ -307,6 +332,7 @@ int main(int argc, char **argv){
 	int numberOfInputParameter = 6;
 	ros::init(argc, argv, nodeName);
 	ros::NodeHandle node;
+    nh_ptr = &node;
 
 	// read input parameters (the one that are set only on node start up)
 	std::string inputPointCloudTopicName;
@@ -358,7 +384,8 @@ int main(int argc, char **argv){
         vis->setCameraClipDistances(0.131668,7.43063);
         vis->setPosition(900,1);
         vis->setSize(960,540);
-        vis->addText(log_str, 10, 520, 13, 0.9, 0.9, 0.9, "log_str");
+        vis->addText(log_str_depth, 10, 520, 13, 0.9, 0.9, 0.9, "log_str_depth");
+        vis->addText(log_str_supp, 10, 10, 13, 0.9, 0.9, 0.9, "log_str_supp");
         vis_thread = boost::thread(visSpin);
     }
 
@@ -395,14 +422,6 @@ int main(int argc, char **argv){
 							kinectTrans.getBasis()[2][0], kinectTrans.getBasis()[2][1], kinectTrans.getBasis()[2][2], kinectTrans.getOrigin().z(),
 							0, 							  0, 							0, 							  1;
 
-			// get ros parameter for services
-			// deep filter service
-			node.param(srvm::PARAM_NAME_DEEP_SRV_Z_THRESHOLD, inputDepthThreshold, srvm::DEFAULT_SERVICE_PARAMETER_REQUEST);
-			// arm filtering service
-			node.param( srvm::PARAM_NAME_ARM_SRV_MIN_FOREARM_BOX, forearmMinBox, srvm::get3DArray( srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
-			node.param( srvm::PARAM_NAME_ARM_SRV_MAX_FOREARM_BOX, forearmMaxBox, srvm::get3DArray( srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
-			node.param( srvm::PARAM_NAME_ARM_SRV_MIN_ELBOW_BOX, elbowMinBox, srvm::get3DArray( srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
-			node.param( srvm::PARAM_NAME_ARM_SRV_MAX_ELBOW_BOX, elbowMaxBox, srvm::get3DArray( srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
 
 		} catch ( TransformException &ex){
 			ROS_WARN_ONCE( "%s", ex.what());

@@ -87,15 +87,12 @@ using namespace std;
         // supports_segmentation
         const string PARAM_NAME_MIN_ITERATIVE_CLOUD_PERCENTAGE = "/pitt/srv/supports_segmentation/min_iter_cloud_percent";
         const string PARAM_NAME_MIN_ITERATIVE_SUPPORT_PERCENTAGE = "/pitt/srv/supports_segmentation/min_iter_support_percent";
-        const string PARAM_NAME_HORIZONTAL_VARIANCE_THRESHOLD_FOR = "/pitt/srv/supports_segmentation/horizontal_variance_th";
+        const string PARAM_NAME_HORIZONTAL_VARIANCE_THRESHOLD = "/pitt/srv/supports_segmentation/horizontal_variance_th";
         const string PARAM_NAME_RANSAC_IN_SHAPE_DISTANCE_POINT_THRESHOLD = "/pitt/srv/supports_segmentation/in_shape_distance_th";
         const string PARAM_NAME_RANSAC_MODEL_NORMAL_DISTANCE_WEIGHT = "/pitt/srv/supports_segmentation/normal_distance_weight";
         const string PARAM_NAME_RANSAC_MAX_ITERATION_THRESHOLD = "/pitt/srv/supports_segmentation/max_iter";
         const string PARAM_NAME_HORIZONTAL_AXIS = "/pitt/srv/supports_segmentation/horizontal_axis";
-        const string PARAM_NAME_SUPPORT_EDGE_REMOVE_OFFSET = "/pitt/srv/supports_segmentation/edge-remove_offset";
-
-        // default ros parameter values
-        const float DEFAULT_PARAM_DEEP_SRV_Z_THRESHOLD = 3.000f; // [m] [ baxter 2.61m]
+        const string PARAM_NAME_SUPPORT_EDGE_REMOVE_OFFSET = "/pitt/srv/supports_segmentation/edge_remove_offset";
 
         // parameter (not ros) default value
         const string DEFAULT_PARAM_INPUT_CLOUD_REFERENCE_FRAME = "/camera_depth_optical_frame";
@@ -119,6 +116,7 @@ using namespace std;
 
         // value to set service parameter as default
         const int DEFAULT_SERVICE_PARAMETER_REQUEST = -1;
+        const float DEFAULT_SERVICE_PARAMETER_REQUEST_F = -1.0f;
         const float DEFAULT_SERVICE_VEC_PARAMETER_REQUEST[3] = {-1, -1, -1};
         const float DEFAULT_TF_WAIT_SECONDS = 2.0f;
 

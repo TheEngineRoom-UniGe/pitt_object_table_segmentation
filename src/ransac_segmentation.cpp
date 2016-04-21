@@ -303,7 +303,7 @@ void clustersAcquisition(const ClustersOutputConstPtr& clusterObj){
 
                 string log_str = str(boost::format("INLIERS: %s/%s/%s/%s    CONE/CYLINDER PRIORITY:%s")
                                      %sphereMinInliers %cylinderMinInliers %coneMinInliers %planeMinInliers %CONE_TO_CYLINDER_PRIORITY);
-                vis->updateText(log_str, 10, 520, "log_str");
+                vis->updateText(log_str, 10, 520, "log_str_depth");
             }
 
             ROS_INFO( "cluster_%d: %d #INLIER plane: %d sphere: %d cylinder: %d cone: %d selected: %s",
@@ -364,7 +364,7 @@ int main(int argc, char **argv){
         vis->setCameraClipDistances(0.0064556, 6.4556);
         vis->setPosition(1, 480);
         vis->setSize(960, 540);
-        vis->addText(log_str, 10, 520, 13, 0.9, 0.9, 0.9, "log_str");
+        vis->addText(log_str, 10, 520, 13, 0.9, 0.9, 0.9, "log_str_depth");
         vis_thread = boost::thread(visSpin);
     }
 
