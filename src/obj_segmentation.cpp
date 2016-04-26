@@ -72,13 +72,13 @@ void visSpin(){
 // remove all the point over a threshold on the z-axis of the camera frame
 bool callDeepFilter( PCLCloudPtr& cloud){
 
-	int inputDepthThreshold;
+	float inputDepthThreshold;
 
-	nh_ptr->param(srvm::PARAM_NAME_DEEP_SRV_Z_THRESHOLD, inputDepthThreshold, srvm::DEFAULT_SERVICE_PARAMETER_REQUEST);
+	nh_ptr->param(srvm::PARAM_NAME_DEEP_SRV_Z_THRESHOLD, inputDepthThreshold, srvm::DEFAULT_SERVICE_PARAMETER_REQUEST_F);
 
 	if (inputShowOriginalCloud || inputShowSupportClouds || inputShowClusterClouds || inputShowObjectOnSupport) {
         boost::mutex::scoped_lock updateLock(vis_mutex);
-		log_str_depth = boost::str(boost::format("DEPTH THRESHOLD: %f")
+		log_str_depth = boost::str(boost::format("DEPTH THRESHOLD: %f  (-1 -> default value)")
                                    % inputDepthThreshold);
 		vis->updateText(log_str_depth, 10, 520, "log_str_depth");
 	}
@@ -112,10 +112,12 @@ bool callArmFilter( PCLCloudPtr& cloud){
 	ArmFilter armFilterSrv;
 
 	// arm filtering service
-	nh_ptr->param( srvm::PARAM_NAME_ARM_SRV_MIN_FOREARM_BOX, forearmMinBox, srvm::get3DArray( srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
-	nh_ptr->param( srvm::PARAM_NAME_ARM_SRV_MAX_FOREARM_BOX, forearmMaxBox, srvm::get3DArray( srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
-	nh_ptr->param( srvm::PARAM_NAME_ARM_SRV_MIN_ELBOW_BOX, elbowMinBox, srvm::get3DArray( srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
-	nh_ptr->param( srvm::PARAM_NAME_ARM_SRV_MAX_ELBOW_BOX, elbowMaxBox, srvm::get3DArray( srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
+    float arr[1] = {-1};
+	vector<float> vec(arr, arr +sizeof(arr)/sizeof(float));
+	nh_ptr->param( srvm::PARAM_NAME_ARM_SRV_MIN_FOREARM_BOX, forearmMinBox, srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST);
+	nh_ptr->param( srvm::PARAM_NAME_ARM_SRV_MAX_FOREARM_BOX, forearmMaxBox, srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST);
+	nh_ptr->param( srvm::PARAM_NAME_ARM_SRV_MIN_ELBOW_BOX, elbowMinBox, srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST);
+	nh_ptr->param( srvm::PARAM_NAME_ARM_SRV_MAX_ELBOW_BOX, elbowMaxBox, srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST);
 
 	// set input data and parameters
 	armFilterSrv.request.input_cloud = PCManager::cloudToRosMsg( cloud);
@@ -162,9 +164,9 @@ InlierSupportsPtr  callSupportFilter( PCLCloudPtr inputCloud, PCLNormalPtr norma
     nh_ptr->param(srvm::PARAM_NAME_RANSAC_MAX_ITERATION_THRESHOLD,
                   srv.request.ransac_max_iteration_threshold, srvm::DEFAULT_SERVICE_PARAMETER_REQUEST);
     nh_ptr->param(srvm::PARAM_NAME_HORIZONTAL_AXIS,
-                  horizontalAxis, srvm::get3DArray(srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
+                  horizontalAxis, srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST);
     nh_ptr->param(srvm::PARAM_NAME_SUPPORT_EDGE_REMOVE_OFFSET,
-                  edgeRemoveOffset, srvm::get3DArray(srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST));
+                  edgeRemoveOffset, srvm::DEFAULT_SERVICE_VEC_PARAMETER_REQUEST);
 
     srv.request.horizontal_axis = horizontalAxis;
     srv.request.support_edge_remove_offset = edgeRemoveOffset;
@@ -284,7 +286,7 @@ void depthAcquisition( const PointCloud2Ptr& input){
 							for( int j = 0; j < clusters->size(); j++){ // for all the clusters
 								InliersCluster clusterObject = (* clusters)[ j];
 								// append this cluster to output
-								out->clusterObjs.push_back( clusterObject);
+								out->cluster_objs.push_back( clusterObject);
 
 								// get cluster
 								PCLCloudPtr clusterCloud = PCManager::cloudForRosMsg(clusterObject.cloud);

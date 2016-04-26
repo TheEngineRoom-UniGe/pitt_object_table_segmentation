@@ -35,7 +35,7 @@ const float DEFAULT_PARAM_SUPPORT_SRV_VARIANCE_THRESHOLD_FOR_HORIZONTAL = 0.09f;
 const float DEFAULT_PARAM_SUPPORT_SRV_RANSAC_DISTANCE_POINT_IN_SHAPE_THRESHOLD = 0.02f; // meters (distance between point to belong to the same shape)
 const float DEFAULT_PARAM_SUPPORT_SRV_RANSAC_MODEL_NORMAL_DISTANCE_WEIGHT = 0.9f; // [0,1]
 const int DEFAULT_PARAM_SUPPORT_SRV_RANSAC_MAX_ITERATION_THRESHOLD = 10; // max number of iterations for ransac plane segmentation on support detection iterative algorithm
-const float DEFAULT_PARAM_SUPPORT_SRV_HORIZONTAL_AXIS[] = 	{ 0.0f, 0.0f, -1.0f};
+const float DEFAULT_PARAM_SUPPORT_SRV_HORIZONTAL_AXIS[3] = { 0.0f, 0.0f, -1.0f};
 const float DEFAULT_PARAM_SUPPORT_SRV_SUPPORT_EDGE_REMOVE_OFFSET[] = { 0.02, 0.02, 0.005}; // in meters
 
 // used abbreviations (typedef) (PCLCloud, PCLCloudPtr, PCLNormal and PCLNormalPtr) given from PCManager in turn given from PCPrimitive.
@@ -83,9 +83,6 @@ void initializeInputParameters( SupportSegmentation::Request  &req){
             req.ransac_max_iteration_threshold, DEFAULT_PARAM_SUPPORT_SRV_RANSAC_MAX_ITERATION_THRESHOLD);
     horizontalAxis = srvm::getService3DArrayParameter(req.horizontal_axis, DEFAULT_PARAM_SUPPORT_SRV_HORIZONTAL_AXIS);
     supportEdgeRemoveOffset = srvm::getService3DArrayParameter( req.support_edge_remove_offset, DEFAULT_PARAM_SUPPORT_SRV_SUPPORT_EDGE_REMOVE_OFFSET);
-
-
-
 }
 
 // use ransac pcl implementation to find the biggest horizontal plane on the scene

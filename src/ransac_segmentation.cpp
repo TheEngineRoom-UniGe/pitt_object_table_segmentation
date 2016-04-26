@@ -219,7 +219,7 @@ string returnPrimitiveNameFromTag( int primitiveTag){
 string centroidFileLog;
 void clustersAcquisition(const ClustersOutputConstPtr& clusterObj){
     // iterate over all the input clusters
-    InliersClusters clusters = clusterObj->clusterObjs;
+    InliersClusters clusters = clusterObj->cluster_objs;
     // create an output vector to be published
     TrackedShapes::Ptr outShapes ( new TrackedShapes);
     if( clusters.size() > 0){ // at least one cluster

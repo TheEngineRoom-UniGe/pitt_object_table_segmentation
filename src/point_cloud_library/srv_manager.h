@@ -117,7 +117,11 @@ using namespace std;
         // value to set service parameter as default
         const int DEFAULT_SERVICE_PARAMETER_REQUEST = -1;
         const float DEFAULT_SERVICE_PARAMETER_REQUEST_F = -1.0f;
-        const float DEFAULT_SERVICE_VEC_PARAMETER_REQUEST[3] = {-1, -1, -1};
+        const float DEFAULT_SERVICE_ARRAY_PARAMETER_REQUEST[1] = {-1};
+        const vector<float> DEFAULT_SERVICE_VEC_PARAMETER_REQUEST(DEFAULT_SERVICE_ARRAY_PARAMETER_REQUEST,
+                                                                  DEFAULT_SERVICE_ARRAY_PARAMETER_REQUEST +
+                                                                  sizeof(DEFAULT_SERVICE_ARRAY_PARAMETER_REQUEST)
+                                                                  /sizeof(float));
         const float DEFAULT_TF_WAIT_SECONDS = 2.0f;
 
         const string DEFAULT_SYMBOL = ".";

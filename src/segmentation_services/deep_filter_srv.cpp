@@ -30,7 +30,6 @@ bool deepFiltering( DeepFilter::Request& req, DeepFilter::Response& res){
 
 	// set parameter default if <0
 	float thDeep = srvm::getServiceFloatParameter( req.deep_threshold, DEFAULT_PARAM_DEEP_SRV_Z_THRESHOLD);
-
 	// initialize outputs
 	PCLCloudPtr cloudCloser ( new PCLCloud);
 	PCLCloudPtr cloudFurther ( new PCLCloud);
