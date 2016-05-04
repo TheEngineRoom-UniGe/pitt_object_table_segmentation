@@ -357,7 +357,7 @@ int main(int argc, char **argv){
     //Subscriber sub = n.subscribe ("obj_segmentation/cluster", 10, clustersAcquisition); // get data from cluster node
     Subscriber sub = nh.subscribe( "geometric_tracker/trackedCluster", 10, clustersAcquisition); // get data from tracker node
     // to publish the data at the end of the process
-    pub = nh.advertise< TrackedShapes>( "ransac_segmentation/trackedShape", 10);
+    pub = nh.advertise< TrackedShapes>( "ransac_segmentation/trackedShapes", 10);
 
     string log_str = str(boost::format("INLIERS: %s/%s/%s/%s    CONE/CYLINDER PRIORITY:%s")
                          %DEFAULT_SPHERE_MIN_INLIERS %DEFAULT_CYLINDER_MIN_INLIERS %DEFAULT_CONE_MIN_INLIERS

@@ -109,7 +109,7 @@ bool ransacCylinderDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSeg
     
 	// apply RANSAC
 	SACSegmentationFromNormals< PointXYZ, Normal> seg;
-	ModelCoefficients::Ptr coefficients_cyliner( new ModelCoefficients);
+	ModelCoefficients::Ptr coefficients_cylinder( new ModelCoefficients);
 	PointIndices::Ptr inliers_cylinder( new PointIndices);
 	seg.setOptimizeCoefficients( true);
 	seg.setModelType( SACMODEL_CYLINDER);
@@ -123,7 +123,7 @@ bool ransacCylinderDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSeg
 	seg.setEpsAngle( epsAngleTh);
 	seg.setMinMaxOpeningAngle( minOpeningAngle / 180.0  * M_PI, maxOpeningAngle / 180.0 * M_PI);
 	// Obtain the plane inliers and coefficients
-	seg.segment( *inliers_cylinder, *coefficients_cyliner);
+	seg.segment( *inliers_cylinder, *coefficients_cylinder);
 
 
 	// compute the center of mass (hp: uniform material)
@@ -132,11 +132,11 @@ bool ransacCylinderDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSeg
 	float height = -1.0f; // it is the maxim distances between pair of points (of the incoming cloud) projected into the cone axis
 	if( inliers_cylinder->indices.size() > 0){
 		// normalize direction vector
-		vector3d normalizedAxesDirection = getNormalizeAxesDirectionVector( coefficients_cyliner); // [x,y,z]
+		vector3d normalizedAxesDirection = getNormalizeAxesDirectionVector( coefficients_cylinder); // [x,y,z]
 
 		// get the cone axes (2points) (with respect to direction and apex)
-		vector3d A1 = getPointOnAxes( coefficients_cyliner, normalizedAxesDirection, -1.0f);
-		vector3d A2 = getPointOnAxes( coefficients_cyliner, normalizedAxesDirection, +1.0f);
+		vector3d A1 = getPointOnAxes( coefficients_cylinder, normalizedAxesDirection, -1.0f);
+		vector3d A2 = getPointOnAxes( coefficients_cylinder, normalizedAxesDirection, +1.0f);
 
 		// project all the points of the cloud on the cone axis        p = A1 + [dot( A1P, A1A2) / dot( A1A2, A1A2)] * A1A2 = A1 + G * A1A2
 		//PCLCloudPtr projected_cloud = new PCLCloud( cloud->size());
@@ -191,7 +191,7 @@ bool ransacCylinderDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSeg
 	ROS_INFO("-----");
 
 	// set returning value
-	vector< float> coefficientVector = PCManager::coefficientToVectorMsg( coefficients_cyliner);
+	vector< float> coefficientVector = PCManager::coefficientToVectorMsg( coefficients_cylinder);
 	coefficientVector.push_back( height);	// add height to the coefficients
 	res.coefficients = coefficientVector;
 	res.inliers = PCManager::inlierToVectorMsg( inliers_cylinder);	// inlier w.r.t. the input cloud
