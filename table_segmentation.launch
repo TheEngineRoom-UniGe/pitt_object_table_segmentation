@@ -99,7 +99,11 @@
 
 	<!--			ARGS FOR RANSAC_SEGMENTATION NODE	(considered only on launching)	("." for default)				-->
 
-	<arg name="ransac_show_primitives" value= "1" /> 										<!-- default:"0"(false)-->
+	<arg name="ransac_show_primitives" value= "." /> 										<!-- default:"0"(false)-->
+
+	<!--			ARGS FOR GEOMETRIC_TRACKER NODE	(considered only on launching)	("." for default)				-->
+
+	<arg name="show_geometric_tracker" value= "." /> 										<!-- default:"0"(false)-->
 
 
 		<!--	###################	PITT LAUNCH #########################	-->
@@ -144,6 +148,7 @@
 
 
 		<!--			TRACKER																							-->
-	<node name="geometric_tracker" 				pkg="pitt_geometric_tracking" 			type="geometric_tracker" 			/> <!-- output="screen"/> -->
+	<node name="geometric_tracker" 				pkg="pitt_geometric_tracking" 			type="geometric_tracker" 	
+		args= "$(arg show_geometric_tracker)"		/> <!-- output="screen"/> -->
 
 </launch>
