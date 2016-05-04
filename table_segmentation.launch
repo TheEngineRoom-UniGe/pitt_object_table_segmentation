@@ -83,19 +83,23 @@
 	<arg name="pitt_input_cloud_topic" value= "/cameraB/depth/points" /> 			<!-- default: "/camera/depth/points"					-->
 	<arg name="pitt_show_original_cloud" value="." /> 								<!-- default: "0" (false) [white ptn]					-->
 	<arg name="pitt_show_supports" value="." /> 									<!-- default: "0" (false) [brown ptn]					-->
-	<arg name="pitt_show_cluster" value="1" />		 								<!-- default: "0" (false) [random ptn]					-->
+	<arg name="pitt_show_cluster" value="." />		 								<!-- default: "0" (false) [random ptn]					-->
 	<arg name="pitt_show_object_on_support" value="." /> 							<!-- default: "0" (false) [orange ptn]					-->
 	<arg name="pitt_raw_centroid_log_file_path" value="." /> 						<!-- default: "" (do not print)							-->
 		  					<!-- set to: ".." for timed formatting name (works only at the end of the path) or set to any other paths.
 		  						 ExAMPLE <arg name="pitt_raw_centroid_log_file_path" value="$(find pitt_object_table_segmentation)/logs/log-.." />  
 		  					-->
 							
-	<arg name="pitt_arm_filter_show_cloud" value= "1" /> 										<!-- default:"0"(false)[red arm][green objs]-->
+	<arg name="pitt_arm_filter_show_cloud" value= "." /> 										<!-- default:"0"(false)[red arm][green objs]-->
 	<arg name="pitt_arm_filter_camera_frame" value= "/cameraB_depth_optical_frame" /> 			<!-- default: "/camera_depth_optical_frame"	-->
 	<arg name="pitt_arm_filter_left_forearm_frame" value= "." /> 								<!-- default: "/left_lower_forearm"			-->
 	<arg name="pitt_arm_filter_right_forearm_frame" value= "." /> 								<!-- default: "/right_lower_forearm"		-->
 	<arg name="pitt_arm_filter_left_elbow_frame" value= "." /> 									<!-- default: "/left_lower_elbow"			-->
 	<arg name="pitt_arm_filter_right_elbow_frame" value= "." /> 								<!-- default: "/right_lower_elbow"			-->
+
+	<!--			ARGS FOR RANSAC_SEGMENTATION NODE	(considered only on launching)	("." for default)				-->
+
+	<arg name="ransac_show_primitives" value= "1" /> 										<!-- default:"0"(false)-->
 
 
 		<!--	###################	PITT LAUNCH #########################	-->
@@ -134,7 +138,8 @@
 	<node name="sphere_segmentation_srv" 		pkg="pitt_object_table_segmentation" 	type="sphere_segmentation_srv" 		/> <!-- output="screen"/> -->
 	<node name="cylinder_segmentation_srv" 		pkg="pitt_object_table_segmentation" 	type="cylinder_segmentation_srv" 	/> <!-- output="screen"/> -->
 	<node name="cone_segmentation_srv" 			pkg="pitt_object_table_segmentation" 	type="cone_segmentation_srv" 		/> <!-- output="screen"/> -->
-	<node name="ransac_segmentation" 			pkg="pitt_object_table_segmentation" 	type="ransac_segmentation" 			output="screen"/>
+	<node name="ransac_segmentation" 			pkg="pitt_object_table_segmentation" 	type="ransac_segmentation" 			output="screen"
+	    args= "$(arg ransac_show_primitives)"/>
 
 
 

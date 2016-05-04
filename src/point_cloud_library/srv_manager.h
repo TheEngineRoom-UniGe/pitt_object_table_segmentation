@@ -108,7 +108,7 @@ using namespace std;
         const string DEFAULT_PARAM_ARM_SRV_LEFT_FOREARM_FRAME = "/left_lower_forearm";
         const string DEFAULT_PARAM_ARM_SRV_RIGHT_ELBOW_FRAME = "/right_lower_elbow";
         const string DEFAULT_PARAM_ARM_SRV_LEFT_ELBOW_FRAME = "/left_lower_elbow";
-        const bool DEFAULT_PARAM_ARM_SRV_SHOW_CLOUDS = true;	// [red filtered points (arm)] [green remaining points]
+        const bool DEFAULT_PARAM_ARM_SRV_SHOW_CLOUDS = false;	// [red filtered points (arm)] [green remaining points]
 
         // topics (between nodes) names
         // TODO: ADJUST NAMES

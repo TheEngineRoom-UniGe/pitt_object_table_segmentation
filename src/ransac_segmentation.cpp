@@ -29,20 +29,23 @@ boost::mutex vis_mutex;
 
 Publisher pub; // to publish out results
 
-static const int SPHERE_MIN_INLIERS = 40;
-static const int CYLINDER_MIN_INLIERS = 40;
-static const int CONE_MIN_INLIERS = 40;
-static const int PLANE_MIN_INLIERS = 40;
+static const int DEFAULT_SPHERE_MIN_INLIERS = 40;
+static const int DEFAULT_CYLINDER_MIN_INLIERS = 40;
+static const int DEFAULT_CONE_MIN_INLIERS = 40;
+static const int DEFAULT_PLANE_MIN_INLIERS = 40;
 
-static const bool SHOW_PRIMITIVE = true;
-const static float CONE_TO_CYLINDER_PRIORITY = 0.9f;// 0.90f;
+const static float DEFAULT_CONE_OVER_CYLINDER_PRIORITY = 0.9f;// 0.90f;
+
+static const bool DEFAULT_SHOW_PRIMITIVE = false;
+static bool SHOW_PRIMITIVE;
+
 const static int TXT_UNKNOWN_SHAPE_TAG = 0;
 const static int TXT_PLANE_SHAPE_TAG = 1;
 const static int TXT_SPHERE_SHAPE_TAG = 2;
 const static int TXT_CONE_SHAPE_TAG = 3;
 const static int TXT_CYLINDER_SHAPE_TAG = 4;
 
-int sphereMinInliers, cylinderMinInliers, coneMinInliers, planeMinInliers, coneToCylinderPriority;
+int sphereMinInliers, cylinderMinInliers, coneMinInliers, planeMinInliers, coneOverCylinderPriority;
 
 void visSpin(){
     while(!vis->wasStopped()){
@@ -66,7 +69,7 @@ bool callRansacSphereSegmentation( PCLCloudPtr cloud, PCLNormalPtr norm, Primiti
     if( client.call( srv)){
 
         int minInliers = 0;
-        nh_ptr->param(srvm::PARAM_NAME_SPHERE_MIN_INLIERS, sphereMinInliers, SPHERE_MIN_INLIERS);
+        nh_ptr->param(srvm::PARAM_NAME_SPHERE_MIN_INLIERS, sphereMinInliers, DEFAULT_SPHERE_MIN_INLIERS);
 
         if(  srv.response.inliers.size() > minInliers){
             *out = srv;
@@ -103,7 +106,7 @@ bool callRansacCylinderSegmentation( PCLCloudPtr cloud, PCLNormalPtr norm, Primi
     // call the service
     if( client.call( srv)){
         int minInliers = 0;
-        nh_ptr->param(srvm::PARAM_NAME_CYLINDER_MIN_INLIERS, cylinderMinInliers, CYLINDER_MIN_INLIERS);
+        nh_ptr->param(srvm::PARAM_NAME_CYLINDER_MIN_INLIERS, cylinderMinInliers, DEFAULT_CYLINDER_MIN_INLIERS);
         if(  srv.response.inliers.size() > minInliers){
             *out = srv; // get respose
 
@@ -125,7 +128,7 @@ void printCylinderInfo( PrimitiveSegmentationPtr info, int idx){
         "  axisX:" << info->response.coefficients[ 3] <<
         "  axisY:" << info->response.coefficients[ 4] <<
         "  axisZ:" << info->response.coefficients[ 5] <<
-        " radious:" << info->response.coefficients[ 6] << endl;
+        " radius:" << info->response.coefficients[ 6] << endl;
 }
 
 // use ransac to detach cone
@@ -142,7 +145,7 @@ bool callRansacConeSegmentation( PCLCloudPtr cloud, PCLNormalPtr norm, Primitive
     // call the service
     if( client.call( srv)){
         int minInliers = 0;
-        nh_ptr->param(srvm::PARAM_NAME_CONE_MIN_INLIERS, coneMinInliers, CONE_MIN_INLIERS);
+        nh_ptr->param(srvm::PARAM_NAME_CONE_MIN_INLIERS, coneMinInliers, DEFAULT_CONE_MIN_INLIERS);
         if(  srv.response.inliers.size() > minInliers){
             *out = srv; // get the respose
 
@@ -182,7 +185,7 @@ bool callRansacPlaneSegmentation( PCLCloudPtr cloud, PCLNormalPtr norm, Primitiv
     // call the service
     if( client.call( srv)){
         int minInliers = 0;
-        nh_ptr->param(srvm::PARAM_NAME_PLANE_MIN_INLIERS, planeMinInliers, PLANE_MIN_INLIERS);
+        nh_ptr->param(srvm::PARAM_NAME_PLANE_MIN_INLIERS, planeMinInliers, DEFAULT_PLANE_MIN_INLIERS);
         if(  srv.response.inliers.size() > minInliers){
             *out = srv; // get response
 
@@ -262,7 +265,8 @@ void clustersAcquisition(const ClustersOutputConstPtr& clusterObj){
             if( ( ! planeInl) && ( ! sphereInl) && ( ! cylinderInl) && ( ! coneInl)){
                 R = 100, G = 100, B = 100;	// nothing : GRAY
                 detechedPrimitiveTag = TXT_UNKNOWN_SHAPE_TAG;
-            } else if ( ( coneInl >= planeInl) && ( coneInl >= sphereInl) && ( coneInl >= cylinderInl * CONE_TO_CYLINDER_PRIORITY)) {
+            } else if ( ( coneInl >= planeInl) && ( coneInl >= sphereInl) &&
+                    ( coneInl >= cylinderInl * DEFAULT_CONE_OVER_CYLINDER_PRIORITY)) {
                 R = 0; G = 255; B = 0;		// cone : GREEN	[priority w.r.t. cylinder]
                 detechedPrimitiveTag = TXT_CONE_SHAPE_TAG;
                 primitiveInfo = outCone;
@@ -302,7 +306,8 @@ void clustersAcquisition(const ClustersOutputConstPtr& clusterObj){
                 PCManager::updateVisor( vis, cluster, R, G, B, "clusterShape" + boost::to_string( j));
 
                 string log_str = str(boost::format("INLIERS: %s/%s/%s/%s    CONE/CYLINDER PRIORITY:%s")
-                                     %sphereMinInliers %cylinderMinInliers %coneMinInliers %planeMinInliers %CONE_TO_CYLINDER_PRIORITY);
+                                     %sphereMinInliers %cylinderMinInliers %coneMinInliers
+                                     %planeMinInliers %DEFAULT_CONE_OVER_CYLINDER_PRIORITY);
                 vis->updateText(log_str, 10, 520, "log_str_depth");
             }
 
@@ -346,6 +351,7 @@ int main(int argc, char **argv){
     nh_ptr = &nh;
 
     centroidFileLog = "";
+    SHOW_PRIMITIVE = srvm::getBoolPtrParameter( argv[ 1], DEFAULT_SHOW_PRIMITIVE);
 
     // subscribe to cluster published by obj_segmentation.cpp
     //Subscriber sub = n.subscribe ("obj_segmentation/cluster", 10, clustersAcquisition); // get data from cluster node
@@ -354,7 +360,8 @@ int main(int argc, char **argv){
     pub = nh.advertise< TrackedShapes>( "ransac_segmentation/trackedShape", 10);
 
     string log_str = str(boost::format("INLIERS: %s/%s/%s/%s    CONE/CYLINDER PRIORITY:%s")
-                         %SPHERE_MIN_INLIERS %CYLINDER_MIN_INLIERS %CONE_MIN_INLIERS %PLANE_MIN_INLIERS %CONE_TO_CYLINDER_PRIORITY);
+                         %DEFAULT_SPHERE_MIN_INLIERS %DEFAULT_CYLINDER_MIN_INLIERS %DEFAULT_CONE_MIN_INLIERS
+                         %DEFAULT_PLANE_MIN_INLIERS %DEFAULT_CONE_OVER_CYLINDER_PRIORITY);
 
     // create window to visualize cloud
     if( SHOW_PRIMITIVE) {

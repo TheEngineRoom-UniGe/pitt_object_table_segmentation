@@ -246,7 +246,7 @@ Variables</h2></td></tr>
 <tr class="separator:a5d3670b831703d13af8797a2fd7f2f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2691a1a4820635684eedd254ccc2afac"><td class="memItemLeft" align="right" valign="top">static const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ransac__segmentation_8cpp.html#a2691a1a4820635684eedd254ccc2afac">SHOW_PRIMITIVE</a> = true</td></tr>
 <tr class="separator:a2691a1a4820635684eedd254ccc2afac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88890b57d71f10e081848a98e9a74b54"><td class="memItemLeft" align="right" valign="top">static const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ransac__segmentation_8cpp.html#a88890b57d71f10e081848a98e9a74b54">CONE_TO_CYLINDER_PRIORITY</a> = 0.9f</td></tr>
+<tr class="memitem:a88890b57d71f10e081848a98e9a74b54"><td class="memItemLeft" align="right" valign="top">static const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ransac__segmentation_8cpp.html#a88890b57d71f10e081848a98e9a74b54">CONE_OVER_CYLINDER_PRIORITY</a> = 0.9f</td></tr>
 <tr class="separator:a88890b57d71f10e081848a98e9a74b54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae40d37f99c64adbd93effecc8b752907"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ransac__segmentation_8cpp.html#ae40d37f99c64adbd93effecc8b752907">TXT_UNKNOWN_SHAPE_TAG</a> = 0</td></tr>
 <tr class="separator:ae40d37f99c64adbd93effecc8b752907"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -493,7 +493,7 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ransac__segmentation_8cpp_source.html#l00284">284</a> of file <a class="el" href="ransac__segmentation_8cpp_source.html">ransac_segmentation.cpp</a>.</p>
 
-<p>References <a class="el" href="ransac__segmentation_8cpp_source.html#l00161">callRansacConeSegmentation()</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00115">callRansacCylinderSegmentation()</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00207">callRansacPlaneSegmentation()</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00072">callRansacSphereSegmentation()</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00262">callSemanticSceneRecognitionServer()</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00064">CONE_TO_CYLINDER_PRIORITY</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00020">pub</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00250">returnPrimitiveNameFromTag()</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00063">SHOW_PRIMITIVE</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00068">TXT_CONE_SHAPE_TAG</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00069">TXT_CYLINDER_SHAPE_TAG</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00066">TXT_PLANE_SHAPE_TAG</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00067">TXT_SPHERE_SHAPE_TAG</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00065">TXT_UNKNOWN_SHAPE_TAG</a>, and <a class="el" href="ransac__segmentation_8cpp_source.html#l00019">vis</a>.</p>
+<p>References <a class="el" href="ransac__segmentation_8cpp_source.html#l00161">callRansacConeSegmentation()</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00115">callRansacCylinderSegmentation()</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00207">callRansacPlaneSegmentation()</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00072">callRansacSphereSegmentation()</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00262">callSemanticSceneRecognitionServer()</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00064">CONE_OVER_CYLINDER_PRIORITY</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00020">pub</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00250">returnPrimitiveNameFromTag()</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00063">SHOW_PRIMITIVE</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00068">TXT_CONE_SHAPE_TAG</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00069">TXT_CYLINDER_SHAPE_TAG</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00066">TXT_PLANE_SHAPE_TAG</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00067">TXT_SPHERE_SHAPE_TAG</a>, <a class="el" href="ransac__segmentation_8cpp_source.html#l00065">TXT_UNKNOWN_SHAPE_TAG</a>, and <a class="el" href="ransac__segmentation_8cpp_source.html#l00019">vis</a>.</p>
 
 <p>Referenced by <a class="el" href="ransac__segmentation_8cpp_source.html#l00402">main()</a>.</p>
 
@@ -922,7 +922,7 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const float CONE_TO_CYLINDER_PRIORITY = 0.9f</td>
+          <td class="memname">const float CONE_OVER_CYLINDER_PRIORITY = 0.9f</td>
         </tr>
       </table>
   </td>
