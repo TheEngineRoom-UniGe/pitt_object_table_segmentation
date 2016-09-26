@@ -419,7 +419,7 @@ int main(int argc, char **argv){
 			listener.lookupTransform(  outputCloudFrame, inputCloudFrame, Time(0), kinectTrans);
 
 			// retrieve the homogeneous transformation
-			pclTransform << kinectTrans.getBasis()[0][1], kinectTrans.getBasis()[0][1], kinectTrans.getBasis()[0][2], kinectTrans.getOrigin().x(),
+			pclTransform << kinectTrans.getBasis()[0][0], kinectTrans.getBasis()[0][1], kinectTrans.getBasis()[0][2], kinectTrans.getOrigin().x(),
 							kinectTrans.getBasis()[1][0], kinectTrans.getBasis()[1][1], kinectTrans.getBasis()[1][2], kinectTrans.getOrigin().y(),
 							kinectTrans.getBasis()[2][0], kinectTrans.getBasis()[2][1], kinectTrans.getBasis()[2][2], kinectTrans.getOrigin().z(),
 							0, 							  0, 							0, 							  1;
