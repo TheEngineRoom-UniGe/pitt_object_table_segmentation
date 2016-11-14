@@ -15,6 +15,8 @@ find_package(catkin REQUIRED COMPONENTS
   pitt_msgs
 )
 
+find_package(PCL REQUIRED)
+
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -103,67 +105,69 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
   ${catkin_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS}
 )
+link_directories(${PCL_LIBRARY_DIRS})
 
 ## Declare a cpp library
 add_library(pc_manager src/point_cloud_library/pc_manager.cpp)
 add_library(pc_primitive src/point_cloud_library/pc_primitive.cpp)
-target_link_libraries(pc_manager pc_primitive ${catkin_LIBRARIES} vtkCommon vtkFiltering)
+target_link_libraries(pc_manager pc_primitive ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 
 ################################################ PREPROCESSING !!
 
 # arm filtering (SERVICE)
 add_executable(arm_filter_srv src/segmentation_services/arm_filter_srv.cpp)
-target_link_libraries(arm_filter_srv pc_manager ${catkin_LIBRARIES} libvtkCommon.so libvtkFiltering.so)
+target_link_libraries(arm_filter_srv pc_manager ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(arm_filter_srv pitt_msgs_generate_messages_cpp)
 
 # deep filter (SERVICE)
 add_executable(deep_filter_srv src/segmentation_services/deep_filter_srv.cpp)
-target_link_libraries(deep_filter_srv pc_manager ${catkin_LIBRARIES} libvtkCommon.so libvtkFiltering.so)
+target_link_libraries(deep_filter_srv pc_manager ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(deep_filter_srv pitt_msgs_generate_messages_cpp)
 
 #################################################### CLUSTER SEGMENTATION !!
 
 # support segmentator (SERVICE)
 add_executable(supports_segmentation_srv src/segmentation_services/supports_segmentation_srv.cpp)
-target_link_libraries(supports_segmentation_srv pc_manager ${catkin_LIBRARIES} libvtkCommon.so libvtkFiltering.so)
+target_link_libraries(supports_segmentation_srv pc_manager ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(supports_segmentation_srv pitt_msgs_generate_messages_cpp)
 
 # cluster segmentation (SERVICE)
 add_executable(cluster_segmentation_srv src/segmentation_services/cluster_segmentation_srv.cpp)
-target_link_libraries(cluster_segmentation_srv pc_manager pc_primitive ${catkin_LIBRARIES} libvtkCommon.so libvtkFiltering.so )
+target_link_libraries(cluster_segmentation_srv pc_manager pc_primitive ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(cluster_segmentation_srv pitt_msgs_generate_messages_cpp)
 
 # orchestrator segmentation orcestrator (NODE)
 add_executable(obj_segmentation src/obj_segmentation.cpp)
-target_link_libraries(obj_segmentation pc_manager pc_primitive ${catkin_LIBRARIES} libvtkCommon.so libvtkFiltering.so)
+target_link_libraries(obj_segmentation pc_manager pc_primitive ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(obj_segmentation pitt_msgs_generate_messages_cpp)
 
 #################################################  SHAPES SEGMENTATION (RANSAC) !!
 
 # plane ransac segmentation (SERVICE)
 add_executable(plane_segmentation_srv src/segmentation_services/plane_segmentation_srv.cpp)
-target_link_libraries(plane_segmentation_srv pc_manager ${catkin_LIBRARIES} libvtkCommon.so libvtkFiltering.so)
+target_link_libraries(plane_segmentation_srv pc_manager ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(plane_segmentation_srv pitt_msgs_generate_messages_cpp)
 
 # sphere ransac segmentation (SERVICE)
 add_executable(sphere_segmentation_srv src/segmentation_services/sphere_segmentation_srv.cpp)
-target_link_libraries(sphere_segmentation_srv pc_manager pc_primitive ${catkin_LIBRARIES} libvtkCommon.so libvtkFiltering.so)
+target_link_libraries(sphere_segmentation_srv pc_manager pc_primitive ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(sphere_segmentation_srv pitt_msgs_generate_messages_cpp)
 
 # cylinder ransac segmentation (SERVICE)
 add_executable(cylinder_segmentation_srv src/segmentation_services/cylinder_segmentation_srv.cpp)
-target_link_libraries(cylinder_segmentation_srv pc_manager pc_primitive ${catkin_LIBRARIES} libvtkCommon.so libvtkFiltering.so)
+target_link_libraries(cylinder_segmentation_srv pc_manager pc_primitive ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(cylinder_segmentation_srv pitt_msgs_generate_messages_cpp)
 
 # cone ransac segmentation (SERVICE)
 add_executable(cone_segmentation_srv src/segmentation_services/cone_segmentation_srv.cpp)
-target_link_libraries(cone_segmentation_srv pc_manager pc_primitive ${catkin_LIBRARIES} libvtkCommon.so libvtkFiltering.so) 
+target_link_libraries(cone_segmentation_srv pc_manager pc_primitive ${catkin_LIBRARIES} ${PCL_LIBRARIES}) 
 add_dependencies(cone_segmentation_srv pitt_msgs_generate_messages_cpp)
 
 # ransac orchetrator node
 add_executable(ransac_segmentation src/ransac_segmentation.cpp)
-target_link_libraries(ransac_segmentation pc_manager ${catkin_LIBRARIES} libvtkCommon.so libvtkFiltering.so)
+target_link_libraries(ransac_segmentation pc_manager ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(ransac_segmentation pitt_msgs_generate_messages_cpp)
 
 
