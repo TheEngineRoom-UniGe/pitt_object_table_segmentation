@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: pitt_object_table_segmentation
+Description: Description of pitt_object_table_segmentation
+Version: 1.0.0
+Cflags: 
+Libs: -L/usr/local/lib 
+Requires: pcl_conversions roscpp sensor_msgs pcl_msgs pitt_msgs message_generation

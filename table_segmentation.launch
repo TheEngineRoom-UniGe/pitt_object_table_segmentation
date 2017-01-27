@@ -81,7 +81,7 @@
 	
 	<!--			ARGS FOR OBJ_SEGMENTATION NODE	(considered only on launching)	("." for default)				--> 
 	<arg name="pitt_input_cloud_topic" value= "/cameraB/depth/points" /> 			<!-- default: "/camera/depth/points"					-->
-	<arg name="pitt_show_original_cloud" value="." /> 								<!-- default: "0" (false) [white ptn]					-->
+	<arg name="pitt_show_original_cloud" value="1" /> 								<!-- default: "0" (false) [white ptn]					-->
 	<arg name="pitt_show_supports" value="." /> 									<!-- default: "0" (false) [brown ptn]					-->
 	<arg name="pitt_show_cluster" value="." />		 								<!-- default: "0" (false) [random ptn]					-->
 	<arg name="pitt_show_object_on_support" value="." /> 							<!-- default: "0" (false) [orange ptn]					-->
