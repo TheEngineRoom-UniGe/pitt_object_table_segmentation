@@ -62,11 +62,11 @@ boost::thread vis_thread;
 boost::mutex vis_mutex;
 
 void visSpin(){
-    ros::Duration t(0.8);
+    ros::Duration t(0.5);
     while(!vis->wasStopped()){
         t.sleep();
         boost::mutex::scoped_lock updateLock(vis_mutex);
-        vis->spinOnce(200);
+        vis->spinOnce(500);
     }
 }
 
