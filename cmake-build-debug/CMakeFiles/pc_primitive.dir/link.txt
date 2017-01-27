@@ -1,1 +1,0 @@
-/usr/bin/c++  -fPIC   -Wno-deprecated -g   -shared -Wl,-soname,libpc_primitive.so -o devel/lib/libpc_primitive.so CMakeFiles/pc_primitive.dir/src/point_cloud_library/pc_primitive.cpp.o 

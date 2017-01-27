@@ -173,6 +173,8 @@ msg/_*.py
 # eclipse stuff
 .project
 .cproject
+/catkin_generated
+/CMakeFiles
 
 # qcreator stuff
 CMakeLists.txt.user
