@@ -1,3 +1,0 @@
-/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles/pitt_object_table_segmentation.dir
