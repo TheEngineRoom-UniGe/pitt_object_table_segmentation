@@ -1,2 +1,2 @@
 - setup-file:
-    local-name: /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/devel/setup.sh
+    local-name: /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/devel/setup.sh

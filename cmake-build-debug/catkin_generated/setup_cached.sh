@@ -7,7 +7,7 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/devel:$CMAKE_PREFIX_PATH"
+export CMAKE_PREFIX_PATH="/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/devel:$CMAKE_PREFIX_PATH"
 export LD_LIBRARY_PATH="/opt/ros/indigo/lib:."
-export ROSLISP_PACKAGE_DIRECTORIES="/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/devel/share/common-lisp"
-export ROS_PACKAGE_PATH="/home/carlotta/catkin_ws/src/pitt_object_table_segmentation:$ROS_PACKAGE_PATH"
+export ROSLISP_PACKAGE_DIRECTORIES="/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/devel/share/common-lisp"
+export ROS_PACKAGE_PATH="/home/carlotta/catkin_ws/src/pitt_object_table_segmentation:/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation:$ROS_PACKAGE_PATH"

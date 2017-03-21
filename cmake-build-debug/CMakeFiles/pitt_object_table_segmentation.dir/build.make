@@ -43,10 +43,10 @@ RM = /home/carlotta/clion-2016.3.3/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/carlotta/catkin_ws/src/pitt_object_table_segmentation
+CMAKE_SOURCE_DIR = /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug
+CMAKE_BINARY_DIR = /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/pitt_object_table_segmentation.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/pitt_object_table_segmentation.dir/flags.make
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager.cpp.o: CMakeFiles/pitt_object_table_segmentation.dir/flags.make
 CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager.cpp.o: ../src/point_cloud_library/pc_manager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager.cpp.o -c /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/point_cloud_library/pc_manager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager.cpp.o -c /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/point_cloud_library/pc_manager.cpp
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/point_cloud_library/pc_manager.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/point_cloud_library/pc_manager.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager.cpp.i
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/point_cloud_library/pc_manager.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/point_cloud_library/pc_manager.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager.cpp.s
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager.cpp.o.requires:
 
@@ -83,16 +83,16 @@ CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primitive.cpp.o: CMakeFiles/pitt_object_table_segmentation.dir/flags.make
 CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primitive.cpp.o: ../src/point_cloud_library/pc_primitive.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primitive.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primitive.cpp.o -c /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/point_cloud_library/pc_primitive.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primitive.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primitive.cpp.o -c /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/point_cloud_library/pc_primitive.cpp
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primitive.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primitive.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/point_cloud_library/pc_primitive.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primitive.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/point_cloud_library/pc_primitive.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primitive.cpp.i
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primitive.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primitive.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/point_cloud_library/pc_primitive.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primitive.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/point_cloud_library/pc_primitive.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primitive.cpp.s
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primitive.cpp.o.requires:
 
@@ -107,16 +107,16 @@ CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primiti
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/arm_filter_srv.cpp.o: CMakeFiles/pitt_object_table_segmentation.dir/flags.make
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/arm_filter_srv.cpp.o: ../src/segmentation_services/arm_filter_srv.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/arm_filter_srv.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/arm_filter_srv.cpp.o -c /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/arm_filter_srv.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/arm_filter_srv.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/arm_filter_srv.cpp.o -c /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/arm_filter_srv.cpp
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/arm_filter_srv.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/arm_filter_srv.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/arm_filter_srv.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/arm_filter_srv.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/arm_filter_srv.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/arm_filter_srv.cpp.i
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/arm_filter_srv.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/arm_filter_srv.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/arm_filter_srv.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/arm_filter_srv.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/arm_filter_srv.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/arm_filter_srv.cpp.s
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/arm_filter_srv.cpp.o.requires:
 
@@ -131,16 +131,16 @@ CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/arm_filt
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cluster_segmentation_srv.cpp.o: CMakeFiles/pitt_object_table_segmentation.dir/flags.make
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cluster_segmentation_srv.cpp.o: ../src/segmentation_services/cluster_segmentation_srv.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cluster_segmentation_srv.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cluster_segmentation_srv.cpp.o -c /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/cluster_segmentation_srv.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cluster_segmentation_srv.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cluster_segmentation_srv.cpp.o -c /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/cluster_segmentation_srv.cpp
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cluster_segmentation_srv.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cluster_segmentation_srv.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/cluster_segmentation_srv.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cluster_segmentation_srv.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/cluster_segmentation_srv.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cluster_segmentation_srv.cpp.i
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cluster_segmentation_srv.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cluster_segmentation_srv.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/cluster_segmentation_srv.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cluster_segmentation_srv.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/cluster_segmentation_srv.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cluster_segmentation_srv.cpp.s
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cluster_segmentation_srv.cpp.o.requires:
 
@@ -155,16 +155,16 @@ CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cluster_
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cone_segmentation_srv.cpp.o: CMakeFiles/pitt_object_table_segmentation.dir/flags.make
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cone_segmentation_srv.cpp.o: ../src/segmentation_services/cone_segmentation_srv.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cone_segmentation_srv.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cone_segmentation_srv.cpp.o -c /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/cone_segmentation_srv.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cone_segmentation_srv.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cone_segmentation_srv.cpp.o -c /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/cone_segmentation_srv.cpp
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cone_segmentation_srv.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cone_segmentation_srv.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/cone_segmentation_srv.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cone_segmentation_srv.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/cone_segmentation_srv.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cone_segmentation_srv.cpp.i
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cone_segmentation_srv.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cone_segmentation_srv.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/cone_segmentation_srv.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cone_segmentation_srv.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/cone_segmentation_srv.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cone_segmentation_srv.cpp.s
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cone_segmentation_srv.cpp.o.requires:
 
@@ -179,16 +179,16 @@ CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cone_seg
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cylinder_segmentation_srv.cpp.o: CMakeFiles/pitt_object_table_segmentation.dir/flags.make
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cylinder_segmentation_srv.cpp.o: ../src/segmentation_services/cylinder_segmentation_srv.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cylinder_segmentation_srv.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cylinder_segmentation_srv.cpp.o -c /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/cylinder_segmentation_srv.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cylinder_segmentation_srv.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cylinder_segmentation_srv.cpp.o -c /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/cylinder_segmentation_srv.cpp
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cylinder_segmentation_srv.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cylinder_segmentation_srv.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/cylinder_segmentation_srv.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cylinder_segmentation_srv.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/cylinder_segmentation_srv.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cylinder_segmentation_srv.cpp.i
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cylinder_segmentation_srv.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cylinder_segmentation_srv.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/cylinder_segmentation_srv.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cylinder_segmentation_srv.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/cylinder_segmentation_srv.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cylinder_segmentation_srv.cpp.s
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cylinder_segmentation_srv.cpp.o.requires:
 
@@ -203,16 +203,16 @@ CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/cylinder
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/deep_filter_srv.cpp.o: CMakeFiles/pitt_object_table_segmentation.dir/flags.make
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/deep_filter_srv.cpp.o: ../src/segmentation_services/deep_filter_srv.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/deep_filter_srv.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/deep_filter_srv.cpp.o -c /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/deep_filter_srv.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/deep_filter_srv.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/deep_filter_srv.cpp.o -c /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/deep_filter_srv.cpp
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/deep_filter_srv.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/deep_filter_srv.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/deep_filter_srv.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/deep_filter_srv.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/deep_filter_srv.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/deep_filter_srv.cpp.i
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/deep_filter_srv.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/deep_filter_srv.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/deep_filter_srv.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/deep_filter_srv.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/deep_filter_srv.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/deep_filter_srv.cpp.s
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/deep_filter_srv.cpp.o.requires:
 
@@ -227,16 +227,16 @@ CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/deep_fil
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/plane_segmentation_srv.cpp.o: CMakeFiles/pitt_object_table_segmentation.dir/flags.make
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/plane_segmentation_srv.cpp.o: ../src/segmentation_services/plane_segmentation_srv.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/plane_segmentation_srv.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/plane_segmentation_srv.cpp.o -c /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/plane_segmentation_srv.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/plane_segmentation_srv.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/plane_segmentation_srv.cpp.o -c /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/plane_segmentation_srv.cpp
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/plane_segmentation_srv.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/plane_segmentation_srv.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/plane_segmentation_srv.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/plane_segmentation_srv.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/plane_segmentation_srv.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/plane_segmentation_srv.cpp.i
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/plane_segmentation_srv.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/plane_segmentation_srv.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/plane_segmentation_srv.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/plane_segmentation_srv.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/plane_segmentation_srv.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/plane_segmentation_srv.cpp.s
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/plane_segmentation_srv.cpp.o.requires:
 
@@ -251,16 +251,16 @@ CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/plane_se
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/sphere_segmentation_srv.cpp.o: CMakeFiles/pitt_object_table_segmentation.dir/flags.make
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/sphere_segmentation_srv.cpp.o: ../src/segmentation_services/sphere_segmentation_srv.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/sphere_segmentation_srv.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/sphere_segmentation_srv.cpp.o -c /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/sphere_segmentation_srv.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/sphere_segmentation_srv.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/sphere_segmentation_srv.cpp.o -c /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/sphere_segmentation_srv.cpp
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/sphere_segmentation_srv.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/sphere_segmentation_srv.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/sphere_segmentation_srv.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/sphere_segmentation_srv.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/sphere_segmentation_srv.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/sphere_segmentation_srv.cpp.i
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/sphere_segmentation_srv.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/sphere_segmentation_srv.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/sphere_segmentation_srv.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/sphere_segmentation_srv.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/sphere_segmentation_srv.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/sphere_segmentation_srv.cpp.s
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/sphere_segmentation_srv.cpp.o.requires:
 
@@ -275,16 +275,16 @@ CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/sphere_s
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.o: CMakeFiles/pitt_object_table_segmentation.dir/flags.make
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.o: ../src/segmentation_services/supports_segmentation_srv.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.o -c /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/supports_segmentation_srv.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.o -c /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/supports_segmentation_srv.cpp
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/supports_segmentation_srv.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/supports_segmentation_srv.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.i
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/segmentation_services/supports_segmentation_srv.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/segmentation_services/supports_segmentation_srv.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.s
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.o.requires:
 
@@ -299,16 +299,16 @@ CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.o: CMakeFiles/pitt_object_table_segmentation.dir/flags.make
 CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.o: ../src/obj_segmentation.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.o -c /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/obj_segmentation.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.o -c /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/obj_segmentation.cpp
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/obj_segmentation.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/obj_segmentation.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.i
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/obj_segmentation.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/obj_segmentation.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.s
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.o.requires:
 
@@ -323,16 +323,16 @@ CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.o.provide
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.o: CMakeFiles/pitt_object_table_segmentation.dir/flags.make
 CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.o: ../src/ransac_segmentation.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.o -c /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/ransac_segmentation.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.o -c /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/ransac_segmentation.cpp
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/ransac_segmentation.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/ransac_segmentation.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.i
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/src/ransac_segmentation.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/ransac_segmentation.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.s
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.o.requires:
 
@@ -343,6 +343,30 @@ CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.o.prov
 .PHONY : CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.o.provides
 
 CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.o.provides.build: CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.o
+
+
+CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o: CMakeFiles/pitt_object_table_segmentation.dir/flags.make
+CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o: ../src/color_service.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o -c /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/color_service.cpp
+
+CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/color_service.cpp > CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.i
+
+CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/color_service.cpp -o CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.s
+
+CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o.requires:
+
+.PHONY : CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o.requires
+
+CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o.provides: CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o.requires
+	$(MAKE) -f CMakeFiles/pitt_object_table_segmentation.dir/build.make CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o.provides.build
+.PHONY : CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o.provides
+
+CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o.provides.build: CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o
 
 
 # Object files for target pitt_object_table_segmentation
@@ -358,7 +382,8 @@ pitt_object_table_segmentation_OBJECTS = \
 "CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/sphere_segmentation_srv.cpp.o" \
 "CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.o" \
 "CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.o" \
-"CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.o"
+"CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.o" \
+"CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o"
 
 # External object files for target pitt_object_table_segmentation
 pitt_object_table_segmentation_EXTERNAL_OBJECTS =
@@ -375,9 +400,10 @@ pitt_object_table_segmentation: CMakeFiles/pitt_object_table_segmentation.dir/sr
 pitt_object_table_segmentation: CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.o
 pitt_object_table_segmentation: CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.o
 pitt_object_table_segmentation: CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.o
+pitt_object_table_segmentation: CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o
 pitt_object_table_segmentation: CMakeFiles/pitt_object_table_segmentation.dir/build.make
 pitt_object_table_segmentation: CMakeFiles/pitt_object_table_segmentation.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable pitt_object_table_segmentation"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX executable pitt_object_table_segmentation"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/pitt_object_table_segmentation.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -397,6 +423,7 @@ CMakeFiles/pitt_object_table_segmentation.dir/requires: CMakeFiles/pitt_object_t
 CMakeFiles/pitt_object_table_segmentation.dir/requires: CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.o.requires
 CMakeFiles/pitt_object_table_segmentation.dir/requires: CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.o.requires
 CMakeFiles/pitt_object_table_segmentation.dir/requires: CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.o.requires
+CMakeFiles/pitt_object_table_segmentation.dir/requires: CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o.requires
 
 .PHONY : CMakeFiles/pitt_object_table_segmentation.dir/requires
 
@@ -405,6 +432,6 @@ CMakeFiles/pitt_object_table_segmentation.dir/clean:
 .PHONY : CMakeFiles/pitt_object_table_segmentation.dir/clean
 
 CMakeFiles/pitt_object_table_segmentation.dir/depend:
-	cd /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/carlotta/catkin_ws/src/pitt_object_table_segmentation /home/carlotta/catkin_ws/src/pitt_object_table_segmentation /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles/pitt_object_table_segmentation.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles/pitt_object_table_segmentation.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/pitt_object_table_segmentation.dir/depend
 

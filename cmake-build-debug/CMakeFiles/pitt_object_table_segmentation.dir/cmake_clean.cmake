@@ -11,6 +11,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.o"
   "CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.o"
   "CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.o"
+  "CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o"
   "pitt_object_table_segmentation.pdb"
   "pitt_object_table_segmentation"
 )

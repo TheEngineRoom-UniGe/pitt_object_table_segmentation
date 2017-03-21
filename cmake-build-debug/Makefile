@@ -48,10 +48,10 @@ RM = /home/carlotta/clion-2016.3.3/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/carlotta/catkin_ws/src/pitt_object_table_segmentation
+CMAKE_SOURCE_DIR = /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug
+CMAKE_BINARY_DIR = /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/carlotta/catkin_ws/src/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -122,6 +122,33 @@ pitt_object_table_segmentation: cmake_check_build_system
 pitt_object_table_segmentation/fast:
 	$(MAKE) -f CMakeFiles/pitt_object_table_segmentation.dir/build.make CMakeFiles/pitt_object_table_segmentation.dir/build
 .PHONY : pitt_object_table_segmentation/fast
+
+src/color_service.o: src/color_service.cpp.o
+
+.PHONY : src/color_service.o
+
+# target to build an object file
+src/color_service.cpp.o:
+	$(MAKE) -f CMakeFiles/pitt_object_table_segmentation.dir/build.make CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o
+.PHONY : src/color_service.cpp.o
+
+src/color_service.i: src/color_service.cpp.i
+
+.PHONY : src/color_service.i
+
+# target to preprocess a source file
+src/color_service.cpp.i:
+	$(MAKE) -f CMakeFiles/pitt_object_table_segmentation.dir/build.make CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.i
+.PHONY : src/color_service.cpp.i
+
+src/color_service.s: src/color_service.cpp.s
+
+.PHONY : src/color_service.s
+
+# target to generate assembly for a file
+src/color_service.cpp.s:
+	$(MAKE) -f CMakeFiles/pitt_object_table_segmentation.dir/build.make CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.s
+.PHONY : src/color_service.cpp.s
 
 src/obj_segmentation.o: src/obj_segmentation.cpp.o
 
@@ -456,6 +483,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... pitt_object_table_segmentation"
+	@echo "... src/color_service.o"
+	@echo "... src/color_service.i"
+	@echo "... src/color_service.s"
 	@echo "... src/obj_segmentation.o"
 	@echo "... src/obj_segmentation.i"
 	@echo "... src/obj_segmentation.s"
