@@ -86,7 +86,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/color_service.cpp">
+		<Unit filename="/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/color_services/color_srv.cpp">
 			<Option target="pitt_object_table_segmentation"/>
 		</Unit>
 		<Unit filename="/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/obj_segmentation.cpp">

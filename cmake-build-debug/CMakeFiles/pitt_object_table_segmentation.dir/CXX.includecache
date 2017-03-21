@@ -6,6 +6,16 @@
 
 #IncludeRegexTransform: 
 
+/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/color_services/color_srv.cpp
+ros/ros.h
+/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/color_services/ros/ros.h
+pcl_ros/point_cloud.h
+-
+pitt_msgs/ColorSrvMsg.h
+/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/color_services/pitt_msgs/ColorSrvMsg.h
+../point_cloud_library/pc_manager.h
+/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/point_cloud_library/pc_manager.h
+
 /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/obj_segmentation.cpp
 pcl_ros/point_cloud.h
 -

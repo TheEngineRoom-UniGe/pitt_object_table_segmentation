@@ -28,7 +28,7 @@ PCLCloudPtrRGB cloudForRosMsgRGB ( PointCloud2 input){
 }
 
 //service name
- string SRV_NAME_COLOR = "color_srv";
+ const string SRV_NAME_COLOR = "color_srv";
 const string NAME_COLOR_RED = "red";
 const string NAME_COLOR_BLUE = "blue";
 const string NAME_COLOR_GREEN = "green";

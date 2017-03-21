@@ -1,3 +1,4 @@
+
 cmake_minimum_required(VERSION 2.8.3)
 project(pitt_object_table_segmentation)
 
@@ -5,15 +6,15 @@ project(pitt_object_table_segmentation)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  message_runtime
-  pcl_conversions
-  pcl_ros
-  roscpp
-  sensor_msgs
-  std_msgs
-  tf
-  pitt_msgs
-)
+        message_runtime
+        pcl_conversions
+        pcl_ros
+        roscpp
+        sensor_msgs
+        std_msgs
+        tf
+        pitt_msgs
+        )
 
 find_package(PCL REQUIRED)
 
@@ -52,7 +53,7 @@ find_package(PCL REQUIRED)
 
 ## Generate messages in the 'msg' folder
 #add_message_files(
-#   DIRECTORY msg 
+#   DIRECTORY msg
 #   FILES
 #)
 
@@ -90,11 +91,11 @@ find_package(PCL REQUIRED)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES object_table_segmentation
-#  CATKIN_DEPENDS other_catkin_pkg
-   CATKIN_DEPENDS pcl_conversions roscpp sensor_msgs pcl_msgs pitt_msgs message_generation
-#  DEPENDS system_lib
+        #  INCLUDE_DIRS include
+        #  LIBRARIES object_table_segmentation
+        #  CATKIN_DEPENDS other_catkin_pkg
+        CATKIN_DEPENDS pcl_conversions roscpp sensor_msgs pcl_msgs pitt_msgs message_generation
+        #  DEPENDS system_lib
 )
 
 ###########
@@ -104,8 +105,8 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  ${catkin_INCLUDE_DIRS}
-  ${PCL_INCLUDE_DIRS}
+        ${catkin_INCLUDE_DIRS}
+        ${PCL_INCLUDE_DIRS}
 )
 link_directories(${PCL_LIBRARY_DIRS})
 
@@ -162,7 +163,7 @@ add_dependencies(cylinder_segmentation_srv pitt_msgs_generate_messages_cpp)
 
 # cone ransac segmentation (SERVICE)
 add_executable(cone_segmentation_srv src/segmentation_services/cone_segmentation_srv.cpp)
-target_link_libraries(cone_segmentation_srv pc_manager pc_primitive ${catkin_LIBRARIES} ${PCL_LIBRARIES}) 
+target_link_libraries(cone_segmentation_srv pc_manager pc_primitive ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(cone_segmentation_srv pitt_msgs_generate_messages_cpp)
 
 # ransac orchetrator node
@@ -170,10 +171,7 @@ add_executable(ransac_segmentation src/ransac_segmentation.cpp)
 target_link_libraries(ransac_segmentation pc_manager ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(ransac_segmentation pitt_msgs_generate_messages_cpp)
 
-#################################################  COLOR INFORMATION
-add_executable(color_srv src/color_services/color_srv.cpp)
-target_link_libraries(color_srv pc_manager pc_primitive ${catkin_LIBRARIES} ${PCL_LIBRARIES})
-add_dependencies(color_srv pitt_msgs_generate_messages_cpp)
+
 #############
 ## Install ##
 #############

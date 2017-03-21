@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/color_service.cpp" "/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o"
+  "/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/color_services/color_srv.cpp" "/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles/pitt_object_table_segmentation.dir/src/color_services/color_srv.cpp.o"
   "/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/obj_segmentation.cpp" "/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.o"
   "/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/point_cloud_library/pc_manager.cpp" "/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager.cpp.o"
   "/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/point_cloud_library/pc_primitive.cpp" "/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/cmake-build-debug/CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primitive.cpp.o"

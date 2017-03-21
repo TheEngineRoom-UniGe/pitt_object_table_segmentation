@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/pitt_object_table_segmentation.dir/src/color_services/color_srv.cpp.o"
   "CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_manager.cpp.o"
   "CMakeFiles/pitt_object_table_segmentation.dir/src/point_cloud_library/pc_primitive.cpp.o"
   "CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/arm_filter_srv.cpp.o"
@@ -11,7 +12,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/pitt_object_table_segmentation.dir/src/segmentation_services/supports_segmentation_srv.cpp.o"
   "CMakeFiles/pitt_object_table_segmentation.dir/src/obj_segmentation.cpp.o"
   "CMakeFiles/pitt_object_table_segmentation.dir/src/ransac_segmentation.cpp.o"
-  "CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o"
   "pitt_object_table_segmentation.pdb"
   "pitt_object_table_segmentation"
 )

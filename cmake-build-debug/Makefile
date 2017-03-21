@@ -123,32 +123,32 @@ pitt_object_table_segmentation/fast:
 	$(MAKE) -f CMakeFiles/pitt_object_table_segmentation.dir/build.make CMakeFiles/pitt_object_table_segmentation.dir/build
 .PHONY : pitt_object_table_segmentation/fast
 
-src/color_service.o: src/color_service.cpp.o
+src/color_services/color_srv.o: src/color_services/color_srv.cpp.o
 
-.PHONY : src/color_service.o
+.PHONY : src/color_services/color_srv.o
 
 # target to build an object file
-src/color_service.cpp.o:
-	$(MAKE) -f CMakeFiles/pitt_object_table_segmentation.dir/build.make CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.o
-.PHONY : src/color_service.cpp.o
+src/color_services/color_srv.cpp.o:
+	$(MAKE) -f CMakeFiles/pitt_object_table_segmentation.dir/build.make CMakeFiles/pitt_object_table_segmentation.dir/src/color_services/color_srv.cpp.o
+.PHONY : src/color_services/color_srv.cpp.o
 
-src/color_service.i: src/color_service.cpp.i
+src/color_services/color_srv.i: src/color_services/color_srv.cpp.i
 
-.PHONY : src/color_service.i
+.PHONY : src/color_services/color_srv.i
 
 # target to preprocess a source file
-src/color_service.cpp.i:
-	$(MAKE) -f CMakeFiles/pitt_object_table_segmentation.dir/build.make CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.i
-.PHONY : src/color_service.cpp.i
+src/color_services/color_srv.cpp.i:
+	$(MAKE) -f CMakeFiles/pitt_object_table_segmentation.dir/build.make CMakeFiles/pitt_object_table_segmentation.dir/src/color_services/color_srv.cpp.i
+.PHONY : src/color_services/color_srv.cpp.i
 
-src/color_service.s: src/color_service.cpp.s
+src/color_services/color_srv.s: src/color_services/color_srv.cpp.s
 
-.PHONY : src/color_service.s
+.PHONY : src/color_services/color_srv.s
 
 # target to generate assembly for a file
-src/color_service.cpp.s:
-	$(MAKE) -f CMakeFiles/pitt_object_table_segmentation.dir/build.make CMakeFiles/pitt_object_table_segmentation.dir/src/color_service.cpp.s
-.PHONY : src/color_service.cpp.s
+src/color_services/color_srv.cpp.s:
+	$(MAKE) -f CMakeFiles/pitt_object_table_segmentation.dir/build.make CMakeFiles/pitt_object_table_segmentation.dir/src/color_services/color_srv.cpp.s
+.PHONY : src/color_services/color_srv.cpp.s
 
 src/obj_segmentation.o: src/obj_segmentation.cpp.o
 
@@ -483,9 +483,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... pitt_object_table_segmentation"
-	@echo "... src/color_service.o"
-	@echo "... src/color_service.i"
-	@echo "... src/color_service.s"
+	@echo "... src/color_services/color_srv.o"
+	@echo "... src/color_services/color_srv.i"
+	@echo "... src/color_services/color_srv.s"
 	@echo "... src/obj_segmentation.o"
 	@echo "... src/obj_segmentation.i"
 	@echo "... src/obj_segmentation.s"

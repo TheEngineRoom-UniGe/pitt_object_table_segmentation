@@ -1,6 +1,7 @@
 #include "pitt_msgs/ClustersOutput.h" // for cluster input (msg(
 #include "pitt_msgs/InliersCluster.h" // for cluster input (sub msg)
 #include "pitt_msgs/PrimitiveSegmentation.h" // for ransac service output
+#include "pitt_msgs/ColorSrvMsg.h" // for ransac service output
 #include "pitt_msgs/TrackedShapes.h" // for out message (an array of TrackedShape)
 #include "pitt_msgs/TrackedShape.h" // for out message
 #include "point_cloud_library/pc_manager.h" // for my static library
@@ -20,6 +21,7 @@ using namespace pitt_msgs;
 typedef vector< InliersCluster> InliersClusters;
 typedef boost::shared_ptr< InliersClusters> InliersClustersPtr;
 typedef boost::shared_ptr< PrimitiveSegmentation> PrimitiveSegmentationPtr;
+//definition of the type PCL with RGB information
 
 ros::NodeHandle* nh_ptr = NULL;
 
@@ -33,6 +35,7 @@ const string SRV_NAME_RANSAC_SPHERE_FILTER = "sphere_segmentation_srv";
 const string SRV_NAME_RANSAC_CONE_FILTER = "cone_segmentation_srv";
 const string SRV_NAME_RANSAC_CYLINDER_FILTER = "cylinder_segmentation_srv";
 const string SRV_NAME_RANSAC_PLANE_FILTER = "plane_segmentation_srv";
+const string SRV_NAME_COLOR = "color_srv";
 //ros Parameter Name
 const string NAME_PARAM_CONE_MIN_INLIERS = "/pitt/srv/cone_segmentation/min_inliers";
 const string NAME_PARAM_CYLINDER_MIN_INLIERS = "/pitt/srv/cylinder_segmentation/min_inliers";
@@ -54,8 +57,11 @@ const static int TXT_PLANE_SHAPE_TAG = 1;
 const static int TXT_SPHERE_SHAPE_TAG = 2;
 const static int TXT_CONE_SHAPE_TAG = 3;
 const static int TXT_CYLINDER_SHAPE_TAG = 4;
-
+//name in case the service fail to be called
+const string SRV_COLOR_FAILED = "no_color";
 int inputSphereMinInliers, inputCylinderMinInliers, inputConeMinInliers, inputPlaneMinInliers, coneOverCylinderPriority;
+
+
 
 void visSpin(){
     while(!vis->wasStopped()){
@@ -207,6 +213,21 @@ bool callRansacPlaneSegmentation( PCLCloudPtr cloud, PCLNormalPtr norm, Primitiv
     } else ROS_ERROR( " ERROR on service %s", client.getService().c_str());
     return( false);
 }
+bool callColorSrv(PCLCloudPtr cloud, string color){
+    NodeHandle n;
+    ServiceClient client = n.serviceClient<ColorSrvMsg>(SRV_NAME_COLOR);
+    ColorSrvMsg srv;
+    srv.request.cloud=PCManager::cloudToRosMsg( cloud);
+    if(client.call(srv))
+    {
+        color=srv.response.color.data;
+        return (true);
+    }
+    else
+    {
+        return(false);
+    }
+}
 // print sphere details
 void printPlaneInfo( PrimitiveSegmentationPtr info, int idx){
     if( info->response.inliers.size() > 0 && info->response.coefficients.size() > 0)
@@ -271,6 +292,9 @@ void clustersAcquisition(const ClustersOutputConstPtr& clusterObj){
             int R, G, B;
             int detechedPrimitiveTag;
             float xC, yC, zC;
+            string color;
+            //call color service
+
             PrimitiveSegmentationPtr primitiveInfo;
             if( ( ! planeInl) && ( ! sphereInl) && ( ! cylinderInl) && ( ! coneInl)){
                 R = 100, G = 100, B = 100;	// nothing : GRAY
@@ -331,6 +355,12 @@ void clustersAcquisition(const ClustersOutputConstPtr& clusterObj){
             outShape->y_pc_centroid = clusters[ j].y_centroid;
             outShape->z_pc_centroid = clusters[ j].z_centroid;
             outShape->shape_tag = returnPrimitiveNameFromTag( detechedPrimitiveTag);
+            if(callColorSrv(cluster, color)) {
+                outShape->color.data = color;
+            } else
+            {
+                outShape->color.data=SRV_COLOR_FAILED;
+            }
             if( detechedPrimitiveTag != TXT_UNKNOWN_SHAPE_TAG){
                 outShape->x_est_centroid = xC;
                 outShape->y_est_centroid = yC;
