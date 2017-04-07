@@ -85,11 +85,11 @@ using namespace std;
         const bool DEFAULT_INPUT_PARAM_SHOW_OBJECT_ON_SUPPORT = false; 				// as a unique cloud [orange]
         const bool DEFAULT_INPUT_PARAM_SHOW_CLUSTER_CLOUDS = false;						// as separate clusters [with random colors]
         //ARM FILTER SERVICE
-        const string DEFAULT_PARAM_ARM_SRV_CAMERA_FRAME_NAME = "/camera_depth_optical_frame";
-        const string DEFAULT_PARAM_ARM_SRV_RIGHT_FOREARM_FRAME_NAME = "/right_lower_forearm";
-        const string DEFAULT_PARAM_ARM_SRV_LEFT_FOREARM_FRAME_NAME = "/left_lower_forearm";
-        const string DEFAULT_PARAM_ARM_SRV_RIGHT_ELBOW_FRAME_NAME = "/right_lower_elbow";
-        const string DEFAULT_PARAM_ARM_SRV_LEFT_ELBOW_FRAME_NAME = "/left_lower_elbow";
+        const string DEFAULT_PARAM_ARM_SRV_CAMERA_FRAME_NAME = "CameraDepth_optical_frame";
+        const string DEFAULT_PARAM_ARM_SRV_RIGHT_FOREARM_FRAME_NAME = "RForeArm";
+        const string DEFAULT_PARAM_ARM_SRV_LEFT_FOREARM_FRAME_NAME = "LForeArm";
+        const string DEFAULT_PARAM_ARM_SRV_RIGHT_ELBOW_FRAME_NAME = "RElbow";
+        const string DEFAULT_PARAM_ARM_SRV_LEFT_ELBOW_FRAME_NAME = "LElbow";
         const bool DEFAULT_PARAM_ARM_SRV_SHOW_CLOUDS = false;	// [red filtered points (arm)] [green remaining points]
 
         // topics (between nodes) names

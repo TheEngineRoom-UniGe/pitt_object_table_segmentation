@@ -324,8 +324,8 @@ void depthAcquisition( const PointCloud2Ptr& input){
 						}
 					}
 				}
-			}
-		//}
+			//}
+		}
 	}
 	// print on screen
 	ROS_INFO_STREAM( "raw clusters data: [scan id, support idx, cluster idx, centroid X, cenntroid Y, centroid Z;\\n]" << endl << centroidFileLog);
