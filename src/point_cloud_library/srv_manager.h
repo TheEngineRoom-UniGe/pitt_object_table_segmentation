@@ -78,7 +78,7 @@ using namespace std;
         //OBJECT SEGMENTATION NODE
         const string DEFAULT_PARAM_INPUT_CLOUD_REFERENCE_FRAME = "/camera_depth_optical_frame";
         const string DEFAULT_PARAM_OUTPUT_CLOUD_REFERENCE_FRAME = "/world";
-        const string DEFAULT_INPUT_PARAM_RAW_CLOUD_TOPIC = "/camera/depth/points"; 	// default for freenect driver
+        const string DEFAULT_INPUT_PARAM_RAW_CLOUD_TOPIC = "/pepper_robot/camera/depth_registered/points"; 	// default for freenect driver
         const string DEFAULT_INPUT_PARAM_CENTROID_LOG_FILE_PATH = ""; 					// empty do not print
         const bool DEFAULT_INPUT_PARAM_SHOW_ORIGINAL_CLOUD = false; 				// with norms [white]
         const bool DEFAULT_INPUT_PARAM_SHOW_SUPPORT_CLOUDS = false;  						// [brown]

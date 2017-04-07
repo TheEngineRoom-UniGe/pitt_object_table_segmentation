@@ -15,6 +15,8 @@ pitt_msgs/ColorSrvMsg.h
 /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/color_services/pitt_msgs/ColorSrvMsg.h
 ../point_cloud_library/pc_manager.h
 /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/point_cloud_library/pc_manager.h
+pcl/RGBColorSystem.h
+-
 
 /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/obj_segmentation.cpp
 pcl_ros/point_cloud.h
@@ -105,6 +107,8 @@ pitt_msgs/InliersCluster.h
 /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/pitt_msgs/InliersCluster.h
 pitt_msgs/PrimitiveSegmentation.h
 /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/pitt_msgs/PrimitiveSegmentation.h
+pitt_msgs/ColorSrvMsg.h
+/home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/pitt_msgs/ColorSrvMsg.h
 pitt_msgs/TrackedShapes.h
 /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/pitt_msgs/TrackedShapes.h
 pitt_msgs/TrackedShape.h

@@ -1,4 +1,3 @@
-
 cmake_minimum_required(VERSION 2.8.3)
 project(pitt_object_table_segmentation)
 
@@ -218,4 +217,5 @@ add_dependencies(ransac_segmentation pitt_msgs_generate_messages_cpp)
 # endif()
 
 ## Add folders to be run by python nosetests
-# catkin_add_nosetests(test)
+# catkin_add_nosetests(test)ES})
+

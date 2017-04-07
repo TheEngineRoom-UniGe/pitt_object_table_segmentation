@@ -4,9 +4,9 @@
 			 
 	<!-- 			ARGS TO THAT CANNOT BE CHANGED AFTER LAUNCH (comment (or ".") (or <0.0f) (or ) for defaults values)	-->
 
-    <param name="/pitt/ref_frame/input_cloud" type="str" value= "/cameraB_depth_optical_frame" />
-    <param name="/pitt/ref_frame/output_cloud" type="str" value= "." />
-    <param name="/pitt/service/deep_filter/z_threshold" type="double" value= "1.5" />
+    <param name="/pitt/ref_frame/input_cloud" type="str" value= "CameraDepth_optical_frame" />
+    <param name="/pitt/ref_frame/output_cloud" type="str" value="odom" />
+    <param name="/pitt/service/deep_filter/z_threshold" type="double" value= "1" />
 
     <!--	###################	ARM FILTER PARAMETERS########################-->
 
@@ -23,7 +23,7 @@
     <rosparam param="/pitt/srv/supports_segmentation/in_shape_distance_th">[0.02f]</rosparam>              <!-- default:[0.02f] -->
     <rosparam param="/pitt/srv/supports_segmentation/normal_distance_weight">[0.9f]</rosparam>             <!-- default:[0.9f] -->
     <rosparam param="/pitt/srv/supports_segmentation/max_iter">[10]</rosparam>                             <!-- default:[10] -->
-    <rosparam param="/pitt/srv/supports_segmentation/horizontal_axis">[0.0f, 0.0f, -1.0f]</rosparam>       <!-- default:[0.0f, 0.0f, -1.0f] -->
+    <rosparam param="/pitt/srv/supports_segmentation/horizontal_axis">[-1.0f, 0.0f, 0.0f]</rosparam>       <!-- default:[0.0f, 0.0f, -1.0f] -->
     <rosparam param="/pitt/srv/supports_segmentation/edge_remove_offset">[0.02, 0.02, 0.005]</rosparam>    <!-- default:[0.02, 0.02, 0.005] -->
 
 
@@ -96,11 +96,11 @@
 
 
 	<!--			ARGS FOR OBJ_SEGMENTATION NODE	(considered only on launching)	("." for default)				--> 
-	<arg name="pitt_input_cloud_topic" value= "/cameraB/depth/points" /> 			<!-- default: "/camera/depth/points"					-->
+	<arg name="pitt_input_cloud_topic" value= "/pepper_robot/camera/depth_registered/points" /> 			<!-- default: "/camera/depth/points"					-->
 	<arg name="pitt_show_original_cloud" value="0" /> 								<!-- default: "0" (false) [white ptn]					-->
-	<arg name="pitt_show_supports" value="1" /> 									<!-- default: "0" (false) [brown ptn]					-->
-	<arg name="pitt_show_cluster" value="1" />		 								<!-- default: "0" (false) [random ptn]					-->
-	<arg name="pitt_show_object_on_support" value="0" /> 							<!-- default: "0" (false) [orange ptn]					-->
+	<arg name="pitt_show_supports" value="0" /> 									<!-- default: "0" (false) [brown ptn]					-->
+	<arg name="pitt_show_cluster" value="0" />		 								<!-- default: "0" (false) [random ptn]					-->
+	<arg name="pitt_show_object_on_support" value="1" /> 							<!-- default: "0" (false) [orange ptn]					-->
 	<arg name="pitt_raw_centroid_log_file_path" value="." /> 						<!-- default: "" (do not print)							-->
 		  					<!-- set to: ".." for timed formatting name (works only at the end of the path) or set to any other paths.
 		  						 ExAMPLE <arg name="pitt_raw_centroid_log_file_path" value="$(find pitt_object_table_segmentation)/logs/log-.." />  

@@ -21,6 +21,7 @@ using namespace pitt_msgs;
 typedef vector< InliersCluster> InliersClusters;
 typedef boost::shared_ptr< InliersClusters> InliersClustersPtr;
 typedef boost::shared_ptr< PrimitiveSegmentation> PrimitiveSegmentationPtr;
+
 //definition of the type PCL with RGB information
 
 ros::NodeHandle* nh_ptr = NULL;
@@ -213,6 +214,7 @@ bool callRansacPlaneSegmentation( PCLCloudPtr cloud, PCLNormalPtr norm, Primitiv
     } else ROS_ERROR( " ERROR on service %s", client.getService().c_str());
     return( false);
 }
+
 bool callColorSrv(PCLCloudPtr cloud, string color){
     NodeHandle n;
     ServiceClient client = n.serviceClient<ColorSrvMsg>(SRV_NAME_COLOR);
@@ -261,6 +263,7 @@ void clustersAcquisition(const ClustersOutputConstPtr& clusterObj){
         for( int j = 0; j < clusters.size(); j++){ // scan all the clusters
             // add primitive
             PCLCloudPtr cluster = PCManager::cloudForRosMsg( clusters[ j].cloud);
+
             PCLNormalPtr normalCluster = PCManager::estimateNormal( cluster);
 
             // initialize inlier count
