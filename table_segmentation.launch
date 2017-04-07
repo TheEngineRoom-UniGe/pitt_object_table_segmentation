@@ -6,7 +6,7 @@
 
     <param name="/pitt/ref_frame/input_cloud" type="str" value= "CameraDepth_optical_frame" />
     <param name="/pitt/ref_frame/output_cloud" type="str" value="odom" />
-    <param name="/pitt/service/deep_filter/z_threshold" type="double" value= "1" />
+    <param name="/pitt/service/deep_filter/z_threshold" type="double" value= "4" />
 
     <!--	###################	ARM FILTER PARAMETERS########################-->
 

@@ -90,7 +90,7 @@ const string NAME_COLOR_NONE = "none";
    }
 
    bool color_info(pitt_msgs::ColorSrvMsg::Request  &req, pitt_msgs::ColorSrvMsg::Response &res)
-   {
+   {    ROS_INFO_STREAM("looking for colors ..."<<endl);
       //variable definition
        string color_name ;
        float red, blue, green;
@@ -103,18 +103,22 @@ const string NAME_COLOR_NONE = "none";
        if(color_red(&hAverage))
        {
            color_name=NAME_COLOR_RED;
+           ROS_INFO_STREAM("RED"<<endl);
        }
        else if(color_green(&hAverage))
        {
            color_name=NAME_COLOR_GREEN;
+           ROS_INFO_STREAM("GREEN"<<endl);
        }
        else if(color_blue(&hAverage))
        {
            color_name=NAME_COLOR_BLUE;
+           ROS_INFO_STREAM("BLUE"<<endl);
        }
        else
        {
            color_name = NAME_COLOR_NONE;
+           ROS_INFO_STREAM("NONE"<<endl);
        }
        //filling the response
        res.color.data=color_name;

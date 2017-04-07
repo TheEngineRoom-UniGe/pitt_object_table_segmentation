@@ -78,7 +78,7 @@ void initializeInputParameters( SupportSegmentation::Request  &req){
 }
 
 // use ransac pcl implementation to find the biggest horizontal plane on the scene
-SACSegmentationFromNormals< PointXYZ, Normal> seg;
+SACSegmentationFromNormals< PointXYZRGB, Normal> seg;
 void ransacPlaneSegmentator( PCLCloudPtr inputCloud, PCLNormalPtr normals, PointIndices::Ptr &inlierOutput, ModelCoefficients::Ptr &coefficientOutput){
     // Create the segmentation object for the PLANAR model and set all the parameters
     seg.setOptimizeCoefficients( true);
@@ -103,7 +103,7 @@ void ransacPlaneSegmentator( PCLCloudPtr inputCloud, PCLNormalPtr normals, Point
 }
 
 // remove points for a cloud and compute the new cloud without such point
-ExtractIndices< PointXYZ> extract ( true);
+ExtractIndices< PointXYZRGB> extract ( true);
 void removePlaneInliner( PCLCloudPtr inputCloud, PointIndices::Ptr &removeIndex, PCLCloudPtr output){
     // compute output: part of the cloud with only index
     extract.setInputCloud( inputCloud);

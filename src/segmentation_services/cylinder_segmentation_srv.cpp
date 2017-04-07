@@ -125,7 +125,7 @@ bool ransacCylinderDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSeg
                   inputCylinderMaxOpeningAngle, DEFAULT_PARAM_CYLINDER_SRV_MAX_OPENING);
     
 	// apply RANSAC
-	SACSegmentationFromNormals< PointXYZ, Normal> seg;
+	SACSegmentationFromNormals< PointXYZRGB, Normal> seg;
 	ModelCoefficients::Ptr coefficients_cylinder( new ModelCoefficients);
 	PointIndices::Ptr inliers_cylinder( new PointIndices);
 	seg.setOptimizeCoefficients( true);
@@ -166,7 +166,7 @@ bool ransacCylinderDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSeg
 			P.z = cloud->points[ i].z;
 			vector3d A1P = getVectorBetweenPoints( A1, P);
 			float G = ( A1P.x * A1A2.x + A1P.y * A1A2.y + A1P.z * A1A2.z) / gDivis;
-			PointXYZ *p ( new PointXYZ( A1.x + G * A1A2.x, A1.y + G * A1A2.y, A1.z + G * A1A2.z));
+			PointXYZRGB *p ( new PointXYZRGB( A1.x + G * A1A2.x, A1.y + G * A1A2.y, A1.z + G * A1A2.z));
 			projected_cloud->push_back( *p);
 		}
 
@@ -175,8 +175,8 @@ bool ransacCylinderDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSeg
 		for( int i = 0; i < projected_cloud->size(); i++){
 			for( int j = 0; j < projected_cloud->size(); j++){
 				if( i > j){
-					PointXYZ p1 = projected_cloud->points[ i];
-					PointXYZ p2 = projected_cloud->points[ j];
+					PointXYZRGB p1 = projected_cloud->points[ i];
+					PointXYZRGB p2 = projected_cloud->points[ j];
 					float distance = sqrt(( p1.x - p2.x) * ( p1.x - p2.x) + ( p1.y - p2.y) * ( p1.y - p2.y) + ( p1.z - p2.z) * ( p1.z - p2.z));
 					if( distance > height){
 						height = distance; // save the new cone height
@@ -201,7 +201,7 @@ bool ransacCylinderDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSeg
 			PCManager::updateVisor( vis, projected_cloud, 255, 0, 0, "projected"); // show point of the cloud projected on the cone axis
 			PCManager::updateVisor( vis, projected_cloud->points[ idx1], 0, 0, 255, "pMax"); // add the maximum point to compute the height (distance)
 			PCManager::updateVisor( vis, projected_cloud->points[ idx2], 0, 0, 255, "pMin"); // add the minimum point to compute the height (distance)
-			PCManager::updateVisor( vis, PointXYZ( centroid.x, centroid.y, centroid.z), 0, 255, 0, "centroid"); // add the estimated centroid
+			PCManager::updateVisor( vis, PointXYZRGB( centroid.x, centroid.y, centroid.z), 0, 255, 0, "centroid"); // add the estimated centroid
 		}
 
 	}

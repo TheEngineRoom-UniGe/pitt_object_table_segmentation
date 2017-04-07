@@ -106,7 +106,7 @@ bool callDeepFilter( PCLCloudPtr& cloud){
 
 //filter points belonging to the robot arms
 bool callArmFilter( PCLCloudPtr& cloud){
-    ROS_INFO_STREAM("called arm filter"<<endl);
+
 	vector< float> srvArmFilterForearmMinBox, srvArmFilterForearmMaxBox, srvArmFilterElbowMinBox, srvArmFilterElbowMaxBox;
 
 	// initialise deep filter server caller
@@ -219,7 +219,7 @@ InlierSupportsPtr  callSupportFilter( PCLCloudPtr inputCloud, PCLNormalPtr norma
 
 // clusterize objects over the input support cloud
 InlierClusterPtr callClusterSegmentation( PCLCloudPtr cloud){
-    ROS_INFO_STREAM("called Cluster segmentation"<<endl);
+
     // call cluster service
 	ServiceClient client = nh_ptr->serviceClient< ClusterSegmentation>( srvm::SRV_NAME_CUSTER_FILTER);
 	ClusterSegmentation srv;
