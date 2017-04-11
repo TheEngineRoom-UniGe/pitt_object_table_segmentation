@@ -21,20 +21,20 @@ namespace pcm {
 
 // ######################################## GLOBAL VARAIBLES #######################################
 	// useful variable to estimate normals
-	static NormalEstimation< PointXYZRGB, Normal> ne;
-	static search::KdTree<PointXYZRGB>::Ptr tree ( new search::KdTree< PointXYZRGB> ());
+	static NormalEstimation< PointXYZ, Normal> ne;
+	static search::KdTree<PointXYZ>::Ptr tree ( new search::KdTree< PointXYZ> ());
 	// useful variable for down sampling
-	static VoxelGrid< PointXYZRGB> sor;
+	static VoxelGrid< PointXYZ> sor;
 
 // ########################################## STATIC ################################################
 	PCLCloudPtr PCManager::copyCloud( PCLCloudPtr input){
 		// create cloud
-		PointCloud< PointXYZRGB>::Ptr output ( new PointCloud< PointXYZRGB>);
+		PointCloud< PointXYZ>::Ptr output ( new PointCloud< PointXYZ>);
 		// copy it
 		for( int i = 0; i < input->size(); i++){
 			// remove Nan
 			//if( input->points[ i].x == input->points[ i].x && input->points[ i].y == input->points[ i].y && input->points[ i].z == input->points[ i].z){
-				PointXYZRGB *p ( new PointXYZRGB( input->points[ i].x, input->points[ i].y, input->points[ i].z));
+				PointXYZ *p ( new PointXYZ( input->points[ i].x, input->points[ i].y, input->points[ i].z));
 				output->push_back( *p);
 			//}
 		}
@@ -136,24 +136,24 @@ namespace pcm {
 		return viewer;
 	}
 	// method to show a single point
-	void PCManager::updateVisor ( PCLVisualizer viewer, PointXYZRGB point, int R, int G, int B, string name){
+	void PCManager::updateVisor ( PCLVisualizer viewer, PointXYZ point, int R, int G, int B, string name){
 		PCLCloudPtr cloud( new PCLCloud);
 		cloud->push_back( point);
-        visualization::PointCloudColorHandlerCustom< PointXYZRGB> color_handler( cloud, R, G, B);
+        visualization::PointCloudColorHandlerCustom< PointXYZ> color_handler( cloud, R, G, B);
         if (!viewer->updatePointCloud(cloud, color_handler, name)){
-            viewer->addPointCloud< PointXYZRGB>( cloud, color_handler, name);
+            viewer->addPointCloud< PointXYZ>( cloud, color_handler, name);
         }
 		viewer->setPointCloudRenderingProperties( visualization::PCL_VISUALIZER_POINT_SIZE, VISUALIZER_POINT_SIZE_BIG, name);
 	}
 	// show a single point (with random color))
-	void PCManager::updateVisor ( PCLVisualizer viewer, PointXYZRGB point, string name){
+	void PCManager::updateVisor ( PCLVisualizer viewer, PointXYZ point, string name){
 		updateVisor( viewer, point, rand()%255+1, rand()%255+1, rand()%255+1, name);
 	}
 	// method to show a new cloud
 	void PCManager::updateVisor ( PCLVisualizer viewer, PCLCloudPtr cloud, int R, int G, int B, string name){
-        visualization::PointCloudColorHandlerCustom< PointXYZRGB> color_handler( cloud, R, G, B);
+        visualization::PointCloudColorHandlerCustom< PointXYZ> color_handler( cloud, R, G, B);
         if (!viewer->updatePointCloud(cloud, color_handler, name)){
-            viewer->addPointCloud< PointXYZRGB>( cloud, color_handler, name);
+            viewer->addPointCloud< PointXYZ>( cloud, color_handler, name);
         }
 		viewer->setPointCloudRenderingProperties( visualization::PCL_VISUALIZER_POINT_SIZE, VISUALIZER_POINT_SIZE, name);
 	}
@@ -163,13 +163,13 @@ namespace pcm {
 	}
 	 // method to show a new cloud with normals
 	void PCManager::updateVisor ( PCLVisualizer viewer, PCLCloudPtr cloud, PCLNormalPtr normals, int R, int G, int B, string name){
-		visualization::PointCloudColorHandlerCustom< PointXYZRGB> color_handler( cloud, R, G, B);
+		visualization::PointCloudColorHandlerCustom< PointXYZ> color_handler( cloud, R, G, B);
         if ( viewer->updatePointCloud(cloud, color_handler, name)){
             viewer->removePointCloud( name + DEFAULT_NORM_NAME_SUFFIX);
-            viewer->addPointCloudNormals< PointXYZRGB, Normal> ( cloud, normals, DEFAULT_NORM_LEVEL, DEFAULT_NORM_SCALE, name + DEFAULT_NORM_NAME_SUFFIX);
+            viewer->addPointCloudNormals< PointXYZ, Normal> ( cloud, normals, DEFAULT_NORM_LEVEL, DEFAULT_NORM_SCALE, name + DEFAULT_NORM_NAME_SUFFIX);
          } else {
-            viewer->addPointCloud< PointXYZRGB>( cloud, color_handler, name);
-            viewer->addPointCloudNormals< PointXYZRGB, Normal> ( cloud, normals, DEFAULT_NORM_LEVEL, DEFAULT_NORM_SCALE, name + DEFAULT_NORM_NAME_SUFFIX);
+            viewer->addPointCloud< PointXYZ>( cloud, color_handler, name);
+            viewer->addPointCloudNormals< PointXYZ, Normal> ( cloud, normals, DEFAULT_NORM_LEVEL, DEFAULT_NORM_SCALE, name + DEFAULT_NORM_NAME_SUFFIX);
         }
 		viewer->setPointCloudRenderingProperties ( visualization::PCL_VISUALIZER_POINT_SIZE, VISUALIZER_POINT_SIZE, name);
 	}

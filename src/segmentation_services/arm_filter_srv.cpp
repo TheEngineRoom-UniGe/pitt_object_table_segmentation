@@ -63,7 +63,7 @@ PCLCloudPtr armFiltering(PCLCloudPtr original, Vector4f minValues, Vector4f maxV
 	Vector3f translation;
 	Vector3f rotation;
 	Affine3f trans = Affine3f::Identity();
-	CropBox<PointXYZRGB> cropFilter;
+	CropBox<PointXYZ> cropFilter;
 	PCLCloudPtr filteredCloud (new PCLCloud);
 	tf::Matrix3x3 rotMat;
 

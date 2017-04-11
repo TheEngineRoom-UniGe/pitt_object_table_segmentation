@@ -59,12 +59,12 @@ bool clusterize(ClusterSegmentation::Request  &req, ClusterSegmentation::Respons
 	if( cloud->points.size() >= inputClusterMinInputSize){ // skip if input cloud is too small
 
 		// Creating the KdTree object for the search method of the extraction
-		search::KdTree< PointXYZRGB>::Ptr tree (new search::KdTree< PointXYZRGB>);
+		search::KdTree< PointXYZ>::Ptr tree (new search::KdTree< PointXYZ>);
 		tree->setInputCloud ( cloud);
 
 		// compute clusters
 		vector< PointIndices> cluster_indices;
-		EuclideanClusterExtraction< PointXYZRGB> ec;
+		EuclideanClusterExtraction< PointXYZ> ec;
 		ec.setClusterTolerance(inputClusterTolerance); // in meters
 		ec.setMinClusterSize( round(cloud->points.size () * inputClusterMinSizeRate)); // percentage
 		ec.setMaxClusterSize( round(cloud->points.size () * inputClusterMaxSizeRate));
@@ -86,7 +86,7 @@ bool clusterize(ClusterSegmentation::Request  &req, ClusterSegmentation::Respons
 				// set inlier
 				inlier->push_back( *pit);
 				// set a point of the cloud
-				PointXYZRGB* p ( new PointXYZRGB( cloud->points[*pit].x, cloud->points[*pit].y, cloud->points[*pit].z));
+				PointXYZ* p ( new PointXYZ( cloud->points[*pit].x, cloud->points[*pit].y, cloud->points[*pit].z));
 				cloudExtraxted->push_back( *p);
 
 				// save summ to compute avarage

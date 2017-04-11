@@ -73,7 +73,7 @@ bool ransacSphereDetection(PrimitiveSegmentation::Request &req, PrimitiveSegment
 
 
 	// apply RANSAC
-	SACSegmentationFromNormals< PointXYZRGB, Normal> seg;
+	SACSegmentationFromNormals< PointXYZ, Normal> seg;
 	ModelCoefficients::Ptr coefficients_sphere( new ModelCoefficients);
 	PointIndices::Ptr inliers_sphere( new PointIndices);
 	seg.setOptimizeCoefficients( true);

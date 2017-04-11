@@ -67,8 +67,8 @@ namespace pcm {
 			static void updateVisor ( PCLVisualizer viewer, PCLCloudPtr cloud, string name); // method to show a new cloud (with random color)
 			static void updateVisor ( PCLVisualizer viewer, PCLCloudPtr cloud, PCLNormalPtr normals, int R, int G, int B, string name); // method to show a new cloud with normals
 			static void updateVisor ( PCLVisualizer viewer, PCLCloudPtr cloud, PCLNormalPtr normals, string name); // method to show a new cloud with normals with random color
-			static void updateVisor ( PCLVisualizer viewer, PointXYZRGB point, int R, int G, int B, string name); // show a single point
-			static void updateVisor ( PCLVisualizer viewer, PointXYZRGB point, string name); // show a single point (with random color))
+			static void updateVisor ( PCLVisualizer viewer, PointXYZ point, int R, int G, int B, string name); // show a single point
+			static void updateVisor ( PCLVisualizer viewer, PointXYZ point, string name); // show a single point (with random color))
 			static void clearVisor( PCLVisualizer viewer);
 			// get cloud from original cloud and inlier idx (for debug)
 			static vector< PCLCloudPtr> getCloudFromIdx( PCLCloudPtr originalCloud, PrimitiveIdxPtr indices);

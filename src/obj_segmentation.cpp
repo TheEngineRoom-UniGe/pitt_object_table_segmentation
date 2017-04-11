@@ -299,6 +299,7 @@ void depthAcquisition( const PointCloud2Ptr& input){
 						if( clusters->size() > 0){ // at least one cluster
 							for( int j = 0; j < clusters->size(); j++){ // for all the clusters
 								InliersCluster clusterObject = (* clusters)[ j];
+
 								// append this cluster to output
 								out->cluster_objs.push_back( clusterObject);
 

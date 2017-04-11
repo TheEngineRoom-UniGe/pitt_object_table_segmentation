@@ -17,8 +17,8 @@ using namespace sensor_msgs;
 // nice abbreviation for pointer to custom class
 typedef std::vector< int> PrimitiveIdx;									// for refer cloud points to original cloud index
 typedef boost::shared_ptr< std::vector< int> > PrimitiveIdxPtr;			// for refer cloud points to original cloud index smart pointer
-typedef pcl::PointCloud< pcl::PointXYZRGB> PCLCloud;						// for point cloud
-typedef pcl::PointCloud< pcl::PointXYZRGB>::Ptr PCLCloudPtr;				// for point cloud smart pointer
+typedef pcl::PointCloud< pcl::PointXYZ> PCLCloud;						// for point cloud
+typedef pcl::PointCloud< pcl::PointXYZ>::Ptr PCLCloudPtr;				// for point cloud smart pointer
 typedef pcl::PointCloud< pcl::Normal> PCLNormal;						// for normal estimation of a point cloud
 typedef pcl::PointCloud< pcl::Normal>::Ptr PCLNormalPtr;				// for normal estimation of a point cloud smart pointer
 
