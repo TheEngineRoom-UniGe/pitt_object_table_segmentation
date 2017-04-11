@@ -269,23 +269,23 @@ void clustersAcquisition(const ClustersOutputConstPtr& clusterObj){
             // initialize inlier count
             size_t planeInl = 0, coneInl = 0, sphereInl = 0, cylinderInl = 0;
             size_t clusterSize = cluster->size();
-            ROS_INFO_STREAM("CALLING SPHERE SERVICE"<<endl);
+
             // call ransac sphere service
             PrimitiveSegmentationPtr outSphere ( new PrimitiveSegmentation);
             if( callRansacSphereSegmentation( cluster, normalCluster, outSphere))
                 sphereInl = outSphere->response.inliers.size();
-            ROS_INFO_STREAM("CALLING CYLINDER SERVICE"<<endl);
+
             // call ransac cylinder service
             PrimitiveSegmentationPtr outCylinder ( new PrimitiveSegmentation);
             if( callRansacCylinderSegmentation( cluster, normalCluster, outCylinder))
                 cylinderInl = outCylinder->response.inliers.size();
 
-            ROS_INFO_STREAM("CALLING CONE SERVICE"<<endl);
+
             // call ransac cone service
             PrimitiveSegmentationPtr outCone ( new PrimitiveSegmentation);
             if( callRansacConeSegmentation( cluster, normalCluster, outCone))
                 coneInl = outCone->response.inliers.size();
-            ROS_INFO_STREAM("CALLING PLANE SERVICE"<<endl);
+
             // call ransac plane service
             PrimitiveSegmentationPtr outPlane ( new PrimitiveSegmentation);
             if( callRansacPlaneSegmentation( cluster, normalCluster, outPlane))

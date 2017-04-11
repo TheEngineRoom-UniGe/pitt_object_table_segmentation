@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
         std_msgs
         tf
         pitt_msgs
+
         )
 
 find_package(PCL REQUIRED)

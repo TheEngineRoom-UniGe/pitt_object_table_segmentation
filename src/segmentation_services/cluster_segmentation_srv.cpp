@@ -12,7 +12,7 @@
 // for traslating from PointCloud<> to PointCloud2
 #include <pcl_conversions/pcl_conversions.h>
 // for my point cloud static library
-
+#include <pcl/impl/point_types.hpp>
 
 #include "../point_cloud_library/pc_manager.h"
 #include "../point_cloud_library/srv_manager.h"
@@ -59,12 +59,12 @@ bool clusterize(ClusterSegmentation::Request  &req, ClusterSegmentation::Respons
 	if( cloud->points.size() >= inputClusterMinInputSize){ // skip if input cloud is too small
 
 		// Creating the KdTree object for the search method of the extraction
-		search::KdTree< PointXYZ>::Ptr tree (new search::KdTree< PointXYZ>);
+		search::KdTree< PointXYZRGB>::Ptr tree (new search::KdTree< PointXYZRGB>);
 		tree->setInputCloud ( cloud);
 
 		// compute clusters
 		vector< PointIndices> cluster_indices;
-		EuclideanClusterExtraction< PointXYZ> ec;
+		EuclideanClusterExtraction< PointXYZRGB> ec;
 		ec.setClusterTolerance(inputClusterTolerance); // in meters
 		ec.setMinClusterSize( round(cloud->points.size () * inputClusterMinSizeRate)); // percentage
 		ec.setMaxClusterSize( round(cloud->points.size () * inputClusterMaxSizeRate));
@@ -86,7 +86,11 @@ bool clusterize(ClusterSegmentation::Request  &req, ClusterSegmentation::Respons
 				// set inlier
 				inlier->push_back( *pit);
 				// set a point of the cloud
-				PointXYZ* p ( new PointXYZ( cloud->points[*pit].x, cloud->points[*pit].y, cloud->points[*pit].z));
+				Eigen::Vector3i rgb_data=cloud->points[*pit].getRGBVector3i();
+				PointXYZRGB* p ( new PointXYZRGB(rgb_data(0),rgb_data(1),rgb_data(2)));
+				p->x=cloud->points[*pit].x;
+				p->y=cloud->points[*pit].y;
+				p->z=cloud->points[*pit].z;
 				cloudExtraxted->push_back( *p);
 
 				// save summ to compute avarage

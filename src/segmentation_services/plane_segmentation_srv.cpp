@@ -70,7 +70,7 @@ bool ransacPlaneDetaction( PrimitiveSegmentation::Request  &req, PrimitiveSegmen
 
 
 	// apply RANSAC
-	SACSegmentationFromNormals< PointXYZ, Normal> seg;
+	SACSegmentationFromNormals< PointXYZRGB, Normal> seg;
 	ModelCoefficients::Ptr coefficients_plane( new ModelCoefficients);
 	PointIndices::Ptr inliers_plane( new PointIndices);
 	seg.setOptimizeCoefficients( true);
