@@ -219,10 +219,13 @@ bool callColorSrv(PCLCloudPtr cloud, string color){
     NodeHandle n;
     ServiceClient client = n.serviceClient<ColorSrvMsg>(SRV_NAME_COLOR);
     ColorSrvMsg srv;
+
     srv.request.cloud=PCManager::cloudToRosMsg( cloud);
     if(client.call(srv))
     {
         color=srv.response.color.data;
+        ROS_INFO("%s ", srv.response.color.data.c_str());
+
         return (true);
     }
     else
@@ -358,11 +361,14 @@ void clustersAcquisition(const ClustersOutputConstPtr& clusterObj){
             outShape->y_pc_centroid = clusters[ j].y_centroid;
             outShape->z_pc_centroid = clusters[ j].z_centroid;
             outShape->shape_tag = returnPrimitiveNameFromTag( detechedPrimitiveTag);
+            ROS_INFO("CALLING_COLOR_SRV");
+
             if(callColorSrv(cluster, color)) {
-                outShape->color.data = color;
+                outShape->color.data= color;
             } else
             {
                 outShape->color.data=SRV_COLOR_FAILED;
+
             }
             if( detechedPrimitiveTag != TXT_UNKNOWN_SHAPE_TAG){
                 outShape->x_est_centroid = xC;

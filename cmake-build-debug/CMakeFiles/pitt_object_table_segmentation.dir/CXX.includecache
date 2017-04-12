@@ -169,6 +169,8 @@ std_msgs/String.h
 -
 pcl_conversions/pcl_conversions.h
 -
+pcl/impl/point_types.hpp
+-
 ../point_cloud_library/pc_manager.h
 /home/carlotta/catkin_ws/src/PITT/pitt_object_table_segmentation/src/point_cloud_library/pc_manager.h
 ../point_cloud_library/srv_manager.h

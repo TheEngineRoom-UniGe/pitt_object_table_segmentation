@@ -14,6 +14,9 @@ find_package(catkin REQUIRED COMPONENTS
         tf
         pitt_msgs
 
+
+
+
         )
 
 find_package(PCL REQUIRED)
@@ -171,7 +174,10 @@ add_executable(ransac_segmentation src/ransac_segmentation.cpp)
 target_link_libraries(ransac_segmentation pc_manager ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 add_dependencies(ransac_segmentation pitt_msgs_generate_messages_cpp)
 
-
+#color service
+add_executable(color_services src/color_services/color_srv.cpp)
+target_link_libraries(color_services pc_manager ${catkin_LIBRARIES} ${PCL_LIBRARIES} )
+add_dependencies(color_services pitt_msgs_generate_messages_cpp)
 #############
 ## Install ##
 #############

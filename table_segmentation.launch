@@ -161,7 +161,7 @@
 	<node name="ransac_segmentation" 			pkg="pitt_object_table_segmentation" 	type="ransac_segmentation" 			output="screen"
 	    args= "$(arg ransac_show_primitives)"/>
 		<!-- 			COLOR SRV CONFIG																					-->
-<node name="color_srv" 		pkg="pitt_object_table_segmentation" 	type="color_srv"		/> <!-- output="screen"/> -->
+<node name="color_srv" 		pkg="pitt_object_table_segmentation" 	type="color_srv"  output="screen"/> 
 
 		<!--			TRACKER																							-->
 	<node name="geometric_tracker" 				pkg="pitt_geometric_tracking" 			type="geometric_tracker" 	
