@@ -24,16 +24,19 @@ const string NAME_COLOR_GREEN = "GREEN";
 const string NAME_COLOR_YELLOW="YELLOW";
 const string NAME_COLOR_PINK="PINK";
 const string NAME_COLOR_NONE = "NO_COLOR_RECOGNIZE";
+//functions to check  the quantity of points which have a certain color. It uses the hsv representation
 
-    //functions to check the color of the point cloud starting form its average hue data
-
-    //red color
-    float color_red(PCLCloudPtr cloud, int cloudSize)
-    {  pcl::PointXYZHSV hsv;
+//red color
+float color_red(PCLCloudPtr cloud, int cloudSize)
+    {   //definition of the pcl in hsv space
+        pcl::PointXYZHSV hsv;
+        // initialization of the counter
         float counter_red=0;
+        // for each point of the cloud check the color
         for (int i = 0; i < cloudSize; i++)
         {   //conversion from RGB to HSV color space
             pcl::PointXYZRGBtoXYZHSV(cloud->points[i], hsv);
+            //check whether the point has red color
             if(hsv.h>=320){
                 counter_red++;
             }
@@ -41,24 +44,29 @@ const string NAME_COLOR_NONE = "NO_COLOR_RECOGNIZE";
                 counter_red++;
             }
         }
+        //computing it as percentage
         counter_red=counter_red/cloudSize;
         return counter_red;
 
     }
 
-    //Green color
+//Green color
 
-    float color_green(PCLCloudPtr cloud, int cloudSize)
-    {
+float color_green(PCLCloudPtr cloud, int cloudSize)
+    {   //definition of the pcl in hsv space
         pcl::PointXYZHSV hsv;
+        // initialization of the counter
         float counter_green=0;
+        // for each point of the cloud check the color
         for (int i = 0; i < cloudSize; i++)
         {   //conversion from RGB to HSV color space
             pcl::PointXYZRGBtoXYZHSV(cloud->points[i], hsv);
+            //check whether the point has green color
             if(hsv.h<=160 && hsv.h>=80){
                 counter_green++;
             }
         }
+        //computing it as percentage
         counter_green=counter_green/cloudSize;
         return counter_green;
     }
@@ -68,50 +76,66 @@ const string NAME_COLOR_NONE = "NO_COLOR_RECOGNIZE";
 //Yellow color
 
 float color_yellow(PCLCloudPtr cloud, int cloudSize)
-{
+{   //definition of the pcl in hsv space
     pcl::PointXYZHSV hsv;
+    // initialization of the counter
     float counter_yellow=0;
+    // for each point of the cloud check the color
     for (int i = 0; i < cloudSize; i++)
     {   //conversion from RGB to HSV color space
         pcl::PointXYZRGBtoXYZHSV(cloud->points[i], hsv);
+        //check whether the point has yellow color
         if(hsv.h<80 && hsv.h>=40){
             counter_yellow++;
         }
     }
+    //computing it as percentage
     counter_yellow=counter_yellow/cloudSize;
     return counter_yellow;
 }
 
-    //Blue color
-    float color_blue(PCLCloudPtr cloud, int cloudSize)
-    {   pcl::PointXYZHSV hsv;
+
+//Blue color
+float color_blue(PCLCloudPtr cloud, int cloudSize)
+    {  //definition of the pcl in hsv space
+        pcl::PointXYZHSV hsv;
+        // initialization of the counter
         float counter_blue=0;
+        // for each point of the cloud check the color
         for (int i = 0; i < cloudSize; i++)
         {   //conversion from RGB to HSV color space
             pcl::PointXYZRGBtoXYZHSV(cloud->points[i], hsv);
+            //check whether the point has blue color
             if(hsv.h>160 && hsv.h<=280){
                 counter_blue++;
             }
         }
+        //computing it as percentage
         counter_blue=counter_blue/cloudSize;
         return counter_blue;
     }
+
 //Pink color
 float color_pink(PCLCloudPtr cloud, int cloudSize)
-{   pcl::PointXYZHSV hsv;
+{   //definition of the pcl in hsv space
+    pcl::PointXYZHSV hsv;
+    // initialization of the counter
     float counter_pink=0;
+    // for each point of the cloud check the color
     for (int i = 0; i < cloudSize; i++)
     {   //conversion from RGB to HSV color space
         pcl::PointXYZRGBtoXYZHSV(cloud->points[i], hsv);
+        //check whether the point has pink color
         if(hsv.h>280 && hsv.h<320){
             counter_pink++;
         }
     }
+    //computing it as percentage
     counter_pink=counter_pink/cloudSize;
     return counter_pink;
 }
 
-
+// function which will be executed everytime the service is called
    bool color_info(pitt_msgs::ColorSrvMsg::Request  &req, pitt_msgs::ColorSrvMsg::Response &res)
    {
       //variable definition
@@ -121,17 +145,17 @@ float color_pink(PCLCloudPtr cloud, int cloudSize)
        float counter_blue;
        float counter_pink;
        float counter_yellow;
-       pcl::PointXYZHSV hsv;
        //conversion of the input PCL
        PCLCloudPtr cloud = PCManager::cloudForRosMsg(req.cloud);
+       //saving the size of the cloud
        int cloudSize=cloud->points.size();
+       //calling the function that computes the percentage of each color
        counter_red=color_red(cloud,cloudSize);
        counter_green=color_green(cloud,cloudSize);
        counter_blue=color_blue(cloud,cloudSize);
        counter_yellow=color_yellow(cloud,cloudSize);
        counter_pink=color_pink(cloud,cloudSize);
-       // check which color is the point cloud
-
+       // check which color is more present in each object
         if(counter_green>counter_red && counter_green>counter_blue && counter_green>counter_pink && counter_green>counter_yellow)
        {
            color_name=NAME_COLOR_GREEN;
@@ -158,12 +182,15 @@ float color_pink(PCLCloudPtr cloud, int cloudSize)
 
        //filling the response
        res.Color.data=color_name;
+       // TODO deleta or increase with information regarding the other colors
        res.bluePercentage.data=counter_blue;
        res.greenPercentage.data=counter_green;
        res.redPercentage.data=counter_red;
 
        return true;
    }
+
+
 int main(int argc, char **argv)
 {
     ros::init(argc, argv,SRV_NAME_COLOR );

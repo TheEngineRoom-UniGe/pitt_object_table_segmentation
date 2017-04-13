@@ -214,7 +214,7 @@ bool callRansacPlaneSegmentation( PCLCloudPtr cloud, PCLNormalPtr norm, Primitiv
     } else ROS_ERROR( " ERROR on service %s", client.getService().c_str());
     return( false);
 }
-
+//function which calls the color service
 bool callColorSrv(PCLCloudPtr cloud, string* color){
     NodeHandle n;
     ServiceClient client = n.serviceClient<ColorSrvMsg>(SRV_NAME_COLOR);
@@ -366,8 +366,7 @@ void clustersAcquisition(const ClustersOutputConstPtr& clusterObj){
             outShape->y_pc_centroid = clusters[ j].y_centroid;
             outShape->z_pc_centroid = clusters[ j].z_centroid;
             outShape->shape_tag = returnPrimitiveNameFromTag( detechedPrimitiveTag);
-            ROS_INFO("CALLING_COLOR_SRV");
-
+            // calling the color service
             if(callColorSrv(cluster, &color)) {
                 outShape->color.data= color;
             } else
