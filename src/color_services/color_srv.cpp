@@ -22,95 +22,133 @@ const string NAME_COLOR_RED = "RED";
 const string NAME_COLOR_BLUE = "BLUE";
 const string NAME_COLOR_GREEN = "GREEN";
 const string NAME_COLOR_YELLOW="YELLOW";
+const string NAME_COLOR_PINK="PINK";
 const string NAME_COLOR_NONE = "NO_COLOR_RECOGNIZE";
 
     //functions to check the color of the point cloud starting form its average hue data
 
     //red color
-    int color_red(PCLCloudPtr cloud, int cloud_size)
+    float color_red(PCLCloudPtr cloud, int cloudSize)
     {  pcl::PointXYZHSV hsv;
-        if(hAverage > 180){
-            return true;
+        float counter_red=0;
+        for (int i = 0; i < cloudSize; i++)
+        {   //conversion from RGB to HSV color space
+            pcl::PointXYZRGBtoXYZHSV(cloud->points[i], hsv);
+            if(hsv.h>=320){
+                counter_red++;
+            }
+            else if(hsv.h<=40){
+                counter_red++;
+            }
         }
-        else {
+        counter_red=counter_red/cloudSize;
+        return counter_red;
 
-            return false;
-        }
     }
-bool color_yellow(float  hAverage)
-{
-    if(hAverage > 140 && hAverage<180){
-        return true;
-    }
-    else {
 
-        return false;
-    }
-}
     //Green color
 
-    bool color_green(float  hAverage)
+    float color_green(PCLCloudPtr cloud, int cloudSize)
     {
-        if(hAverage < 150 && hAverage > 100){
-            return true;
+        pcl::PointXYZHSV hsv;
+        float counter_green=0;
+        for (int i = 0; i < cloudSize; i++)
+        {   //conversion from RGB to HSV color space
+            pcl::PointXYZRGBtoXYZHSV(cloud->points[i], hsv);
+            if(hsv.h<=160 && hsv.h>=80){
+                counter_green++;
+            }
         }
-        else {
+        counter_green=counter_green/cloudSize;
+        return counter_green;
+    }
 
-            return false;
+
+
+//Yellow color
+
+float color_yellow(PCLCloudPtr cloud, int cloudSize)
+{
+    pcl::PointXYZHSV hsv;
+    float counter_yellow=0;
+    for (int i = 0; i < cloudSize; i++)
+    {   //conversion from RGB to HSV color space
+        pcl::PointXYZRGBtoXYZHSV(cloud->points[i], hsv);
+        if(hsv.h<80 && hsv.h>=40){
+            counter_yellow++;
         }
     }
+    counter_yellow=counter_yellow/cloudSize;
+    return counter_yellow;
+}
 
     //Blue color
-    bool color_blue(float  hAverage)
-    {
-        if(hAverage > 200){
-            return true;
+    float color_blue(PCLCloudPtr cloud, int cloudSize)
+    {   pcl::PointXYZHSV hsv;
+        float counter_blue=0;
+        for (int i = 0; i < cloudSize; i++)
+        {   //conversion from RGB to HSV color space
+            pcl::PointXYZRGBtoXYZHSV(cloud->points[i], hsv);
+            if(hsv.h>160 && hsv.h<=280){
+                counter_blue++;
+            }
         }
-        else {
-
-            return false;
+        counter_blue=counter_blue/cloudSize;
+        return counter_blue;
+    }
+//Pink color
+float color_pink(PCLCloudPtr cloud, int cloudSize)
+{   pcl::PointXYZHSV hsv;
+    float counter_pink=0;
+    for (int i = 0; i < cloudSize; i++)
+    {   //conversion from RGB to HSV color space
+        pcl::PointXYZRGBtoXYZHSV(cloud->points[i], hsv);
+        if(hsv.h>280 && hsv.h<320){
+            counter_pink++;
         }
     }
+    counter_pink=counter_pink/cloudSize;
+    return counter_pink;
+}
+
 
    bool color_info(pitt_msgs::ColorSrvMsg::Request  &req, pitt_msgs::ColorSrvMsg::Response &res)
    {
       //variable definition
        string color_name ;
-       float hAverage=0;
-       float sum_sq=0;
-       float variance=0;
+       float counter_red;
+       float counter_green;
+       float counter_blue;
+       float counter_pink;
+       float counter_yellow;
        pcl::PointXYZHSV hsv;
        //conversion of the input PCL
        PCLCloudPtr cloud = PCManager::cloudForRosMsg(req.cloud);
        int cloudSize=cloud->points.size();
-
-       //computation of the average HSV value
-       for (int i = 0; i < cloudSize; i++)
-       {   //conversion from RGB to HSV color space
-           pcl::PointXYZRGBtoXYZHSV(cloud->points[i], hsv);
-           hAverage=hAverage+hsv.h;
-           sum_sq=sum_sq+hsv.h*hsv.h;
-           ROS_INFO_STREAM(hsv.h<<endl);
-       }
-
-       hAverage=hAverage/cloudSize;
-       variance=(sum_sq-(hAverage*hAverage)/cloudSize)/(cloudSize-1);
-
+       counter_red=color_red(cloud,cloudSize);
+       counter_green=color_green(cloud,cloudSize);
+       counter_blue=color_blue(cloud,cloudSize);
+       counter_yellow=color_yellow(cloud,cloudSize);
+       counter_pink=color_pink(cloud,cloudSize);
        // check which color is the point cloud
-       if(color_red(hAverage))
-       {
-           color_name=NAME_COLOR_RED;
-       }
-       else if(color_green(hAverage))
+
+        if(counter_green>counter_red && counter_green>counter_blue && counter_green>counter_pink && counter_green>counter_yellow)
        {
            color_name=NAME_COLOR_GREEN;
        }
-       else if(color_blue(hAverage))
+       else if(counter_blue>counter_red && counter_blue>counter_green && counter_blue>counter_pink && counter_blue>counter_yellow)
        {
            color_name=NAME_COLOR_BLUE;
        }
-       else if(color_yellow(hAverage))
+       else if(counter_red>counter_blue && counter_red>counter_green && counter_red>counter_yellow && counter_red>counter_pink)
+        {
+            color_name = NAME_COLOR_RED;
+        }
+        else if(counter_pink>counter_blue && counter_pink>counter_green && counter_pink>counter_yellow && counter_pink>counter_red)
        {
+           color_name=NAME_COLOR_PINK;
+       }
+       else if (counter_yellow>counter_blue && counter_yellow>counter_green && counter_yellow>counter_pink && counter_yellow>counter_red){
            color_name=NAME_COLOR_YELLOW;
        }
        else
@@ -120,8 +158,10 @@ bool color_yellow(float  hAverage)
 
        //filling the response
        res.Color.data=color_name;
-       res.Hue.data=hAverage;
-       res.Variance.data=variance;
+       res.bluePercentage.data=counter_blue;
+       res.greenPercentage.data=counter_green;
+       res.redPercentage.data=counter_red;
+
        return true;
    }
 int main(int argc, char **argv)

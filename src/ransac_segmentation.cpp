@@ -215,22 +215,22 @@ bool callRansacPlaneSegmentation( PCLCloudPtr cloud, PCLNormalPtr norm, Primitiv
     return( false);
 }
 
-bool callColorSrv(PCLCloudPtr cloud, string color){
+bool callColorSrv(PCLCloudPtr cloud, string* color){
     NodeHandle n;
     ServiceClient client = n.serviceClient<ColorSrvMsg>(SRV_NAME_COLOR);
     ColorSrvMsg srv;
-    float hue;
-    float variance;
+    float R,G,B;
     srv.request.cloud=PCManager::cloudToRosMsg( cloud);
     if(client.call(srv))
     {
-        color=srv.response.Color.data;
+        *color=srv.response.Color.data;
         ROS_INFO_STREAM(color<<"color_name"<<endl);
-        hue=srv.response.Hue.data;
-        ROS_INFO_STREAM(hue<<"hue"<<endl);
-        variance=srv.response.Variance.data;
-        ROS_INFO("%f",variance);
-
+        R=srv.response.redPercentage.data;
+        ROS_INFO("%f",R);
+        G=srv.response.greenPercentage.data;
+        ROS_INFO("%f",G);
+        B=srv.response.bluePercentage.data;
+        ROS_INFO("%f",B);
         return (true);
     }
     else
@@ -368,7 +368,7 @@ void clustersAcquisition(const ClustersOutputConstPtr& clusterObj){
             outShape->shape_tag = returnPrimitiveNameFromTag( detechedPrimitiveTag);
             ROS_INFO("CALLING_COLOR_SRV");
 
-            if(callColorSrv(cluster, color)) {
+            if(callColorSrv(cluster, &color)) {
                 outShape->color.data= color;
             } else
             {
