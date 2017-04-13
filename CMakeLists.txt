@@ -14,9 +14,6 @@ find_package(catkin REQUIRED COMPONENTS
         tf
         pitt_msgs
 
-
-
-
         )
 
 find_package(PCL REQUIRED)
@@ -97,7 +94,7 @@ catkin_package(
         #  INCLUDE_DIRS include
         #  LIBRARIES object_table_segmentation
         #  CATKIN_DEPENDS other_catkin_pkg
-        CATKIN_DEPENDS pcl_conversions roscpp sensor_msgs pcl_msgs pitt_msgs message_generation
+        CATKIN_DEPENDS pcl_conversions roscpp sensor_msgs pcl_msgs pitt_msgs message_generation std_msgs
         #  DEPENDS system_lib
 )
 

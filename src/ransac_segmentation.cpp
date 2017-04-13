@@ -6,7 +6,7 @@
 #include "pitt_msgs/TrackedShape.h" // for out message
 #include "point_cloud_library/pc_manager.h" // for my static library
 #include "point_cloud_library/srv_manager.h"
-
+#include "std_msgs/String.h"
 #include <boost/thread.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/format.hpp>
@@ -219,12 +219,17 @@ bool callColorSrv(PCLCloudPtr cloud, string color){
     NodeHandle n;
     ServiceClient client = n.serviceClient<ColorSrvMsg>(SRV_NAME_COLOR);
     ColorSrvMsg srv;
-
+    float hue;
+    float variance;
     srv.request.cloud=PCManager::cloudToRosMsg( cloud);
     if(client.call(srv))
     {
-        color=srv.response.color.data;
-        ROS_INFO("%s ", srv.response.color.data.c_str());
+        color=srv.response.Color.data;
+        ROS_INFO_STREAM(color<<"color_name"<<endl);
+        hue=srv.response.Hue.data;
+        ROS_INFO_STREAM(hue<<"hue"<<endl);
+        variance=srv.response.Variance.data;
+        ROS_INFO("%f",variance);
 
         return (true);
     }
