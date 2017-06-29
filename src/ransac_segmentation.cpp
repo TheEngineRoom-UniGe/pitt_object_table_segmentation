@@ -223,14 +223,10 @@ bool callColorSrv(PCLCloudPtr cloud, string* color){
     srv.request.cloud=PCManager::cloudToRosMsg( cloud);
     if(client.call(srv))
     {
-        *color=srv.response.Color.data;
-        ROS_INFO_STREAM(color<<"color_name"<<endl);
+        *color=srv.response.Color.data.c_str();
+        ROS_INFO_STREAM(srv.response.Color.data.c_str()<<"color_name"<<endl);
         R=srv.response.redPercentage.data;
-        ROS_INFO("%f",R);
-        G=srv.response.greenPercentage.data;
-        ROS_INFO("%f",G);
-        B=srv.response.bluePercentage.data;
-        ROS_INFO("%f",B);
+
         return (true);
     }
     else
@@ -251,10 +247,10 @@ void printPlaneInfo( PrimitiveSegmentationPtr info, int idx){
 string returnPrimitiveNameFromTag( int primitiveTag){
     switch( primitiveTag){
         case TXT_UNKNOWN_SHAPE_TAG:  return( "unknown");
-        case TXT_PLANE_SHAPE_TAG:	 return( "plane");
-        case TXT_SPHERE_SHAPE_TAG:	 return( "sphere");
-        case TXT_CONE_SHAPE_TAG:	 return( "cone");
-        case TXT_CYLINDER_SHAPE_TAG: return( "cylinder");
+        case TXT_PLANE_SHAPE_TAG:	 return( "Plane");
+        case TXT_SPHERE_SHAPE_TAG:	 return( "Sphere");
+        case TXT_CONE_SHAPE_TAG:	 return( "Cone");
+        case TXT_CYLINDER_SHAPE_TAG: return( "Cylinder");
     }
 }
 

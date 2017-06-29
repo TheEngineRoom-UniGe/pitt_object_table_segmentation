@@ -36,7 +36,7 @@ bool deepFiltering( DeepFilter::Request& req, DeepFilter::Response& res){
 
 	// points iteration   (((  FILTERING   )))
 	for( int i = 0; i < cloud->points.size(); i++){
-		if( cloud->points[ i].z == cloud->points[ i].z){ // then is not NaN
+		if( cloud->points[ i].x == cloud->points[ i].x){ // then is not NaN
 			if( cloud->points[ i].z > thDeep)
 				cloudFurther->points.push_back( cloud->points[ i]);
 			else cloudCloser->points.push_back( cloud->points[ i]);

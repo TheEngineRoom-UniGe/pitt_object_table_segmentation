@@ -18,11 +18,11 @@ using namespace std_msgs;
 //service name
 const string SRV_NAME_COLOR = "color_srv";
 //color names
-const string NAME_COLOR_RED = "RED";
-const string NAME_COLOR_BLUE = "BLUE";
-const string NAME_COLOR_GREEN = "GREEN";
-const string NAME_COLOR_YELLOW="YELLOW";
-const string NAME_COLOR_PINK="PINK";
+const string NAME_COLOR_RED = "red";
+const string NAME_COLOR_BLUE = "blue";
+const string NAME_COLOR_GREEN = "green";
+const string NAME_COLOR_YELLOW="yellow";
+const string NAME_COLOR_PINK="pink";
 const string NAME_COLOR_NONE = "NO_COLOR_RECOGNIZE";
 //functions to check  the quantity of points which have a certain color. It uses the hsv representation
 

@@ -6,7 +6,7 @@
 
     <param name="/pitt/ref_frame/input_cloud" type="str" value= "CameraDepth_optical_frame" />
     <param name="/pitt/ref_frame/output_cloud" type="str" value="odom" />
-    <param name="/pitt/service/deep_filter/z_threshold" type="double" value= "4" />
+    <param name="/pitt/service/deep_filter/z_threshold" type="double" value= "0.7" />
 
     <!--	###################	ARM FILTER PARAMETERS########################-->
 
@@ -99,7 +99,7 @@
 	<arg name="pitt_input_cloud_topic" value= "/pepper_robot/camera/depth_registered/points" /> 			<!-- default: "/camera/depth/points"					-->
 	<arg name="pitt_show_original_cloud" value="1" /> 								<!-- default: "0" (false) [white ptn]					-->
 	<arg name="pitt_show_supports" value="1" /> 									<!-- default: "0" (false) [brown ptn]					-->
-	<arg name="pitt_show_cluster" value="0" />		 								<!-- default: "0" (false) [random ptn]					-->
+	<arg name="pitt_show_cluster" value="1" />		 								<!-- default: "0" (false) [random ptn]					-->
 	<arg name="pitt_show_object_on_support" value="1" /> 							<!-- default: "0" (false) [orange ptn]					-->
 	<arg name="pitt_raw_centroid_log_file_path" value="." /> 						<!-- default: "" (do not print)							-->
 		  					<!-- set to: ".." for timed formatting name (works only at the end of the path) or set to any other paths.
